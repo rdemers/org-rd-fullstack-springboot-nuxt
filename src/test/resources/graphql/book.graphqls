@@ -1,0 +1,16 @@
+#
+# R. Demers; 2023.
+#
+type Book {
+    id: ID!
+    title: String!
+    description: String!
+}
+
+type Query {
+    readBooks(count: Int, offset: Int): [Book]!
+}
+
+type Mutation {
+    createBook(id: ID!, title: String, description: String) : Book!
+}

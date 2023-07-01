@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "org.rd.fullstack.springbootnuxt.secret",
+    "type": "java.lang.String",
+    "description": "The secret key."
+  },
+  {
+    "name": "org.rd.fullstack.springbootnuxt.expiration",
+    "type": "java.lang.String",
+    "description": "The expiration date."
+  },
+  {
+    "name": "org.rd.fullstack.springbootnuxt.authorities",
+    "type": "java.lang.String",
+    "description": "The autorization tag name."
+  }
+]}

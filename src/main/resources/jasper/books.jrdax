@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsonDataAdapter class="net.sf.jasperreports.data.json.JsonDataAdapterImpl">
+  <name>Books</name>
+  <dataFile type="repositoryDataLocation">
+    <location>C:\sdk\var\github\org-rd-fullstack-springboot-nuxt\src\main\resources\jasper\books.json</location>
+  </dataFile>
+  <selectExpression></selectExpression>
+  <locale>fr_CA</locale>
+  <timeZone>America/New_York</timeZone>
+  <useConnection>false</useConnection>
+  <language>json</language>
+</jsonDataAdapter>

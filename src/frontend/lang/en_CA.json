@@ -1,0 +1,89 @@
+{
+    "common" : {
+        "button" : {
+            "login"  : "Login",
+            "cancel" : "Cancel",
+            "ok"     : "Ok"
+        }
+    },
+    "login" : {
+        "alert" : {
+            "title" : "Invalid authentification",
+            "text"  : "Your username/password is invalid."
+        },
+        "title"       : "Authentification window",       
+        "information" : "This application is secure. Use the following accounts: login/password: root/root or support/support or guest/guest.",
+        "login"       : "login",
+        "password"    : "password"
+    },
+    "layout" : {
+        "home"       : "Welcome",
+        "books"      : "Books",
+        "scratchpad" : "ScratchPad (ui)",
+        "about"      : "About"
+    },
+    "index" : {
+        "welcome"  : "Welcome to the Fullstack - SPRINGBOOT/NUXT",
+        "sommaire" : "This application proposes an approach for the development of WEB application and presents a concrete example of data management. Have fun!!!",
+        "techno"   : "The technologies used by this application are:",
+        "techno1"  : "Spring Boot - Facilitates the creation of JAVA/Services/REST applications.",
+        "techno2"  : "Nuxt - The intuitive Vue framework.",
+        "techno3"  : "Vue - The progressive JavaScript framework.",
+        "techno4"  : "Vuetify - UX/UI components for Vue.",
+        "scm"      : "Github source"
+    },
+    "book" : {
+        "alert" : {
+            "title" : "Internal exception",
+            "text"  : "An error occurred while accessing the services."
+        },
+        "rule" : {
+            "rule1"   : "You must specify a value for ",
+            "rule2-0" : " must have a minimum length of ",
+            "rule2-1" : " characters."
+        }, 
+        "id"          : "ID",
+        "title"       : "Title",
+        "description" : "Description",
+        "askdelete"   : "Are you sure you want to destroy this record ?"
+    },
+    "ui" : {
+        "title"      : "ScratchPad features a few UI components",
+        "icon_title" : "FontAwesome icon.",
+        "icon_text"  : "Example of using external icons. FontAwesome: https://fontawesome.com. These icons can be adjusted according to your needs: https://fontawesome.com/docs/web/style/size.",
+        "slot_title" : "Use of a SLOT inside a component.",
+        "slot_text"  : "It is possible to use a SLOT to activate a sub-component inside a main component.",
+        "pdf_title"  : "A WEB component to view a PDF.",
+        "pdf_text"   : "The creation of a WEB component (here see a PDF) requires limiting the use of a Framework in order to reduce the dependencies of your component."
+    },
+    "about" : {
+        "licence01" : "Apache License",
+        "licence02" : "Version 2.0, January 2004",
+        "licence03" : "http://www.apache.org/licenses/",
+        "licence04" : "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+        "licence05" : "Copyright 2023 - Réal Demers",
+        "licence06" : "Licensed under the Apache License, Version 2.0 (the 'License');",
+        "licence07" : "you may not use this file except in compliance with the License.",
+        "licence08" : "You may obtain a copy of the License at",
+        "licence09" : "Apache license",
+        "licence10" : "Unless required by applicable law or agreed to in writing, software",
+        "licence11" : "distributed under the License is distributed on an 'AS IS' BASIS,",
+        "licence12" : "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.",
+        "licence13" : "See the License for the specific language governing permissions and",
+        "licence14" : "limitations under the License."
+    },
+    "error" : {
+        "title"     : "Exception windows",
+        "exception" : "Application exception",
+        "message"   : "Back to the homepage",
+        "msg_error" : "Internal error. Call support.",
+        "msg_cause" : "This page does not exist."
+    },
+    "vrd-pdfviewer" : {
+        "page"                 : "Page ",
+        "of"                   : " of ",
+        "ex_no_source"         : "No source defined !",
+        "ex_no_node_supported" : "Node is not supported !",
+        "ex_unknown"           : "Unknown exception !"
+    }
+}

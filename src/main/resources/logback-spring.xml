@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="120 seconds">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty name="host_name"   source="app.ctx.host_name" defaultValue="${HOSTNAME}"/>
+    <springProperty name="ctx_name"    source="app.ctx.ctx_name"  defaultValue="${CONTEXT_NAME}"/>
+    <springProperty name="dir_root"    source="app.dir.root"      defaultValue="."/>
+    <springProperty name="dir_env"     source="app.dir.env"       defaultValue="."/>
+    <springProperty name="dir_name"    source="app.dir.name"      defaultValue="."/>
+    <springProperty name="log_name"    source="app.log.name"      defaultValue="default_app_log_name"/>
+    <springProperty name="log_pattern" source="app.log.pattern"   defaultValue="%d [%thread] %-5level %logger{35} [%file:%line] - %msg %throwable{1}%n"/>
+
+    <contextName>${ctx_name}</contextName>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeContext>false</includeContext>
+            <customFields>{"host_name":"${host_name}","ctx_name":"${ctx_name}"}</customFields>
+        </encoder>
+    </appender>
+
+    <appender name="file_flat" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${log_pattern}</pattern>
+        </encoder>
+        <file>${dir_root}/${dir_env}/${dir_name}/log/${log_name}-flat.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${dir_root}/${dir_env}/${dir_name}/log/${log_name}-%d{yyyy-MM-dd}-%i-flat.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="file_logstash" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeContext>false</includeContext>
+            <customFields>{"host_name":"${host_name}","ctx_name":"${ctx_name}"}</customFields>
+        </encoder>
+        <file>${dir_root}/${dir_env}/${dir_name}/log/${log_name}-logstash.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${dir_root}/${dir_env}/${dir_name}/log/${log_name}-%d{yyyy-MM-dd}-%i-logstash.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file_flat"/>
+        <appender-ref ref="file_logstash"/>
+    </root>
+
+    <logger name="org.rd.fullstack.springbootnuxt" level="trace" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file_flat"/>
+        <appender-ref ref="file_logstash"/>
+    </logger>
+</configuration>

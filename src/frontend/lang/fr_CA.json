@@ -1,0 +1,89 @@
+{
+    "common" : {
+        "button" : {
+            "login"  : "Login",
+            "cancel" : "Annuler",
+            "ok"     : "Ok"
+        }
+    },
+    "login" : {
+        "alert" : {
+            "title" : "Authentification invalide",
+            "text"  : "Votre usager/mot de passe est invalide."
+        }, 
+        "title"       : "Fenêtre d'authentification",       
+        "information" : "Cette application est sécurisée. Utiliser les comptes suivants: login/password : root/root ou support/support ou guest/guest.",
+        "login"       : "login",
+        "password"    : "mot de passe"
+    },
+    "layout" : {
+        "home"       : "Bienvenue",
+        "books"      : "Livres",
+        "scratchpad" : "ScratchPad (ui)",
+        "about"      : "A propos"
+    },
+    "index" : {
+        "welcome"  : "Bienvenue au Fullstack - SPRINGBOOT/NUXT",
+        "sommaire" : "Cette application propose une approche pour le développement d'application WEB et présente un exemple concret de gestion de données. Have fun !!!",
+        "techno"   : "Les technologies utilisées par cette application sont les suivantes:",
+        "techno1"  : "Spring Boot - Facilite la création d'applications JAVA/Services/REST.",
+        "techno2"  : "Nuxt - Le framework Vue intuitif.",
+        "techno3"  : "Vue - Le framework JavaScript progressif.",
+        "techno4"  : "Vuetify - Composantes UX/UI pour Vue.",
+        "scm"      : "Github source"
+    },
+    "book" : {
+        "alert" : {
+            "title" : "Exception interne",
+            "text"  : "Une erreur est survenue en accédant les services."
+        },
+        "rule" : {
+            "rule1"   : "Vous devez spécifier une valeur pour ",
+            "rule2-0" : " doit avoir une longueur minimale de ",
+            "rule2-1" : " caractères."
+        }, 
+        "id"          : "ID",
+        "title"       : "Titre",
+        "description" : "Description",
+        "askdelete"   : "Désirez-vous vraiment détruire cet enregistrement ?"
+    },
+    "ui" : {
+        "title"      : "ScratchPad présente quelques composantes UI",
+        "icon_title" : "FontAwesome icon.",
+        "icon_text"  : "Exemple d'utilisation d'icons externes. FontAwesome : https://fontawesome.com. Ces icons peuvent être ajustés en fonction de vos besoins : https://fontawesome.com/docs/web/style/size.",
+        "slot_title" : "Utilisation d'une SLOT à l'intérieure d'une composante.",
+        "slot_text"  : "Il est possible d'utiliser une SLOT pour activer une sous-composante à l'intérieur d'une composante principale.",
+        "pdf_title"  : "Une composante WEB pour voir un PDF.",
+        "pdf_text"   : "La création d'une composante WEB (ici voir un PDF) nécessite de limiter l'utilisation d'un Framework afin de réduire les dépendances de votre composante."
+    },
+    "about" : {
+        "licence01" : "Licence Apache",
+        "licence02" : "Version 2.0, janvier 2004",
+        "licence03" : "http://www.apache.org/licenses/",
+        "licence04" : "CONDITIONS GÉNÉRALES D'UTILISATION, DE REPRODUCTION ET DE DISTRIBUTION",
+        "licence05" : "Copyright 2023 - Réal Demers",
+        "licence06" : "Licence sous la licence Apache, version 2.0 (la 'Licence');",
+        "licence07" : "vous ne pouvez utiliser ce fichier qu'en conformité avec la Licence.",
+        "licence08" : "Vous pouvez obtenir une copie de la Licence sur",
+        "licence09" : "Licence Apache",
+        "licence10" : "Sauf si requis par la loi applicable ou convenu par écrit, logiciel",
+        "licence11" : "distribué sous la licence est distribué sur une BASE 'EN L'ÉTAT'",
+        "licence12" : "SANS GARANTIE OU CONDITION D'AUCUNE SORTE, expresse ou tacite.",
+        "licence13" : "Voir la licence pour la langue spécifique régissant les autorisations et",
+        "licence14" : "limitations sous la Licence."
+    },
+    "error" : {
+        "title"     : "Fenêtre d'exception",
+        "exception" : "Exception applicative",
+        "message"   : "Retour à la page d'accueil",
+        "msg_error" : "Erreur interne. Appeler le support.",
+        "msg_cause" : "Cette page n'existe pas."
+    },
+    "vrd-pdfviewer" : {
+        "page"                 : "Page ",
+        "of"                   : " de ",
+        "ex_no_source"         : "Aucune source définie !",
+        "ex_no_node_supported" : "Node n'est pas supporté !",
+        "ex_unknown"           : "Exception inconnue"
+    }
+}

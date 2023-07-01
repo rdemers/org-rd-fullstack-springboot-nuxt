@@ -1,0 +1,46 @@
+#
+# R. Demers 2023.
+#
+server:
+  shutdown: graceful
+  port: 8080
+#
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: "info,health,prometheus"
+#
+spring:
+  main:
+    cloud-platform: kubernetes
+  lifecycle:
+    timeout-per-shutdown-phase: 45s
+  h2:
+    console:
+      enabled: false # Doesn't work well with Spring/Security.
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: update
+  graphql:
+    graphiql:
+      enabled: true
+#
+org:
+  rd:
+    fullstack:
+      springbootnuxt:
+        secret: the.beautiful.secret.key.to.change
+        expiration: 30000
+        authorities: rd.roles
+#

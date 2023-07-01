@@ -1,0 +1,109 @@
+<!-- 
+   *
+   * Copyright 2023; Réal Demers.
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *    http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *
+   * Description
+   * 
+   * Allows construction of the WEB application according to JamSTACK specifications
+   * and deploy it inside the Springboot application (CDN/Tomcat).
+   *
+ -->
+<project name="web-app-jamstack" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
+
+    <property name="src.dir"       location="src/frontend"/>
+    <property name="build.dir"     location="src/frontend/.output/public"/>
+
+    <property name="main-app.dir"  location="src/main/resources/static/app"/>
+    <property name="test-app.dir"  location="src/test/resources/static/app"/>
+
+    <property name="jamstack.flag" location="src/main/resources/static/app/.jamstack"/>
+    
+    <!-- Obtain information about our environment. -->
+    <target name="setup-env"> 
+        <available file="${jamstack.flag}" property="jamstack.app.present"/>
+
+        <echo message="--" level="info"/>
+        <echo message="OS Name:         ${os.name}"    level="info"/>
+        <echo message="OS Architecture: ${os.arch}"    level="info"/>
+        <echo message="OS Version:      ${os.version}" level="info"/>
+
+        <echo message="--" level="info"/>
+        <echo if:set="jamstack.app.present" 
+              message="STATE Web/App:    The Web application/App is in place. Nothing to do." 
+              level="info"/> 
+        <echo unless:set="jamstack.app.present" 
+              message="STATE Web/APP:    The Wep/App application must be setup. Starting activities ..." 
+              level="info"/>
+    </target>
+
+    <!-- Ensure that all packages used by the WEB application are up to date. -->
+    <target name="npm-install" depends="setup-env" unless="jamstack.app.present"> 
+        <echo message="--" level="info"/>
+        <echo message="Update of packages." level="info"/>
+
+        <exec dir="${src.dir}" os="Windows 10" executable="npm.cmd">  <!-- My workstation. -->
+            <arg value="install"/>
+        </exec>
+        <exec dir="${src.dir}" os="Mac OS X" executable="npm">        <!-- My personal laptop ;-) -->
+            <arg value="install"/>
+        </exec>
+        <exec dir="${src.dir}" os="Linux" executable="npm">           <!-- Build via a Docker image (Linux). -->
+            <arg value="install"/>
+        </exec>
+    </target>
+
+    <!-- Compilation and static generation, according to JamSTACK specifications. -->
+    <target name="npm-generate" depends="npm-install" unless="jamstack.app.present">
+        <echo message="--" level="info"/>
+        <echo message="Web/App transpilation and static/JamSTACK generation." level="info"/>
+
+        <exec dir="${src.dir}" os="Windows 10" executable="npm.cmd"> <!-- My workstation. -->
+            <arg value="run"/>
+            <arg value="generate"/>
+        </exec>
+        <exec dir="${src.dir}" os="Mac OS X" executable="npm">       <!-- My personal laptop ;-) -->
+            <arg value="run"/>
+            <arg value="generate"/>
+        </exec>
+        <exec dir="${src.dir}" os="Linux" executable="npm">          <!-- Build via a Docker image (Linux). -->
+            <arg value="run"/>
+            <arg value="generate"/>
+        </exec>    
+    </target>
+
+    <!-- Move the WEB application to its location inside the Springboot application. -->
+    <target name="cp-web-app" depends="npm-generate" unless="jamstack.app.present">
+        <echo message="--" level="info"/>
+        <echo message="Move the Web/App to its final location." level="info"/>
+
+        <mkdir dir="${main-app.dir}"/>
+        <mkdir dir="${test-app.dir}"/>
+
+        <copy todir="${test-app.dir}" >  
+            <fileset dir="${build.dir}" includes="**"/>  
+        </copy> 
+
+        <copy todir="${main-app.dir}" >  
+            <fileset dir="${build.dir}" includes="**"/>  
+        </copy> 
+
+        <!-- Indicator of execution completed successfully. -->
+        <touch file="${jamstack.flag}"/>
+    </target>
+
+    <!-- We are preparing the WEB/JamSTACK application. -->
+    <target name="prepare-web-app-jamstack" depends="setup-env, npm-install, npm-generate, cp-web-app"/>
+
+</project>
