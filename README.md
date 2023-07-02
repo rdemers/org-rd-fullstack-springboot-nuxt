@@ -2,7 +2,7 @@
 
 ## Fullstack application with Springboot and Nuxt.
 
-This example relies on the use of Springboot, Nuxt, Apache/Maven and docker. It allows you to build an application container (OCI) that embeds one or more micro-services compatible with the AWS/EKS architecture. In addition, it includes a WEB application based on the Nuxt Framework (Vue/Vuetify). All the stuff respects the principles of JAMStack architecture with SSG (Static Site Generation). Note : Springboot is used as a simple HTTP server (CDN).
+This project relies on the use of Springboot, Nuxt, Apache/Maven and docker. It allows you to build an application container (OCI) that embeds one or more micro-services compatible with the AWS/EKS architecture. In addition, it includes a WEB application based on the Nuxt Framework (Vue/Vuetify) including the principles of JamStack architecture with SSG (Static Site Generation). Note : Springboot is used as a simple HTTP server (CDN).
 
 ## Important
 
@@ -14,7 +14,9 @@ The following software must be installed on your workstation to build this proje
 
 * [Java SDK](https://www.oracle.com/java/technologies/downloads/)
 * [Apache/Maven](https://maven.apache.org/download.cgi)
+* [Optional - GIT or Zip download](https://git-scm.com/downloads)
 * [Optional - VSCode/IDE](https://code.visualstudio.com/download)
+* [Optional - VSCode/Plugin](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
 
 ## Springboot - Getting started
 
@@ -90,7 +92,7 @@ npx nuxi@latest upgrade                      # Update Nuxt version.
 npx nuxi cleanup                             # Allows you to delete temporary files and directories.
 npm outdated                                 # View packages that are out of date.
 
-npm set registry=https://registry.npmjs.org/ # Configuration (att: proxy).
+npm set registry=https://registry.npmjs.org/ # Configuration (warn: proxy).
 npm config set strict-ssl false --global     # Don't be picky with SSL/TLS certificates.
 
 npm i nuxi                                   # Installing the nuxi module -- OPTIONAL.
@@ -121,10 +123,10 @@ integration failures. To avoid these integration failures, and to formally recog
 
 Even if you’re not planning on building a service as part of a larger ecosystem, the discipline of starting all of your development at the API level still pays enough dividends to make it worth your time. This project establishes simple API contracts through the use of controllers:
 
-* [AuthController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/AuthController.java)
-* [BookController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/BookController.java)
-* [HealthController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/HealthController.java)
-* [ReportController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/ReportController.java)
+* [Source : AuthController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/AuthController.java)
+* [Source : BookController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/BookController.java)
+* [Source : HealthController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/HealthController.java)
+* [Source : ReportController.java](src/main/java/org/rd/fullstack/springbootnuxt/controller/ReportController.java)
 
 ### 3. Dependency management
 
@@ -133,10 +135,10 @@ Most contemporary programming languages have some facility for managing applicat
 A cloud-native application never relies on implicit existence of system-wide packages. Properly managing your application’s dependencies is all about the
 concept of repeatable deployments. Nothing about the runtime into which an application is deployed should be assumed that isn’t automated. In an ideal world, the application’s container is bundled (or bootstrapped, as some frameworks called it) inside the app’s release artifact.
 
-Applying discipline to dependency management will bring your applications one step closer to being able to thrive in cloud environments. This project uses Maven for dependency management for springboot and NPM for the web application:
+Applying discipline to dependency management will bring your applications one step closer to being able to thrive in cloud environments. This project uses Maven for dependency management for Springboot and NPM for the web application:
 
-* [Source: pom.xml](pom.xml)
-* [Source: package.json](./src/frontend/package.json)
+* [Source : pom.xml](pom.xml)
+* [Source : package.json](./src/frontend/package.json)
 
 ### 4. Design, build, release, and run
 
@@ -168,8 +170,8 @@ org:
         authorities: rd.roles
 ```
 
-* [Source: application.yml](src/main/resources/application.yml)
-* [Spring Boot - External configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.external-config)
+* [Source : application.yml](src/main/resources/application.yml)
+* [Documentation : Springboot/External configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.external-config)
 
 ### 6. Logs
 
@@ -189,7 +191,7 @@ Your application should log to STDOUT/STDERR using the LOGSTASH format. The proj
 </dependency>
 ```
 
-* Source: [pom.xml](pom.xml)
+* [Source : pom.xml](pom.xml)
 
 Subsequently, you must configure logging to use this dependency. This configuration is done as follows:
 
@@ -216,7 +218,7 @@ Subsequently, you must configure logging to use this dependency. This configurat
 </configuration>
 ```
 
-* Source: [logback-spring.xml](src/main/resources/logback-spring.xml)
+* [Source : logback-spring.xml](src/main/resources/logback-spring.xml)
 
 ### 7. Disposability
 
@@ -232,7 +234,7 @@ server:
 #
 ```
 
-* [Source: application.yml](src/main/resources/application.yml)
+* [Source : application.yml](src/main/resources/application.yml)
 
 ### 8. Backing services
 
@@ -275,7 +277,7 @@ management:
 #
 ```
 
-* [Source: application.yml](src/main/resources/application.yml)
+* [Source : application.yml](src/main/resources/application.yml)
 
 ### 12. Stateless processes
 
@@ -323,16 +325,16 @@ spring:
 #
 ```
 
-* [Source: application.yml](src/main/resources/application.yml)
+* [Source : application.yml](src/main/resources/application.yml)
 
 This configuration will allow the application to expose the following probes for telemetry:
 
-* List of available probes - http://domaine:8081/actuator
-* Informational probe - http://domaine:8081/actuator/info
-* Health status probe - http://domaine:8081/actuator/health
-* Activity Status Probe - http://domaine:8081/actuator/health/liveness
-* Probe availability status - http://domaine:8081/actuator/health/readiness
-* Statistics probe (prometheus)- http://domaine:8081/actuator/prometheus
+* [List of available probes](http://domaine:8081/actuator)
+* [Informational probe](http://domaine:8081/actuator/info)
+* [Health status probe](http://domaine:8081/actuator/health)
+* [Activity Status Probe](http://domaine:8081/actuator/health/liveness)
+* [Probe availability status](http://domaine:8081/actuator/health/readiness)
+* [Statistics probe (prometheus](http://domaine:8081/actuator/prometheus)
 
 ### 15. Authentication and authorization
 
@@ -353,7 +355,7 @@ Enabling security is done by adding the following dependency:
 </dependency>
 ```
 
-* Source: [pom.xml](pom.xml)
+* [Source : pom.xml](pom.xml)
 
 #### Configuration
 
@@ -382,8 +384,8 @@ http.addFilterBefore(authentificationTokenFilter(jwtUtils(), userDetailsService(
 return http.build();
 ```
 
-* Source: [SecurityConfig.java](src/main/java/org/rd/fullstack/springbootnuxt/config/SecurityConfig.java)
-* Documentation: [SpringSecurity](https://docs.spring.io/spring-security/reference/index.html)
+* [Source : SecurityConfig.java](src/main/java/org/rd/fullstack/springbootnuxt/config/SecurityConfig.java)
+* [Documentation : SpringSecurity](https://docs.spring.io/spring-security/reference/index.html)
 
 ## Links/references used for writing
 

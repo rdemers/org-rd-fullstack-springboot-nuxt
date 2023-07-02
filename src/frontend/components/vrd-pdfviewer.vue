@@ -56,8 +56,8 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, onMounted,
-                       ref, watch } from "vue";
+    import { defineComponent, onMounted, ref, watch } from "vue";
+
     import { PDFService }           from "@/services/PDFService";
     import { PDFServiceException }  from "@/services/PDFServiceException";
     import { PDFServiceCode }       from "@/services/PDFServiceCode";
@@ -74,7 +74,7 @@
 
             const noPage = ref<number>(0);
             const pdfService:PDFService = new PDFService(props.url as string);
-            const canvasReference = ref<HTMLCanvasElement | null>(null); // Avoir accès au Canvas.
+            const canvasReference = ref<HTMLCanvasElement | null>(null); // Get access to canvas.
 
             const docSummary = computed<string>(() => {
                 return t('vrd-pdfviewer.page') + noPage.value + t('vrd-pdfviewer.of') + pdfService.getNumPages();
@@ -121,7 +121,6 @@
                 const height:number = (canvasReference.value  as HTMLCanvasElement).height/2;
 
                 context.fillText(msg, width, height);
-                return;
             }
             
             function prevPage(): void {

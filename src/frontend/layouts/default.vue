@@ -57,8 +57,8 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, 
-             ref, onMounted }           from "vue";
+    import { computed, defineComponent, ref, onMounted } from "vue";
+
     import Menu                         from "@/types/Menu";
     import { SessionStore }             from "@/store/SessionStore";
     import { LocaleObject }             from "@nuxtjs/i18n/dist/runtime/composables";
