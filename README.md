@@ -4,13 +4,13 @@
 
 This project relies on the use of Springboot, Nuxt, Apache/Maven and docker. It allows you to build an application container (OCI) that embeds one or more micro-services compatible with the AWS/EKS architecture. In addition, it includes a WEB application based on the Nuxt Framework (Vue/Vuetify) including the principles of JamStack architecture with SSG (Static Site Generation). Note : Springboot is used as a simple HTTP server (CDN).
 
-![alt text](./doc/springboot-nuxt.png "Springboot-Nuxt")
+![alt text](./doc/asserts/springboot-nuxt.png "Springboot-Nuxt")
 
-* [Source : AppLogin.png](./doc/applogin.png)
-* [Source : AppCRUD.png](./doc/appcrud.png)
-* [Source : AppPDF.png](./doc/apppdf.png)
-* [Source : Swagger.png](./doc/swagger.png)
-* [Source : GraphQL.png](./doc/graphql.png)
+* [Source : AppLogin.png](./doc/asserts/applogin.png)
+* [Source : AppCRUD.png](./doc/asserts/appcrud.png)
+* [Source : AppPDF.png](./doc/asserts/apppdf.png)
+* [Source : Swagger.png](./doc/asserts/swagger.png)
+* [Source : GraphQL.png](./doc/asserts/graphql.png)
 
 ## Important
 
@@ -20,6 +20,7 @@ Building a WEB application with SOA services (BBF only) included in a single art
 
 The following software must be installed on your workstation to build this project:
 
+* [NodeJS](https://nodejs.org/en)
 * [Java SDK](https://www.oracle.com/java/technologies/downloads/)
 * [Apache/Maven](https://maven.apache.org/download.cgi)
 * [Optional - GIT or Zip download](https://git-scm.com/downloads)
@@ -91,6 +92,7 @@ To get started quickly, please consider the following commands:
 
 ```bash
 cd src/frontend                              # Go to the root of the WEB application.
+
 npm install                                  # Installing dependencies.
 npm run dev                                  # Start the application with hot loading.
 npm run preview                              # View a quick production build locally.
