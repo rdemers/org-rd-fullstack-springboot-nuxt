@@ -4,6 +4,8 @@
 
 This project relies on the use of Springboot, Nuxt, Apache/Maven and docker. It allows you to build an application container (OCI) that embeds one or more micro-services compatible with the AWS/EKS architecture. In addition, it includes a WEB application based on the Nuxt Framework (Vue/Vuetify) including the principles of JamStack architecture with SSG (Static Site Generation). Note : Springboot is used as a simple HTTP server (CDN).
 
+![alt text](./doc/springboot-nuxt.png "Springboot-Nuxt")
+
 ## Important
 
 Building a WEB application with SOA services (BBF only) included in a single artefact is not a crime (nor a recommendation). The solution architect's judgment is required. If the approach is used, then limit SOA services to BFF (Backend For Frontend) type requirements only. Also, for this project, we embebed a authentification/autorisation services and a an memory database services. Of course, those services should be an external resources. For demonstration only.

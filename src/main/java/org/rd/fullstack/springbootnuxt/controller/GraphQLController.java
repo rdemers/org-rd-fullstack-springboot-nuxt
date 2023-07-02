@@ -43,7 +43,9 @@ public class GraphQLController {
     public List<Book> readBooks(@Argument int count, @Argument int offset) {
         List<Book> books = new ArrayList<Book>();
         bookRepository.findAll().forEach(books::add);
-        return books;
+
+        // Should apply validation for offset and count !!!
+        return books.subList(offset, count);
     }
 
     @PreAuthorize("hasRole('ROLE_SELECT')")
