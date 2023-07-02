@@ -6,6 +6,12 @@ This project relies on the use of Springboot, Nuxt, Apache/Maven and docker. It 
 
 ![alt text](./doc/springboot-nuxt.png "Springboot-Nuxt")
 
+* [Source : AppLogin.png](./doc/applogin.png)
+* [Source : AppCRUD.png](./doc/appcrud.png)
+* [Source : AppPDF.png](./doc/apppdf.png)
+* [Source : Swagger.png](./doc/swagger.png)
+* [Source : GraphQL.png](./doc/graphql.png)
+
 ## Important
 
 Building a WEB application with SOA services (BBF only) included in a single artefact is not a crime (nor a recommendation). The solution architect's judgment is required. If the approach is used, then limit SOA services to BFF (Backend For Frontend) type requirements only. Also, for this project, we embebed a authentification/autorisation services and a an memory database services. Of course, those services should be an external resources. For demonstration only.
