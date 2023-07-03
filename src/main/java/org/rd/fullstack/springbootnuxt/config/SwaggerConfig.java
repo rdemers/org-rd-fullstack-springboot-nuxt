@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "Auth+Book+Health API", version = "1.0.0", description = "Auth+Book+Report+Health API Demo"))
+@OpenAPIDefinition(info = @Info(title = "Auth+Book+Report+Health API", version = "1.0.0", description = "Auth+Book+Report+Health API Demo"))
 @SecurityScheme(name = "SecureAPI", paramName = "Authorization", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.HEADER)
 public class SwaggerConfig {
 

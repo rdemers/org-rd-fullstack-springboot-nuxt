@@ -2,7 +2,7 @@
 
 ## Fullstack application with Springboot and Nuxt.
 
-This project relies on the use of Springboot, Nuxt, Apache/Maven and docker. It allows you to build an application container (OCI) that embeds one or more micro-services compatible with the AWS/EKS architecture. In addition, it includes a WEB application based on the Nuxt Framework (Vue/Vuetify) including the principles of JamStack architecture with SSG (Static Site Generation). Note : Springboot is used as a simple HTTP server (CDN).
+This project relies on the use of Springboot, Nuxt, Apache/Maven and docker. It allows you to build an application container (OCI) that embeds  micro-services compatible with the AWS/EKS architecture. In addition, it includes a WEB application based on the Nuxt Framework (Vue/Vuetify) build with the principles of JamStack architecture (SSG - Static Site Generation). Note : Springboot is used as a simple static HTTP server (CDN).
 
 ![alt text](./doc/asserts/springboot-nuxt.png "Springboot-Nuxt")
 
@@ -14,7 +14,7 @@ This project relies on the use of Springboot, Nuxt, Apache/Maven and docker. It 
 
 ## Important
 
-Building a WEB application with SOA services (BBF only) included in a single artefact is not a crime (nor a recommendation). The solution architect's judgment is required. If the approach is used, then limit SOA services to BFF (Backend For Frontend) type requirements only. Also, for this project, we embebed a authentification/autorisation services and a an memory database services. Of course, those services should be an external resources. For demonstration only.
+Building a WEB application with SOA services (BBF only) included in a single artefact is not a crime (nor a recommendation). The solution architect's judgment is required. If this approach is used, then limit SOA services to BFF (Backend For Frontend) type requirements only. Also, for this project, we embebed a authentification/autorisation services and a an memory database services. Of course, those services should be an external resources. This project is for learning and demonstration only.
 
 ## Prerequisites
 
@@ -26,6 +26,7 @@ The following software must be installed on your workstation to build this proje
 * [Optional - GIT or Zip download](https://git-scm.com/downloads)
 * [Optional - VSCode/IDE](https://code.visualstudio.com/download)
 * [Optional - VSCode/Plugin](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+* [Optional - Docker to build image](https://www.docker.com/products/docker-desktop/)
 
 ## Springboot - Getting started
 

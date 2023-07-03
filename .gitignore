@@ -39,7 +39,6 @@ pids
 *.pid.lock
 
 # Nuxt/Vue/Node.
-src/frontend/.npmrc
 src/frontend/.nuxt/
 src/frontend/.output/
 src/frontend/.pnpm-debug.log*
