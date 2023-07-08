@@ -15,8 +15,8 @@
  */
 export default defineNuxtConfig({
  
-    //ssr: false,
-    ssr: true,
+    ssr: false,
+    //ssr: true,
     
     typescript: {
         strict: true

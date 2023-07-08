@@ -138,8 +138,11 @@ public class SecurityConfig {
 
                 registry
                         .addViewController("/app")
-                        .setViewName("redirect:/app/login/index.html");
-                        // .setViewName("redirect:/app/index.html");
+                        // SSR = TRUE.
+                        //.setViewName("redirect:/app/login/index.html");
+
+                        // SSR = FALSE.
+                        .setViewName("redirect:/app/index.html");
             }
         };
     }

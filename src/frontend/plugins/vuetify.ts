@@ -20,8 +20,8 @@ import * as directives   from 'vuetify/directives'
 
 export default defineNuxtPlugin(nuxtApp => {
   const vuetify = createVuetify({
-    ssr: true,
-    //ssr: false,
+    //ssr: true,
+    ssr: false,
     components,
     directives,
     theme: {
