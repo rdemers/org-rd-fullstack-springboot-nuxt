@@ -1,6 +1,6 @@
 # Best practices for cloud development
 
-[12factor.net](https://12factor.net/) provided an excellent starting point, a yardstick to measure applications along an axis of  cloud suitability. As you will see throughout the book, these factors often feed each other. Properly following one factor makes it easier to follow another, and so on, throughout a virtuous cycle. Once people get caught up in this cycle, they often wonder how they ever built applications any other way.
+[12factor.net](https://12factor.net/) provided an excellent starting point, a yardstick to measure applications along an axis of cloud suitability. As you will see throughout this documentation, these factors often feed each other. Properly following one factor makes it easier to follow another, and so on, throughout a virtuous cycle. Once people get caught up in this cycle, they often wonder how they ever built applications any other way.
 
 Whether you are developing a brand new application without the burden of a single line of legacy code or you are analyzing an enterprise portfolio with hundreds of legacy applications, this book will give you the guidance you need to get ready for developing cloudnative applications. Taking into account the changes in priority order, definition, and additions, we describe the following facets of cloud-native
 applications:
