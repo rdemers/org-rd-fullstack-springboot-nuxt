@@ -4,11 +4,10 @@
                             http://www.springframework.org/schema/boot/layers/layers-2.7.xsd">
 
     <!--
-         Your app.
-         The "loader" is considered to be a stakeholder.
+        Your app.
+        The "loader" is considered to be a stakeholder.
 
-         Att: This section uses pattern definition with style (Ant) -> /package/sub-package/**.
-              We manipulate classes.
+        Att: This section uses pattern definition with style (Ant) -> /package/sub-package/**. We manipulate classes.
       -->
     <application>
         <into layer="spring-boot-loader">
@@ -18,35 +17,32 @@
     </application>
 
     <!--
-         Gestion des dépendances.
-         Incluant un projet avec des modules:
-             <includeModuleDependencies/> Inclure les sous-modules.
-             <excludeModuleDependencies/> Exclure les sous-modules.
+        Dependency management.
+        Including a project with modules:
+            <includeModuleDependencies/> Include submodules.
+            <excludeModuleDependencies/> Exclude submodules.
 
-         Att: Cette section utilise la définition des patterns avec le format -> group:artifact[:version].
-              Nous manipulons des jars.
+        Att: This section uses pattern definition with the format -> group:artifact[:version]. We handle jars.
       -->
     <dependencies>
         <into layer="application">
-            <includeModuleDependencies/> <!-- Exemple seulement. -->
+            <includeModuleDependencies/> <!-- Example only. -->
         </into>
         <into layer="snapshot-dependencies">
             <include>*:*:*SNAPSHOT</include>
         </into>
-        <into layer="corpo-dependencies"> <!-- Exemple. On simule une ou des JARS/Librairies corporatives. -->
+        <into layer="corpo-dependencies"> <!-- Example. We simulate one or more JARS/Corporate Libraries. -->
             <include>com.fasterxml.jackson.core:*</include>
         </into>
         <into layer="framework-dependencies"/>
     </dependencies>
 
-    <!-- L'ordre des couches est important.
-         À partir de celles qui changent le moins au plus souvent.
-      -->
+    <!-- The order of the layers is important. From those that change the least to the most often. -->
     <layerOrder>
-        <layer>framework-dependencies</layer>  <!-- Ne change pas souvent. SpringFramework, Vaadin et autres.      -->
-        <layer>spring-boot-loader</layer>      <!-- SpringBoot/Loader change plus souvent que SpringFramework      -->
-        <layer>corpo-dependencies</layer>      <!-- Peut changer souvent ... Mais moins que l'application/système. -->
-        <layer>snapshot-dependencies</layer>   <!-- Les artéfacts SNAPSHOT change plus souvent que le reste.       -->
-        <layer>application</layer>             <!-- Couche qui change le plus souvent.                             -->
+        <layer>framework-dependencies</layer>  <!-- Doesn't change often. SpringFramework, libraries and others. -->
+        <layer>spring-boot-loader</layer>      <!-- SpringBoot/Loader changes more often than SpringFramework.   -->
+        <layer>corpo-dependencies</layer>      <!-- May change often... But less than app/system.                -->
+        <layer>snapshot-dependencies</layer>   <!-- SNAPSHOT artifacts change more often than the rest.          -->
+        <layer>application</layer>             <!-- Layer that changes most often normally. It's your app.       -->
     </layerOrder>
 </layers>

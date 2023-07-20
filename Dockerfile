@@ -53,7 +53,7 @@
    FROM arm64v8/debian:bullseye-slim as builder
 WORKDIR /application
 #
-# We copy the sources and tools for the build process.
+# We copy the sources, files and tools for the build process.
    COPY src ./src
    COPY pom.xml .
    COPY layers.xml .
@@ -62,7 +62,7 @@ WORKDIR /application
    COPY maven-with-proxy.xml .
    COPY web-app-jamstack.xml .
 #
-# We delete the node modules of the Web/App application.
+# We need to remove Node Modules from Web Application/App.
 # We need to execute Apache/Maven.
     RUN rm -rf src/frontend/node_modules
     RUN chmod 777 ./mvnw
@@ -75,7 +75,7 @@ WORKDIR /application
     RUN apt install ca-certificates-java -y
     RUN apt install openjdk-17-jdk -y
 #
-# Setup NPM
+# Setup NPM.
     RUN npm set registry=https://registry.npmjs.org/
     RUN npm config set strict-ssl false --global
 #
@@ -84,7 +84,7 @@ WORKDIR /application
 # Build ... With a proxy setup. See maven-with-proxy.xml.
 #   RUN ./mvnw --settings maven-with-proxy.xml -U -B -e -f pom.xml clean prepare-package package
 #
-# Preparation of the layers (layers) of the SpringBoot application.
+# We prepare the SpringBoot application layers.
     ARG JAR_FILE=target/*.jar
     RUN cp ${JAR_FILE} application.jar
     RUN java -Djarmode=layertools -jar application.jar extract
