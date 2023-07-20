@@ -4,7 +4,7 @@ The construction of an OCI image can take two directions with this project. The 
 
 ## Traditional way
 
-The traditional way of building an OCU image with SpringBoot is to use the fat jar like this example below:
+The traditional way of building an OCI image with SpringBoot is to use the fat jar like this example below:
 
 ```bash
       FROM arm64v8/amazoncorretto:17
@@ -12,6 +12,10 @@ The traditional way of building an OCU image with SpringBoot is to use the fat j
        ADD ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
+
+The final result is like the following figure:
+
+![alt text](./asserts/ocidev-traditionnal-layers.drawio.png "traditional-way")
 
 This works fine for most applications, but there are a couple of drawbacks.
 
@@ -21,7 +25,15 @@ This works fine for most applications, but there are a couple of drawbacks.
 
 ## Builder and the Layers way
 
-In order to correct the irritants of the previous section and to be more efficient and resilient. We are going to set up the use of a builder and cut our OCI image into several layers.
+In order to correct the irritants of the previous section and to be more efficient and resilient. We are going to set up the use of a builder and cut our OCI image into several layers. The final result will be like the following figure:
+
+![alt text](./asserts/ocidev-efficient-layers.drawio.png "efficient-way")
+
+This works fine and addresse all issues.
+
+* efficient.
+* resilient.
+* Others ...
 
 ### Builder
 
