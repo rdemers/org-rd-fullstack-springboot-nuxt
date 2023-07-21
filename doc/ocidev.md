@@ -1,39 +1,41 @@
 # Best practices for building OCI image (with Docker)
 
+Building an application image is very flexible and relatively easy to implement with OCI tools. However, with all this flexibility/freedom, it is not always easy to discern the activities (and complexity) that are associated with building efficient application image.
+
 The construction of an OCI image can take two directions with this project. The first is to use the facilities of the SpringBoot Framework (mvn spring-boot:build-image). This approach uses buildpack internally. The second is based on docker. As this approach is currently the most popular. We will describe the construction of an OCI image with docker.
 
 ## Traditional way
 
 The traditional way of building an OCI image with SpringBoot is to use the fat jar like this example below:
 
-```bash
+```docker
       FROM arm64v8/amazoncorretto:17
        ARG JAR_FILE=target/dspringboot-nuxt-unspecified.jar
        ADD ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-The final result is like the following figure:
+The final OCI image will have the following structure:
 
 ![alt text](./asserts/ocidev-traditionnal-layers.drawio.png "traditional-way")
 
-This works fine for most applications, but there are a couple of drawbacks.
+ This approach has significant impacts on performance and management of containers for the following reasons:
 
-* We are using the fat jar created by SpringBoot. This can impact startup time, especially in a containerized environment. We can save startup time by adding the exploded contents of the jar file instead.
-* We create an image with a single layer. This layer has a considerable weight (in megs). Each change to the application (even minimal) will re-create a complete image in the registry.
+* We create an image with only two layers. All changes to your application (even minor) will regenerate a full image (part 2). Image management requires a container registry. The “disk” capacities of the registry are not unlimited. In addition, each image must be checked/certified. The management time spent on images is directly proportional to the volume and quantity of images.
+A light image is easier to control/certify. It reduces the attack surface and, therefore, increases the security of images.
+* This OCI image uses the fat jar created by SpringBoot. This can impact startup time, especially in a containerized environment. We can save startup time by adding the exploded contents of the jar file instead.
+* Operations on a containerization platform will require more resources in terms of: disk space, I/O and memory. The performance impacts will be significant.
 * We assume that the CI/CD pipeline has the necessary tools to build the application (java, node and others) with the right versions.
 
-## Builder and the Layers way
+This list represents the main issues for the construction of OCI images. However, several complementary issues must also be taken into consideration when deploying the application inside a containerization platform. The next sections present the technical specifications, norms and standards in order to address these issues.
 
-In order to correct the irritants of the previous section and to be more efficient and resilient. We are going to set up the use of a builder and cut our OCI image into several layers. The final result will be like the following figure:
+## Builder, layers and tools (SprinBoot)
+
+In order to correct these problems from the previous section. We will configure a builder and cut our OCI image into several layers. The end result will look like the following figure:
 
 ![alt text](./asserts/ocidev-efficient-layers.drawio.png "efficient-way")
 
-This works fine and addresse all issues.
-
-* efficient.
-* resilient.
-* Others ...
+The containerized application has multiple layers. The first is a base image from the middleware team. It embeds an OS and its software components (commands, JVM and others). Subsequently, several layers are used to make this application image efficient. The number of layers depends on the context of your application. The layers are ordered according to the frequency of application changes: from “least frequent” to “most frequent”. A layer is rebuilt only if its software components change. However, if a layer changes, then the upper layers will also be rebuilt. This approach makes it possible to address the issues that we have previously identified. Resources are used efficiently.
 
 ### Builder
 
@@ -68,6 +70,8 @@ WORKDIR /application                        # We copy the sources,files and tool
     RUN ./mvnw -U -B -e -f pom.xml clean prepare-package package
 ```
 
+* [Source : Dockerfile](../Dockerfile)
+
 These activities will create our application. It is important to note that a SpringBoot plugin will create a JAR with a breakdown of our components according to our specifications.
 
 ```xml
@@ -85,7 +89,9 @@ These activities will create our application. It is important to note that a Spr
 </plugin>
 ```
 
-Our specifications for application slicing are controlled by the layers.xml file.
+* [Source : pom.xml](../pom.xml)
+
+Our specification for the layers in our application is controlled by the layers.xml file. The SpringBoot plugin will use these specifications for the construction of our application JAR.
 
 ```xml
 <layers xmlns="http://www.springframework.org/schema/boot/layers"
@@ -135,11 +141,21 @@ Our specifications for application slicing are controlled by the layers.xml file
 </layers>
 ```
 
+* [Source : pom.xml](../layers.xml)
+
+The final application is in the form of a JAR. We need to extract the different layers in order to prepare the construction of our final OCI image. To perform this extraction, we use a SpringBoot tool: layertools.
+
 ```docker
     ARG JAR_FILE=target/*.jar # We prepare the SpringBoot application layers.
     RUN cp ${JAR_FILE} application.jar
     RUN java -Djarmode=layertools -jar application.jar extract
 ```
+
+* [Source : Dockerfile](../Dockerfile)
+
+### OCI image
+
+We are now ready to build our OCI image with the components from our builder.
 
 ```docker
    FROM arm64v8/amazoncorretto:17
@@ -172,3 +188,14 @@ WORKDIR /application
 # Entry point.
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
 ```
+
+* [Source : Dockerfile](../Dockerfile)
+
+### OCI image explorer (dive)
+
+DIVE is a "free software" tool maintained by Alex Goodman. It allows to consult the layers of an application image.
+Download and documentation are available under GitHub: https://github.com/wagoodman/dive. The following figure shows a working session with this tool.
+
+![alt text](./asserts/dive.png "dive-explorer")
+
+Have fun !
