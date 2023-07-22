@@ -45,33 +45,23 @@
     </v-row>
 </template>
 
-<script lang="ts">
-    import { defineComponent } from "vue";
+<script setup lang="ts">
+    name: "index";
 
-    export default defineComponent({
-        name: "index",
-
-        setup() {
-            const items = [ 
-                { techno: "SpringBoot", 
-                  description: "index.techno1",
-                  url: "https://spring.io/projects/spring-boot" },
-                { techno: "Nuxt",
-                  description: "index.techno2",
-                  url: "https://nuxtjs.org/" },
-                { techno: "Vue",
-                  description: "index.techno3",
-                  url: "https://vuejs.org/"},
-                { techno: "Vuetify",
-                  description: "index.techno4",
-                  url: "https://next.vuetifyjs.com/en/"}
-            ];
-
-            return {
-                items
-            }
-        },
-    });
+    const items = [ 
+        { techno: "SpringBoot", 
+            description: "index.techno1",
+            url: "https://spring.io/projects/spring-boot" },
+        { techno: "Nuxt",
+            description: "index.techno2",
+            url: "https://nuxtjs.org/" },
+        { techno: "Vue",
+            description: "index.techno3",
+            url: "https://vuejs.org/"},
+        { techno: "Vuetify",
+            description: "index.techno4",
+            url: "https://next.vuetifyjs.com/en/"}
+    ];
 </script>
 
 <style scoped>

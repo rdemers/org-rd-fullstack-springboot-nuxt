@@ -26,12 +26,12 @@
     </v-form>
 </template>
 
-<script lang="ts">
-    import { defineComponent, onMounted, ref } from "vue";
+<script setup lang="ts">
+    import { onMounted, ref } from "vue";
 
-    import BookService          from "@/services/BookService";
-    import Book                 from "@/types/Book";
-    import ResponseData         from "@/types/ResponseData";
+    import BookService  from "@/services/BookService";
+    import Book         from "@/types/Book";
+    import ResponseData from "@/types/ResponseData";
   
     definePageMeta({
         validate: async (route) => {
@@ -39,66 +39,56 @@
         }
     })
 
-    export default defineComponent({
-        name: "book-id",
-        setup() {
+    name: "book-id";
 
-            const { t } = useI18n();
+    const { t } = useI18n();
+    const isErrorBook = ref<boolean>(false);
+    const isValid = ref<boolean>(false);
+    const book = ref<Book>({id: "0", title:"new Title", description: "new Description"});
 
-            const isErrorBook = ref<boolean>(false);
-            const isValid = ref<boolean>(false);
-            const book = ref<Book>({id: "0", title:"new Title", description: "new Description"});
+    onMounted((): void => {
+        const route = useRoute();
+        getBook(route.params.id as string);
+    })
 
-            onMounted((): void => {
-                const route = useRoute();
-                getBook(route.params.id as string);
+    function ruleRequired(propertyType:any): any {
+        return (v:string) => 
+            (v && v.length > 0 || t('book.rule.rule1') + propertyType + ".");
+    }
+
+    function ruleMinLength(propertyType:string, minLength:number): any {
+        return (v:string) => 
+            (v && v.length >= minLength || propertyType + t('book.rule.rule2-0') + minLength + t('book.rule.rule2-1'));
+    }
+
+    function getBook(id: string) : void {
+        BookService.get(id)
+            .then((response: ResponseData) => {
+                isErrorBook.value = false;
+                book.value = response.data;
             })
+            .catch((e: Error) => {
+                isErrorBook.value = true;
+            });
+    }
 
-            function ruleRequired(propertyType:any): any {
-                return (v:string) => 
-                    (v && v.length > 0 || t('book.rule.rule1') + propertyType + ".");
-            }
+    function updateBook() : void {
+        BookService.update(book.value as Book)
+            .then((response: ResponseData) => {
+                isErrorBook.value = false;
+                navigateToBooks();
+            })
+            .catch((e: Error) => {
+                isErrorBook.value = true;
+            })
+            .finally(() => {
+                console.log("Finally ...");
+            });
+    }
 
-            function ruleMinLength(propertyType:string, minLength:number): any {
-                return (v:string) => 
-                    (v && v.length >= minLength || propertyType + t('book.rule.rule2-0') + minLength + t('book.rule.rule2-1'));
-            }
-
-            function getBook(id: string) : void {
-                BookService.get(id)
-                    .then((response: ResponseData) => {
-                        isErrorBook.value = false;
-                        book.value = response.data;
-                    })
-                    .catch((e: Error) => {
-                        isErrorBook.value = true;
-                    });
-            }
-
-            function updateBook() : void {
-                BookService.update(book.value as Book)
-                    .then((response: ResponseData) => {
-                        isErrorBook.value = false;
-                        navigateToBooks();
-                    })
-                    .catch((e: Error) => {
-                        isErrorBook.value = true;
-                    })
-                    .finally(() => {
-                        console.log("Finally ...");
-                    });
-            }
-
-            function navigateToBooks() : any {
-                return navigateTo("/books");
-            }
-
-            return {
-                isErrorBook, isValid, book,
-                ruleRequired, ruleMinLength, updateBook, navigateToBooks
-            }
-        }
-    });
+    function navigateToBooks() : any {
+        return navigateTo("/books");
+    }
 </script>
   
 <style scoped>

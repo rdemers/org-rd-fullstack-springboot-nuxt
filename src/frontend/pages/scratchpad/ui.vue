@@ -74,20 +74,13 @@
     </v-row>
 </template>
 
-<script lang="ts">
-    export default defineComponent({
-        name: "ui",
+<script setup lang="ts">
+    name: "ui";
 
-        setup() {
-            const langs = [ 
-                { iso: "fr-CA", description: "Français" },
-                { iso: "en-CA", description: "English" }
-            ];
-            return {
-                langs
-            }
-        }
-    });
+    const langs = [ 
+        { iso: "fr-CA", description: "Français" },
+        { iso: "en-CA", description: "English" }
+    ];
 </script>
 
 <style scoped>

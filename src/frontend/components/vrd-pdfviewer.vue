@@ -55,110 +55,95 @@
     </div>
 </template>
 
-<script lang="ts">
-    import { defineComponent, onMounted, ref, watch } from "vue";
+<script setup lang="ts">
+    import { onMounted, ref, watch } from "vue";
 
-    import { PDFService }           from "@/services/PDFService";
-    import { PDFServiceException }  from "@/services/PDFServiceException";
-    import { PDFServiceCode }       from "@/services/PDFServiceCode";
+    import { PDFService }          from "@/services/PDFService";
+    import { PDFServiceException } from "@/services/PDFServiceException";
+    import { PDFServiceCode }      from "@/services/PDFServiceCode";
 
-    export default defineComponent({
-        name: "vrd-pdfviewer",
+    name: "vrd-pdfviewer";
+    const props = defineProps({ url: String });
 
-        props: {
-            url: String
-        },
+    const { t } = useI18n();
+    const noPage = ref<number>(0);
+    const pdfService:PDFService = new PDFService(props.url as string);
+    const canvasReference = ref<HTMLCanvasElement | null>(null); // Get access to canvas.
 
-        setup(props) {
-            const { t } = useI18n();
+    const docSummary = computed<string>(() => {
+        return t('vrd-pdfviewer.page') + noPage.value + t('vrd-pdfviewer.of') + pdfService.getNumPages();
+    })
 
-            const noPage = ref<number>(0);
-            const pdfService:PDFService = new PDFService(props.url as string);
-            const canvasReference = ref<HTMLCanvasElement | null>(null); // Get access to canvas.
-
-            const docSummary = computed<string>(() => {
-                return t('vrd-pdfviewer.page') + noPage.value + t('vrd-pdfviewer.of') + pdfService.getNumPages();
-            })
-
-            onMounted((): void => {
-                pdfService.init(canvasReference.value as HTMLCanvasElement).then(() => {
-                    pdfService.render().then(() => {
-                        noPage.value = pdfService.getPage();
-                    }).catch((e: Error) => {
-                        if (e instanceof PDFServiceException) {
-                            switch((e as PDFServiceException).getCode()) { 
-                                case PDFServiceCode.NO_SOURCE: { 
-                                    displayMessage(t('vrd-pdfviewer.ex_no_source')); 
-                                    break; 
-                                } 
-                                case PDFServiceCode.NO_NODE_SUPPORTED: { 
-                                    displayMessage(t('vrd-pdfviewer.ex_no_node_supported')); 
-                                    break; 
-                                } 
-                                default: { 
-                                    displayMessage(t('vrd-pdfviewer.ex_unknown')); 
-                                    break; 
-                                } 
-                            } 
-                        }
-                        console.log(e);
-                    })          
-                })
-            })    
-
-            function displayMessage(msg:string) : void {
-
-                if (!msg) {
-                    return;
+    onMounted((): void => {
+        pdfService.init(canvasReference.value as HTMLCanvasElement).then(() => {
+            pdfService.render().then(() => {
+                noPage.value = pdfService.getPage();
+            }).catch((e: Error) => {
+                if (e instanceof PDFServiceException) {
+                    switch((e as PDFServiceException).getCode()) { 
+                        case PDFServiceCode.NO_SOURCE: { 
+                            displayMessage(t('vrd-pdfviewer.ex_no_source')); 
+                            break; 
+                        } 
+                        case PDFServiceCode.NO_NODE_SUPPORTED: { 
+                            displayMessage(t('vrd-pdfviewer.ex_no_node_supported')); 
+                            break; 
+                        } 
+                        default: { 
+                            displayMessage(t('vrd-pdfviewer.ex_unknown')); 
+                            break; 
+                        } 
+                    } 
                 }
+                console.log(e);
+            })          
+        })
+    })    
 
-                const context:CanvasRenderingContext2D = (canvasReference.value  as HTMLCanvasElement).getContext('2d') as CanvasRenderingContext2D;
-                context.font = "20px Arial";
-                context.fillStyle = "rgb(139,0,0)"; // Dark red.
-                context.textAlign = "center";
+    function displayMessage(msg:string) : void {
+        if (!msg) {
+            return;
+        }
 
-                const width:number = (canvasReference.value  as HTMLCanvasElement).width/2; 
-                const height:number = (canvasReference.value  as HTMLCanvasElement).height/2;
+        const context:CanvasRenderingContext2D = (canvasReference.value  as HTMLCanvasElement).getContext('2d') as CanvasRenderingContext2D;
+        context.font = "20px Arial";
+        context.fillStyle = "rgb(139,0,0)"; // Dark red.
+        context.textAlign = "center";
 
-                context.fillText(msg, width, height);
-            }
+        const width:number = (canvasReference.value  as HTMLCanvasElement).width/2; 
+        const height:number = (canvasReference.value  as HTMLCanvasElement).height/2;
+
+        context.fillText(msg, width, height);
+    }
             
-            function prevPage(): void {
-                pdfService.prevPage();
-                noPage.value = pdfService.getPage(); 
-            }
+    function prevPage(): void {
+        pdfService.prevPage();
+        noPage.value = pdfService.getPage(); 
+    }
 
-            function nextPage(): void {
-                pdfService.nextPage();
-                noPage.value = pdfService.getPage(); 
-            }
+    function nextPage(): void {
+        pdfService.nextPage();
+        noPage.value = pdfService.getPage(); 
+    }
 
-            function print(): void {
-                pdfService.print();
-            }
+    function print(): void {
+        pdfService.print();
+    }
 
-            function scaleIN(): void {
-                pdfService.scaleIN();
-            }
+    function scaleIN(): void {
+        pdfService.scaleIN();
+    }
 
-            function scaleOUT(): void {
-                pdfService.scaleOUT();
-            }
+    function scaleOUT(): void {
+        pdfService.scaleOUT();
+    }
 
-            watch(noPage, function(newValue, oldValue) {
-                pdfService.setPage(newValue);
-                if (pdfService.getPage() != newValue)
-                    noPage.value = pdfService.getPage();
-            });
-
-            return {
-                noPage, canvasReference, docSummary,
-                prevPage, nextPage, print, scaleIN, scaleOUT
-            }
-        },
-
-    });
-</script>
+    watch(noPage, function(newValue, oldValue) {
+        pdfService.setPage(newValue);
+        if (pdfService.getPage() != newValue)
+            noPage.value = pdfService.getPage();
+    })
+ </script>
 
 <style scoped>
     .vrd_navigation {

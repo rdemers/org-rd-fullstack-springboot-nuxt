@@ -56,79 +56,67 @@
     </v-app>
 </template>
 
-<script lang="ts">
-    import { computed, defineComponent, ref, onMounted } from "vue";
+<script setup lang="ts">
+    import { computed, ref, onMounted } from "vue";
 
-    import Menu                         from "@/types/Menu";
-    import { SessionStore }             from "@/store/SessionStore";
-    import { LocaleObject }             from "@nuxtjs/i18n/dist/runtime/composables";
-    import authentificationService      from "@/services/AuthentificationService";
+    import Menu                    from "@/types/Menu";
+    import { SessionStore }        from "@/store/SessionStore";
+    import { LocaleObject }        from "@nuxtjs/i18n/dist/runtime/composables";
+    import authentificationService from "@/services/AuthentificationService";
 
-    export default defineComponent({
-        name: "DefaultLayout",
-        
-        layout: "default",
+    name: "DefaultLayout";
+    layout: "default";
 
-        setup () {
-            const title:string = "org.rd.fullstack.springboot-nuxt";
+    const title:string = "org.rd.fullstack.springboot-nuxt";
+    const menus:Menu[] = [ 
+        { icon: "mdi-home",            title: "layout.home",       to: "/" },
+        { icon: "mdi-book",            title: "layout.books",      to: "/books" },
+        { icon: "mdi-developer-board", title: "layout.scratchpad", to: "/scratchpad/ui" },
+        { icon: "mdi-copyright",       title: "layout.about",      to: "/about" }
+    ];
 
-            const menus:Menu[] = [ 
-                { icon: "mdi-home",            title: "layout.home",       to: "/" },
-                { icon: "mdi-book",            title: "layout.books",      to: "/books" },
-                { icon: "mdi-developer-board", title: "layout.scratchpad", to: "/scratchpad/ui" },
-                { icon: "mdi-copyright",       title: "layout.about",      to: "/about" }
-            ];
+    const { locale, locales, setLocale } = useI18n();
 
-            const { locale, locales, setLocale } = useI18n();
+    const clipped     = ref<boolean>(false);
+    const drawer      = ref<boolean>(false);
+    const fixed       = ref<boolean>(false);
+    const miniVariant = ref<boolean>(false);
 
-            const clipped     = ref<boolean>(false);
-            const drawer      = ref<boolean>(false);
-            const fixed       = ref<boolean>(false);
-            const miniVariant = ref<boolean>(false);
+    function changeLocale(locale:LocaleObject): void {
+        setLocale(locale.code);            
+    }
 
-            function changeLocale(locale:LocaleObject): void {
-                setLocale(locale.code);            
-            }
-
-            function doLogout(): any {
-                if (authentificationService.doLogout()) {
-                    drawer.value = false;
-                    return navigateTo("/login");
-                }
-            }
-
-            function swapDrawer(): void {
-                drawer.value = !drawer.value;
-            }
-
-            const isDrawer = computed<boolean>(() => {
-                if (! SessionStore().isActiveSession()) {
-                    return false;
-                }
-                return drawer.value;
-            })
-
-            const isActionDisabled = computed<boolean>(() => {
-                return (! SessionStore().isActiveSession());
-            })
-
-            const currentlocale = computed<string|undefined>(() => {
-                const localeArray:LocaleObject[] = locales.value as LocaleObject[];
-                const lo:LocaleObject|undefined = localeArray.find(i => i.code === locale.value);
-                return lo?.name;
-            })
-
-            onMounted(() => {
-                console.log("Example of a lifecycle Hooks.");
-            })
-
-            return {
-                title, menus, locales, currentlocale,
-                clipped, drawer, fixed, miniVariant, 
-                changeLocale, doLogout, swapDrawer, isActionDisabled, isDrawer
-            }
+    function doLogout(): any {
+        if (authentificationService.doLogout()) {
+            drawer.value = false;
+            return navigateTo("/login");
         }
-    });
+    }
+
+    function swapDrawer(): void {
+        drawer.value = !drawer.value;
+    }
+
+    const isDrawer = computed<boolean>(() => {
+        if (! SessionStore().isActiveSession()) {
+            return false;
+        }
+        return drawer.value;
+    })
+
+    const isActionDisabled = computed<boolean>(() => {
+        return (! SessionStore().isActiveSession());
+    })
+
+    const currentlocale = computed<string|undefined>(() => {
+        const localeArray:LocaleObject[] = locales.value as LocaleObject[];
+        const lo:LocaleObject|undefined = localeArray.find(i => i.code === locale.value);
+        return lo?.name;
+    })
+
+    onMounted(() => {
+        console.log("Example of a lifecycle Hooks.");
+    })
 </script>
 
 <style scoped>

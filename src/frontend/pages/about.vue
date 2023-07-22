@@ -44,10 +44,8 @@
     </v-row>
 </template>
 
-<script lang="ts">
-    export default defineComponent({
-        name: "about"
-    });
+<script setup lang="ts">
+    name: "about";
 </script>
 
 <style scoped>

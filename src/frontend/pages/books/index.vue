@@ -68,83 +68,74 @@
     </v-dialog>
 </template>
   
-<script lang="ts">
-    import { defineComponent, onMounted, ref } from "vue";
+<script setup lang="ts">
+    import { onMounted, ref } from "vue";
 
     import BookService  from "@/services/BookService";
     import Book         from "@/types/Book"
     import ResponseData from "@/types/ResponseData";
 
-    export default defineComponent({
-        name: "books-list",
-        setup() {
-            const books        = ref<Book[]>();
+    name: "books-list";
 
-            const isErrorBook  = ref<boolean>(false);
-            const deleteDialog = ref<boolean>(false);
-            const pdfDialog    = ref<boolean>(false);
+    const books        = ref<Book[]>();
+    const isErrorBook  = ref<boolean>(false);
+    const deleteDialog = ref<boolean>(false);
+    const pdfDialog    = ref<boolean>(false);
 
-            let bookIDtoDelete:string = "";
+    let bookIDtoDelete:string = "";
 
-            onMounted((): void => {
-                retrieveBooks();
+    onMounted((): void => {
+        retrieveBooks();
+    })
+
+    function retrieveBooks(): void {
+        BookService.getAll()
+            .then((response: ResponseData) => {
+                books.value = response.data;
+                isErrorBook.value = false;
             })
+            .catch((e: Error) => {
+                isErrorBook.value = true;
+                console.log(e);
+            });                
+    }
+    
+    function navigateDetail(id:string): any {
+        return navigateTo("/books/book/" + id);
+    }
 
-            function retrieveBooks(): void {
-                BookService.getAll()
-                    .then((response: ResponseData) => {
-                        books.value = response.data;
-                        isErrorBook.value = false;
-                    })
-                    .catch((e: Error) => {
-                        isErrorBook.value = true;
-                        console.log(e);
-                    });                
-            }
-            
-            function navigateDetail(id:string): any {
-                return navigateTo("/books/book/" + id);
-            }
+    function navigateDelete(id:string): void {
+        bookIDtoDelete = id;
+        deleteDialog.value = true;
+    }
 
-            function navigateDelete(id:string): void {
-                bookIDtoDelete = id;
-                deleteDialog.value = true;
-            }
+    function navigatePdf(): void {
+        pdfDialog.value = true;
+    }
 
-            function navigatePdf(): void {
-                pdfDialog.value = true;
-            }
+    function navigateError(): any {
+        return navigateTo("/books/book/invalid_url_show_error_page");
+    }
 
-            function navigateError(): any {
-                return navigateTo("/books/book/invalid_url_show_error_page");
-            }
+    function deleteBook(): void {
+        deleteDialog.value = false;
+        BookService.delete(bookIDtoDelete)
+            .then((response: ResponseData) => {
+                books.value = response.data;
+                isErrorBook.value = false;
 
-            function deleteBook(): void {
-                deleteDialog.value = false;
-                BookService.delete(bookIDtoDelete)
-                    .then((response: ResponseData) => {
-                        books.value = response.data;
-                        isErrorBook.value = false;
+                bookIDtoDelete = "";
+                retrieveBooks(); // Refresh.
+            })
+            .catch((e: Error) => {
+                isErrorBook.value = true;
+                console.log(e);
+            });                
+    }            
 
-                        bookIDtoDelete = "";
-                        retrieveBooks(); // Refresh.
-                    })
-                    .catch((e: Error) => {
-                        isErrorBook.value = true;
-                        console.log(e);
-                    });                
-            }            
-
-            function navigateAdd(): any {
-                return navigateTo("/books/book/add");
-            } 
-
-            return {
-                isErrorBook, deleteDialog, pdfDialog, books,
-                navigateDetail, navigateDelete, navigateError, navigateAdd, navigatePdf, deleteBook
-            }
-        }
-    });
+    function navigateAdd(): any {
+        return navigateTo("/books/book/add");
+    } 
 </script>
   
 <style scoped>

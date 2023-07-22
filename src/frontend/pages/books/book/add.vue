@@ -25,64 +25,51 @@
     </v-form>
 </template>
   
-<script lang="ts">
-    import { defineComponent }  from "vue";
+<script setup lang="ts">
+    import BookService  from "@/services/BookService";
+    import Book         from "@/types/Book";
+    import ResponseData from "@/types/ResponseData";
 
-    import BookService          from "@/services/BookService";
-    import Book                 from "@/types/Book";
-    import ResponseData         from "@/types/ResponseData";
+    name: "book-add";
 
-    export default defineComponent({
-        name: "book-add",
-        setup() {
+    const { t } = useI18n();
+    const isErrorBook = ref<boolean>(false);
+    const isValid = ref<boolean>(false);
+    const book = ref<Book>({id: "0", title:"", description: ""});
 
-            const { t } = useI18n();
+    function ruleRequired(propertyType:any): any {
+        return (v:string) => 
+            (v && v.length > 0 || t('book.rule.rule1') + propertyType + ".");
+    }
 
-            const isErrorBook = ref<boolean>(false);
-            const isValid = ref<boolean>(false);
-            const book = ref<Book>({id: "0", title:"", description: ""});
+    function ruleMinLength(propertyType:string, minLength:number): any {
+        return (v:string) => 
+            (v && v.length >= minLength || propertyType + t('book.rule.rule2-0') + minLength + t('book.rule.rule2-1'));
+    }
 
-            function ruleRequired(propertyType:any): any {
-                return (v:string) => 
-                    (v && v.length > 0 || t('book.rule.rule1') + propertyType + ".");
-            }
+    function saveBook(): void {
+        const data: Book = {
+            id: book.value.id,
+            title: book.value.title,
+            description: book.value.description,
+        };
 
-            function ruleMinLength(propertyType:string, minLength:number): any {
-                return (v:string) => 
-                    (v && v.length >= minLength || propertyType + t('book.rule.rule2-0') + minLength + t('book.rule.rule2-1'));
-            }
+        BookService.create(data)
+        .then((response: ResponseData) => {
+            isErrorBook.value = false;
+            navigateToBooks();
+        })
+        .catch((e: Error) => {
+            isErrorBook.value = true;
+        })                    
+        .finally(() => {
+            console.log("Finally ...");
+        });
+    }
 
-            function saveBook(): void {
-
-                const data: Book = {
-                    id: book.value.id,
-                    title: book.value.title,
-                    description: book.value.description,
-                };
-  
-                BookService.create(data)
-                .then((response: ResponseData) => {
-                    isErrorBook.value = false;
-                    navigateToBooks();
-                })
-                .catch((e: Error) => {
-                    isErrorBook.value = true;
-                })                    
-                .finally(() => {
-                    console.log("Finally ...");
-                });
-            }
-
-            function navigateToBooks(): any {
-                    return navigateTo("/books");
-            }
-
-            return {
-                isErrorBook, isValid, book,
-                ruleRequired, ruleMinLength, saveBook, navigateToBooks  
-            }
-        }
-    });
+    function navigateToBooks(): any {
+            return navigateTo("/books");
+    }
 </script>
   
 <style scoped>

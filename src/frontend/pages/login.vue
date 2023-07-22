@@ -38,62 +38,52 @@
     </v-row>
 </template>
 
-<script lang="ts">
-    import { defineComponent, ref } from "vue";
-    import LoginRequest             from "@/types/LoginRequest";
-    import ResponseData             from "@/types/ResponseData";
-    import Session                  from "@/types/Session";
-    import { SessionStore }         from "@/store/SessionStore";
-    import authentificationService  from "@/services/AuthentificationService";
+<script setup lang="ts">
+    import LoginRequest            from "@/types/LoginRequest";
+    import ResponseData            from "@/types/ResponseData";
+    import Session                 from "@/types/Session";
+    import { SessionStore }        from "@/store/SessionStore";
+    import authentificationService from "@/services/AuthentificationService";
 
-    export default defineComponent({
-        name: "login",
+    name: "login";
 
-        setup() {
-            const isActionDisabled = ref<boolean>(false);
-            const isErrorLogin     = ref<boolean>(false);
-            const loginRequest     = ref<LoginRequest>({username: "", password: ""});
+    const isActionDisabled = ref<boolean>(false);
+    const isErrorLogin     = ref<boolean>(false);
+    const loginRequest     = ref<LoginRequest>({username: "", password: ""});
 
-            function doLogin(): void {
-                isActionDisabled.value = true;
+    function doLogin(): void {
+        isActionDisabled.value = true;
 
-                authentificationService.doLogin(loginRequest.value)
-                    .then((response: ResponseData) => {
-                        const session:Session = SessionStore().getSession;
+        authentificationService.doLogin(loginRequest.value)
+            .then((response: ResponseData) => {
+                const session:Session = SessionStore().getSession;
 
-                        session.jwtToken = response.data.message;
-                        SessionStore().setSession(session);
-                        
-                        isErrorLogin.value = false;
-                        navigateToHome(); // Nuxt/NavigaTo() constraint - return or await.
-                    })
-                    .catch((error: any) => {
-                        isErrorLogin.value = true;
-                        if (error.response) {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        } else if (error.request) {
-                            console.log(error.request);
-                        } else {
-                            console.log(error);
-                        }
-                    })
-                    .finally(() => {
-                        isActionDisabled.value = false;
-                    });
-            }    
+                session.jwtToken = response.data.message;
+                SessionStore().setSession(session);
+                
+                isErrorLogin.value = false;
+                navigateToHome(); // Nuxt/NavigaTo() constraint - return or await.
+            })
+            .catch((error: any) => {
+                isErrorLogin.value = true;
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log(error);
+                }
+            })
+            .finally(() => {
+                isActionDisabled.value = false;
+            });
+    }    
 
-            function navigateToHome(): any {
-                return navigateTo("/");
-            }
-
-            return {
-                isActionDisabled, isErrorLogin, loginRequest,
-                doLogin
-            }
-        }
-    });
+    function navigateToHome(): any {
+        return navigateTo("/");
+    }
 </script>
 
 <style scoped>
