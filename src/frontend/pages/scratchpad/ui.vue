@@ -75,8 +75,6 @@
 </template>
 
 <script setup lang="ts">
-    name: "ui";
-
     const langs = [ 
         { iso: "fr-CA", description: "Français" },
         { iso: "en-CA", description: "English" }

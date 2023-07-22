@@ -46,8 +46,6 @@
 </template>
 
 <script setup lang="ts">
-    name: "index";
-
     const items = [ 
         { techno: "SpringBoot", 
             description: "index.techno1",

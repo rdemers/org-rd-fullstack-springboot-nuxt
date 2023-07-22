@@ -64,9 +64,6 @@
     import { LocaleObject }        from "@nuxtjs/i18n/dist/runtime/composables";
     import authentificationService from "@/services/AuthentificationService";
 
-    name: "DefaultLayout";
-    layout: "default";
-
     const title:string = "org.rd.fullstack.springboot-nuxt";
     const menus:Menu[] = [ 
         { icon: "mdi-home",            title: "layout.home",       to: "/" },
@@ -75,12 +72,12 @@
         { icon: "mdi-copyright",       title: "layout.about",      to: "/about" }
     ];
 
-    const { locale, locales, setLocale } = useI18n();
-
     const clipped     = ref<boolean>(false);
     const drawer      = ref<boolean>(false);
     const fixed       = ref<boolean>(false);
     const miniVariant = ref<boolean>(false);
+
+    const { locale, locales, setLocale } = useI18n();
 
     function changeLocale(locale:LocaleObject): void {
         setLocale(locale.code);            

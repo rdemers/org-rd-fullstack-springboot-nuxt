@@ -39,11 +39,9 @@
         }
     })
 
-    name: "book-id";
-
     const { t } = useI18n();
-    const isErrorBook = ref<boolean>(false);
     const isValid = ref<boolean>(false);
+    const isErrorBook = ref<boolean>(false);
     const book = ref<Book>({id: "0", title:"new Title", description: "new Description"});
 
     onMounted((): void => {

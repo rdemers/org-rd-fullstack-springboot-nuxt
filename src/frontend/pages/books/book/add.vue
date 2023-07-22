@@ -30,11 +30,9 @@
     import Book         from "@/types/Book";
     import ResponseData from "@/types/ResponseData";
 
-    name: "book-add";
-
     const { t } = useI18n();
-    const isErrorBook = ref<boolean>(false);
     const isValid = ref<boolean>(false);
+    const isErrorBook = ref<boolean>(false);
     const book = ref<Book>({id: "0", title:"", description: ""});
 
     function ruleRequired(propertyType:any): any {

@@ -17,6 +17,9 @@
     <img class="springboot-logo" alt="Springboot Logo" src="/springboot-logo.png">
 </template>
 
+<script setup lang="ts">
+</script>
+
 <style scoped>
     .springboot-logo {
         height: 180px;

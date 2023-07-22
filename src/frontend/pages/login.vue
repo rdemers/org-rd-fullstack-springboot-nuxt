@@ -45,8 +45,6 @@
     import { SessionStore }        from "@/store/SessionStore";
     import authentificationService from "@/services/AuthentificationService";
 
-    name: "login";
-
     const isActionDisabled = ref<boolean>(false);
     const isErrorLogin     = ref<boolean>(false);
     const loginRequest     = ref<LoginRequest>({username: "", password: ""});

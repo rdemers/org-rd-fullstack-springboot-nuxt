@@ -27,7 +27,7 @@ A light image is easier to control/certify. It reduces the attack surface and, t
 * Operations on a containerization platform will require more resources in terms of: disk space, I/O and memory. The performance impacts will be significant.
 * We assume that the CI/CD pipeline has the necessary tools to build the application (java, node and others) with the right versions.
 
-This list represents the main issues for the construction of OCI images. However, several complementary issues must also be taken into consideration when deploying the application inside a containerization platform. The next sections present the technical specifications, norms and standards in order to address these issues.
+This list represents the main issues for the construction of OCI image. However, several complementary issues must also be taken into consideration when deploying the application inside a containerization platform. The next sections present the technical specifications, norms and standards in order to address these issues.
 
 ## Builder, layers and tools (SprinBoot)
 
@@ -35,7 +35,7 @@ In order to correct these problems from the previous section. We will configure 
 
 ![alt text](./asserts/ocidev-efficient-layers.drawio.png "efficient-way")
 
-The containerized application has multiple layers. The first is a base image from the middleware team. It embeds an OS and its software components (commands, JVM and others). Subsequently, several layers are used to make this application image efficient. The number of layers depends on the context of your application. The layers are ordered according to the frequency of application changes: from “least frequent” to “most frequent”. A layer is rebuilt only if its software components change. However, if a layer changes, then the upper layers will also be rebuilt. This approach makes it possible to address the issues that we have previously identified. Resources are used efficiently.
+The containerized application has multiple layers. The first is a base image from the devops (middleware) team. It embeds an OS and its software components (commands, JVM and others). Subsequently, several layers are used to make this application image efficient. The number of layers depends on the context of your application. The layers are ordered according to the frequency of application changes: from “least frequent” to “most frequent”. A layer is rebuilt only if its software components change. However, if a layer changes, then the upper layers will also be rebuilt. This approach makes it possible to address the issues that we have previously identified. Resources are used efficiently.
 
 ### Builder
 
@@ -198,4 +198,6 @@ Download and documentation are available under GitHub: https://github.com/wagood
 
 ![alt text](./asserts/dive.png "dive-explorer")
 
-Have fun !
+## Links/references used for writing
+
+* [Whats New in Spring Boot 2.3 - Docker build](https://www.youtube.com/watch?v=WL7U-yGfUXA)

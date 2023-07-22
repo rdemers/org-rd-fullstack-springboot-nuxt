@@ -32,8 +32,7 @@
                 <br>
                 <a href="http://www.apache.org/licenses/LICENSE-2.0" 
                    target="_blank" rel="noopener noreferrer">{{$t('about.licence09')}}</a>
-                <br>
-                <br>
+                <br><br>
                 {{$t('about.licence10')}}<br>
                 {{$t('about.licence11')}}<br>
                 {{$t('about.licence12')}}<br>
@@ -45,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-    name: "about";
 </script>
 
 <style scoped>

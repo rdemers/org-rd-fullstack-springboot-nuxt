@@ -75,8 +75,6 @@
     import Book         from "@/types/Book"
     import ResponseData from "@/types/ResponseData";
 
-    name: "books-list";
-
     const books        = ref<Book[]>();
     const isErrorBook  = ref<boolean>(false);
     const deleteDialog = ref<boolean>(false);

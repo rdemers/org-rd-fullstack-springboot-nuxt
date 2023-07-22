@@ -17,6 +17,9 @@
     <img class="vuetify-logo" alt="Vuetify Logo" src="/vuetify-logo.svg">
 </template>
 
+<script setup lang="ts">
+</script>
+
 <style scoped>
     .vuetify-logo {
         height: 180px;

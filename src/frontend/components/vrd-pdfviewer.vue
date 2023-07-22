@@ -62,11 +62,9 @@
     import { PDFServiceException } from "@/services/PDFServiceException";
     import { PDFServiceCode }      from "@/services/PDFServiceCode";
 
-    name: "vrd-pdfviewer";
-    const props = defineProps({ url: String });
-
     const { t } = useI18n();
     const noPage = ref<number>(0);
+    const props = defineProps({ url: String });
     const pdfService:PDFService = new PDFService(props.url as string);
     const canvasReference = ref<HTMLCanvasElement | null>(null); // Get access to canvas.
 

@@ -17,6 +17,9 @@
     <img class="osl-logo" alt="OSL Logo" src="/open-source-license.png">
 </template>
 
+<script setup lang="ts">
+</script>
+
 <style scoped>
     .osl-logo {
         height: 180px;

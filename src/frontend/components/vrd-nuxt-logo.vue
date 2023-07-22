@@ -19,6 +19,9 @@
     </svg>
 </template>
 
+<script setup lang="ts">
+</script>
+
 <style scoped>
     .nuxt-logo {
       height: 180px;
