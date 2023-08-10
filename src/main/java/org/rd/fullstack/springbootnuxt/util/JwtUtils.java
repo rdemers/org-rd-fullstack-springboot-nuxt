@@ -126,7 +126,7 @@ public class JwtUtils {
         }
         catch (JwtException ex) {
             logger.error("JWT token is invalid: {}.", ex.getMessage());
-            return ex.getLocalizedMessage(); // Simplistic... This is an example only.
+            return ex.getLocalizedMessage(); // Simplicity ... This is an example only.
         }
         return jws.getBody().toString();
     }

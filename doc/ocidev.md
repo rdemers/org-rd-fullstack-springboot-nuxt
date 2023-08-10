@@ -141,7 +141,7 @@ Our specification for the layers in our application is controlled by the layers.
 </layers>
 ```
 
-* [Source : pom.xml](../layers.xml)
+* [Source : layers.xml](../layers.xml)
 
 The final application is in the form of a JAR. We need to extract the different layers in order to prepare the construction of our final OCI image. To perform this extraction, we use a SpringBoot tool: layertools.
 
