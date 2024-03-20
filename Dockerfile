@@ -100,7 +100,7 @@ WORKDIR /application
 # Identification.
     ARG LABEL_TITLE="Please, provide a title."
     ARG LABEL_DESCRIPTION="Please, provide a description."
-    ARG LABEL_CREATED="2023-99-99"
+    ARG LABEL_CREATED="9999-99-99"
 #
 # Version : MAJOR.MINOR.REVISION-BUILD.
     ARG LABEL_VERSION_MAJOR="1"

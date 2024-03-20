@@ -50,7 +50,7 @@
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M9</maven-surefire-plugin.version>
 
-        <spring.boot.version>3.2.1</spring.boot.version>
+        <spring.boot.version>3.2.3</spring.boot.version>
         <springdoc.version>2.3.0</springdoc.version>
     </properties>
 
