@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import axios, { AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from "axios";
 
 const jwtApi: AxiosInstance = axios.create({
     baseURL: useRuntimeConfig().public.jwtURL,

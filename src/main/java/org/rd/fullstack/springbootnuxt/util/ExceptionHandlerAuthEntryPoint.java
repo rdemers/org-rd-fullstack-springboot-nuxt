@@ -27,11 +27,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class ExceptionHandlingAuthEntryPoint implements AuthenticationEntryPoint {
+public class ExceptionHandlerAuthEntryPoint implements AuthenticationEntryPoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlingAuthEntryPoint.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerAuthEntryPoint.class);
 
-    public ExceptionHandlingAuthEntryPoint() {
+    public ExceptionHandlerAuthEntryPoint() {
         super();
     }
 

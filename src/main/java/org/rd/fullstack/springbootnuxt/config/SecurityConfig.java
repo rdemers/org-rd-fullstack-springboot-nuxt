@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,14 +22,16 @@ import java.util.Arrays;
 
 import org.rd.fullstack.springbootnuxt.dto.ERole;
 import org.rd.fullstack.springbootnuxt.util.AuthentificationTokenFilter;
-import org.rd.fullstack.springbootnuxt.util.ExceptionHandlingAuthEntryPoint;
+import org.rd.fullstack.springbootnuxt.util.ExceptionHandlerAuthEntryPoint;
 import org.rd.fullstack.springbootnuxt.util.JwtUtils;
 import org.rd.fullstack.springbootnuxt.util.UserDetailsServiceImpl;
 import org.rd.fullstack.springbootnuxt.util.UserUtils;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -60,8 +62,7 @@ public class SecurityConfig {
         "/graphql/**",      // GraphQL API implementation. 
         "/graphiql/**",     // GraphQL API implementation.
         "/v3/api-docs/**",  // The API documentation (OpenAPI).
-        "/actuator/**",     // Probe for liveness/readiness.
-        "/favicon.ico"      // The WEB tools (the browser) want an icon.
+        "/actuator/**"      // Probe for liveness/readiness.
     };
 
     public SecurityConfig() {
@@ -83,8 +84,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    ExceptionHandlingAuthEntryPoint exceptionHandlingAuthEntryPoint() {
-        return new ExceptionHandlingAuthEntryPoint();
+    ExceptionHandlerAuthEntryPoint exceptionHandlingAuthEntryPoint() {
+        return new ExceptionHandlerAuthEntryPoint();
     }
 
     @Bean
@@ -131,18 +132,33 @@ public class SecurityConfig {
     WebMvcConfigurer forwardToIndex() {
         return new WebMvcConfigurer() {
             @Override
+            @SuppressWarnings("null")
             public void addViewControllers(ViewControllerRegistry registry) {
+
+                // To access Swagger UX/UI interface.
                 registry
-                        .addViewController("/swagger-ui")
+                        .addViewController("/swagger-ui") 
                         .setViewName("redirect:/swagger-ui/index.html");
-
+                
+                // To access Nuxt UX/UI interface.
+                // ----------------------------------------------------------------------
+                // @EnableWebMvc annotation switch off all the things that Spring Boot does for you in WebMvcAutoConfiguration. 
+                // You could remove that annotation, or you could add back the view controller that you switched off.
+                //
+                // IMPORTANT (SSR)
+                // Must be synchronize with the configuration of Nuxt/Vue JS application.
+                // See the following files :
+                // - src/frontend/nuxt.config.ts
+                // - src/frontend/plugins/vuetify.ts
                 registry
-                        .addViewController("/app")
-                        // SSR = TRUE.
-                        //.setViewName("redirect:/app/login/index.html");
-
-                        // SSR = FALSE.
+                        .addViewController("/favicon.ico")
+                        .setViewName("redirect:/app/favicon.ico");
+                registry
+                        .addViewController("/app")                        
                         .setViewName("redirect:/app/index.html");
+                registry
+                        .addViewController("/app/login")                        
+                        .setViewName("redirect:/app/login/index.html");
             }
         };
     }
@@ -152,17 +168,18 @@ public class SecurityConfig {
         
         http.cors(withDefaults());
 
-        http.csrf(csrf -> 
-            csrf.disable());
+        http.csrf(csrf -> csrf
+            .disable());
 
-        http.authorizeHttpRequests(auth -> 
-            auth.requestMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated());
+        http.authorizeHttpRequests(auth -> auth
+            .requestMatchers(AUTH_WHITELIST).permitAll()
+            .anyRequest().authenticated());
 
-        http.exceptionHandling(except -> 
-            except.authenticationEntryPoint(exceptionHandlingAuthEntryPoint()));
+        http.exceptionHandling(except -> except
+            .authenticationEntryPoint(exceptionHandlingAuthEntryPoint()));
 
-        http.sessionManagement(sm -> 
-            sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement(sm -> sm
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authenticationProvider(authenticationProvider());
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023,2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ public class T1000_JwtUtils_UT_Tests {
     // - secret: the.beautiful.secret.key.to.change
     // - expiration: 30000
     // - authorities: rd.roles
-    private final String jetonJWT = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmZTc1OGJhOS1jYjhmLTRlNmItOTgyNC1hYjRhZDlmMDYxZmQiLCJzdWIiOiJyb290IiwicmQucm9sZXMiOiJST0xFX1NFTEVDVCxST0xFX0lOU0VSVCxST0xFX1VQREFURSxST0xFX0RFTEVURSIsImlhdCI6MTY4NTQ1MTQ5NX0.d0aF0ukJDRuxRQEAzejbxiYLYDNx6GY6ImY6QB_Qqb4";
+    private final String jetonJWT = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNzJjMDhjMS02OGY5LTQ3YmQtODdhOS1iNjY0YTIxZTZhMWMiLCJzdWIiOiJyb290IiwicmQucm9sZXMiOiJST0xFX1NFTEVDVCxST0xFX0lOU0VSVCxST0xFX1VQREFURSxST0xFX0RFTEVURSIsImlhdCI6MTcxODM4NjQ1NH0.AIS4YFJCUIIv0IzTxdDp3MqQXDyuhQBFSJnJmF6b06c";
 
     public T1000_JwtUtils_UT_Tests() {
         super();

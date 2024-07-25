@@ -19,6 +19,7 @@
     "layout" : {
         "home"       : "Bienvenue",
         "books"      : "Livres",
+        "graphql"    : "GraphQL (Cache)",
         "scratchpad" : "ScratchPad (ui)",
         "about"      : "A propos"
     },
@@ -56,12 +57,21 @@
         "pdf_title"  : "Une composante WEB pour voir un PDF.",
         "pdf_text"   : "La création d'une composante WEB (ici voir un PDF) nécessite de limiter l'utilisation d'un Framework afin de réduire les dépendances de votre composante."
     },
+    "cache" : {
+        "title"      : "GraphQL",
+        "icon_title" : "GraphQL.",
+        "icon_text"  : "GraphQL.",
+        "slot_title" : "GraphQL.",
+        "slot_text"  : "GraphQL.",
+        "pdf_title"  : "GraphQL.",
+        "pdf_text"   : "GraphQL."
+    },
     "about" : {
         "licence01" : "Licence Apache",
         "licence02" : "Version 2.0, janvier 2004",
         "licence03" : "http://www.apache.org/licenses/",
         "licence04" : "CONDITIONS GÉNÉRALES D'UTILISATION, DE REPRODUCTION ET DE DISTRIBUTION",
-        "licence05" : "Copyright 2023 - Réal Demers",
+        "licence05" : "Copyright 2023, 2024 - Réal Demers",
         "licence06" : "Licence sous la licence Apache, version 2.0 (la 'Licence');",
         "licence07" : "vous ne pouvez utiliser ce fichier qu'en conformité avec la Licence.",
         "licence08" : "Vous pouvez obtenir une copie de la Licence sur",
@@ -76,8 +86,7 @@
         "title"     : "Fenêtre d'exception",
         "exception" : "Exception applicative",
         "message"   : "Retour à la page d'accueil",
-        "msg_error" : "Erreur interne. Appeler le support.",
-        "msg_cause" : "Cette page n'existe pas."
+        "msg_error" : "Erreur interne. Appeler le support."
     },
     "vrd-pdfviewer" : {
         "page"                 : "Page ",

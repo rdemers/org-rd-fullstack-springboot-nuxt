@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,15 +25,16 @@ import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
 import graphql.schema.DataFetchingEnvironment;
 
-public class ExceptionHandlingGraphQL extends DataFetcherExceptionResolverAdapter {
+public class ExceptionHandlerGraphQL extends DataFetcherExceptionResolverAdapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlingGraphQL.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerGraphQL.class);
 
-    public ExceptionHandlingGraphQL() {
+    public ExceptionHandlerGraphQL() {
         super();
     }
 
     @Override
+    @SuppressWarnings("null")
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
         logger.debug("GraphQL Exception : {}.", ex.getMessage());
         return GraphqlErrorBuilder.newError()

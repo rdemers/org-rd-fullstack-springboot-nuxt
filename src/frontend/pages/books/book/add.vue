@@ -1,5 +1,5 @@
 <!--
-  * Copyright 2023; Réal Demers.
+  * Copyright 2023, 2024; Réal Demers.
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -26,9 +26,10 @@
 </template>
   
 <script setup lang="ts">
-    import BookService  from "@/services/BookService";
-    import Book         from "@/types/Book";
-    import ResponseData from "@/types/ResponseData";
+    import type Book         from "@/types/Book";
+    import type ResponseData from "@/types/ResponseData";
+
+    import BookService       from "@/services/BookService";
 
     const { t } = useI18n();
     const isValid = ref<boolean>(false);

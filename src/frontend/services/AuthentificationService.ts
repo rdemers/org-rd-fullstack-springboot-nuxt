@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { jwtApi }       from "~/services/HTTPService";
-import LoginRequest     from "@/types/LoginRequest";
-import { SessionStore } from "@/store/SessionStore";
+import { jwtApi }        from "@/services/HTTPService";
+import type LoginRequest from "@/types/LoginRequest";
+import { SessionStore }  from "@/store/SessionStore";
 
 class AuthentificationService {
 

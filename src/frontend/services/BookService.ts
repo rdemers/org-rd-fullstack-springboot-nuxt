@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import Book             from "@/types/Book";
-import Session          from "@/types/Session";
+import type Book        from "@/types/Book";
+import type Session     from "@/types/Session";
 
-import { bookApi }      from "~/services/HTTPService";
+import { bookApi }      from "@/services/HTTPService";
 import { SessionStore } from "@/store/SessionStore";
 
 class BookService {

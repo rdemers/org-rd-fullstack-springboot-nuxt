@@ -1,5 +1,5 @@
 <!--
-  * Copyright 2023; Réal Demers.
+  * Copyright 2023, 2024; Réal Demers.
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -38,15 +38,17 @@
             </tr>
         </tbody>
     </v-table>
-    <v-btn tile outlined color="success" height="20" @click=navigateAdd()>
-        <v-icon left>mdi-pencil-plus</v-icon>
-    </v-btn>
-    <v-btn tile outlined color="success" height="20" @click=navigatePdf()>
-        <v-icon left>mdi-file-pdf-box</v-icon>
-    </v-btn>
-    <v-btn tile outlined color="error" height="20" @click=navigateError()>
-        <v-icon left>mdi-bomb</v-icon>
-    </v-btn>
+    <v-bottom-navigation>
+        <v-btn tile outlined color="success" height="20" @click=navigateAdd()>
+            <v-icon left>mdi-pencil-plus</v-icon>
+        </v-btn>
+        <v-btn tile outlined color="success" height="20" @click=navigatePdf()>
+            <v-icon left>mdi-file-pdf-box</v-icon>
+        </v-btn>
+        <v-btn tile outlined color="error" height="20" @click=navigateError()>
+            <v-icon left>mdi-bomb</v-icon>
+        </v-btn>
+    </v-bottom-navigation>
     <v-dialog v-model="deleteDialog" persistent width="auto">
         <v-card>
             <v-card-text>{{$t('book.askdelete')}}</v-card-text>
@@ -71,9 +73,10 @@
 <script setup lang="ts">
     import { onMounted, ref } from "vue";
 
-    import BookService  from "@/services/BookService";
-    import Book         from "@/types/Book"
-    import ResponseData from "@/types/ResponseData";
+    import type Book         from "@/types/Book"
+    import type ResponseData from "@/types/ResponseData";
+
+    import BookService       from "@/services/BookService";
 
     const books        = ref<Book[]>();
     const isErrorBook  = ref<boolean>(false);

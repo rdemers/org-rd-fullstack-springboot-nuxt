@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.crypto.SecretKey;
+
 import org.rd.fullstack.springbootnuxt.dto.ERole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +38,9 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 
 public class JwtUtils {
 
@@ -72,26 +74,23 @@ public class JwtUtils {
                                                       .map(GrantedAuthority::getAuthority)
                                                       .collect(Collectors.joining(","));
         return Jwts.builder()
-                   .setId(UUID.randomUUID().toString())
-                   .setSubject(userPrincipal.getUsername())
+                   .id(UUID.randomUUID().toString())
+                   .subject(userPrincipal.getUsername())
                    .claim(CST_AUTHORITIES, authorities)
-                   .setIssuedAt(new Date())
+                   .issuedAt(new Date())
                    //.setExpiration(new Date((new Date()).getTime() + CST_EXPIRATION))
                    // An API/KEY does not expire. Add an expiration for testing. Att: Update timeout.
-                   .signWith(SignatureAlgorithm.HS256, CST_SECRET) // Should be an asymmetric key algorithm.
-                   .compact();                                     // Demonstration only.
+                   .signWith(getSigningKey()) 
+                   .compact();
     }
 
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(CST_SECRET).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload().getSubject();
     }
 
     public List<ERole> getAuthoritiesFromJwtToken(String token) {
         List<ERole> roles = new ArrayList<ERole>();
-        String authorities = Jwts.parser().setSigningKey(CST_SECRET)
-                                          .parseClaimsJws(token)
-                                          .getBody()
-                                          .get(CST_AUTHORITIES, String.class);
+        String authorities = Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload().get(CST_AUTHORITIES, String.class);
         if (authorities != null && ! authorities.isEmpty()) {
             StringTokenizer tokenizer = new StringTokenizer(authorities, ",");
             while (tokenizer.hasMoreElements()) {
@@ -101,33 +100,43 @@ public class JwtUtils {
         return roles;
     }
 
+
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(CST_SECRET).parseClaimsJws(authToken);
+            Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(authToken);
             return true;
         } catch (SignatureException ex) {
-            logger.error("Invalid JWT signature: {}.", ex.getMessage());
+            logger.error("Invalid JWT signature: {}", ex.getMessage());
         } catch (MalformedJwtException ex) {
-            logger.error("Invalid JWT token: {}.", ex.getMessage());
+            logger.error("Invalid JWT token: {}", ex.getMessage());
         } catch (ExpiredJwtException ex) {
-            logger.error("JWT token expired: {}.", ex.getMessage());
+            logger.error("JWT token is expired: {}", ex.getMessage());
         } catch (UnsupportedJwtException ex) {
-            logger.error("JWT token is not supported: {}.", ex.getMessage());
+            logger.error("JWT token is unsupported: {}", ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            logger.error("The JWT token claims string is empty: {}.", ex.getMessage());
+            logger.error("JWT claims string is empty: {}", ex.getMessage());
         }
+
         return false;
     }
 
     public String decodeJwtToken(String jwtToken) {
         Jws<Claims> jws;
         try {
-            jws = Jwts.parser().setSigningKey(CST_SECRET).parseClaimsJws(jwtToken);
+            jws = Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(jwtToken);
         }
         catch (JwtException ex) {
             logger.error("JWT token is invalid: {}.", ex.getMessage());
             return ex.getLocalizedMessage(); // Simplicity ... This is an example only.
         }
-        return jws.getBody().toString();
+        return jws.getPayload().toString();
+    }
+
+private SecretKey getSigningKey() {
+        byte[] keyBytes = CST_SECRET.getBytes();
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }

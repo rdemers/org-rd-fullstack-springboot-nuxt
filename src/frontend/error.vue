@@ -1,5 +1,5 @@
 <!--
-  * Copyright 2023; Réal Demers.
+  * Copyright 2023, 2024; Réal Demers.
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
   -->
 <template>
     <v-row align="center" justify="center">
-        <v-card max-width="800">
+        <v-card max-width="500">
             <v-card-title align="center" primary-title>{{$t('error.title')}}</v-card-title>
-            <v-card-text align="center">
-                <v-alert color="error" icon="$error" :title="$t('error.exception')" :text=message />
-            </v-card-text>
+            <v-card-subtitle>
+                <v-alert color="error" icon="$error" :title="$t('error.exception')" :text="t('error.msg_error')"/>
+            </v-card-subtitle>
+            <v-divider/>
+            <v-card-text>{{error?.statusCode}} : {{error?.statusMessage}}</v-card-text>
             <v-card-actions>
                 <v-spacer/>
                 <v-btn align="center" color="primary" flat @click=handleError>{{$t('error.message')}}</v-btn>
@@ -28,43 +30,18 @@
     </v-row>
 </template>
 
-<script lang="ts">
-    import { defineComponent } from "vue";
+<script setup lang="ts">
+    import type { NuxtError } from '#app'
 
-    export default defineComponent({
-        name: 'ExceptionLayout',
-        layout: 'exception',
-        props: {
-            error: {
-                type: Object,
-                default: null
-            }
-        },
+    const { t } = useI18n();
+    const props = defineProps({
+        error: Object as () => NuxtError
+    })
 
-        setup(props) {
-
-            const { t } = useI18n();
-
-            // Determine the error message.
-            let message: string = t('error.msg_error');
-            if (props.error.statusCode === "404") {
-                message = t('error.msg_cause');;
-            }
-
-            function handleError() {
-                clearError({ redirect: '/' });
-            }
-
-            return {
-                // Non-reactive - Const.
-                message,
-
-                // functions.
-                handleError
-            } 
-        }
-    });
-</script>
+    function handleError() {
+        clearError({ redirect: '/' });
+    }
+ </script>
 
 <style scoped>
 </style>

@@ -1,5 +1,5 @@
 <!--
-  * Copyright 2023; Réal Demers.
+  * Copyright 2023, 2024; Réal Demers.
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -39,9 +39,10 @@
 </template>
 
 <script setup lang="ts">
-    import LoginRequest            from "@/types/LoginRequest";
-    import ResponseData            from "@/types/ResponseData";
-    import Session                 from "@/types/Session";
+    import type LoginRequest       from "@/types/LoginRequest";
+    import type ResponseData       from "@/types/ResponseData";
+    import type Session            from "@/types/Session";
+
     import { SessionStore }        from "@/store/SessionStore";
     import authentificationService from "@/services/AuthentificationService";
 

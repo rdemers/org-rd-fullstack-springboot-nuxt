@@ -16,7 +16,7 @@
 
 package org.rd.fullstack.springbootnuxt.config;
 
-import org.rd.fullstack.springbootnuxt.util.ExceptionHandlingGraphQL;
+import org.rd.fullstack.springbootnuxt.util.ExceptionHandlerGraphQL;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,8 +27,19 @@ public class GraphQLConfig {
         super();
     }
 
+    //::TODO::@Bean
+    //@Order(-1)
+    //public RouterFunction<ServerResponse> graphQlGetRouterFunction(GraphQlHttpHandler GetRequestGraphQlHttpHandler, GraphQlProperties properties) {
+    //    return RouterFunctions
+    //            .route()
+    //            .GET(properties.getPath(), RequestPredicates.param("query", Objects::nonNull), gethttpHandler::handleRequest)
+    //            .build();
+    //}
+
+
+ 
     @Bean
-    ExceptionHandlingGraphQL graphQLExceptionResolver() {
-        return new ExceptionHandlingGraphQL();
+    ExceptionHandlerGraphQL graphQLExceptionResolver() {
+        return new ExceptionHandlerGraphQL();
     }
 }

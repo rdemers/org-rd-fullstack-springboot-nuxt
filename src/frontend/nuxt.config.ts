@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify"
+
 export default defineNuxtConfig({
  
-    ssr: false,
-    //ssr: true,
+    compatibilityDate: "2024-07-24",
+
+    //ssr: false,
+    ssr: true,
     
+    devtools: { 
+        enabled: true 
+    },
+
     typescript: {
         strict: true
     },
@@ -45,10 +54,17 @@ export default defineNuxtConfig({
 
     sourcemap: {
         "server": true,
-        "client": true
+        "client": true,
     },
  
     modules: [
+        (_options, nuxt) => {
+            nuxt.hooks.hook('vite:extendConfig', (config) => {
+                    // @ts-expect-error
+                    config.plugins.push(vuetify({ autoImport: true }))
+                }
+            )
+        },
         [
             "@pinia/nuxt", {
                 autoImports: [
@@ -83,20 +99,22 @@ export default defineNuxtConfig({
         ],
     ],
 
+    vite: {
+        vue: {
+            template: {
+                transformAssetUrls,
+            },
+        },
+    },
+
     app: {
-        baseURL: "/app",
+        baseURL: "/app/",
         head: {
             title: "App",
             link: [{ 
                    rel: "icon", type: "image/x-icon", href: "/app/favicon.ico" 
                }
             ],
-        },
-    },
-
-    vite: {
-        define: {
-            "process.env.DEBUG": false,
         },
     },
 });

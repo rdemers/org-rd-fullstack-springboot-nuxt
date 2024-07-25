@@ -1,4 +1,4 @@
-# org-rd-fullstack-springboot-nuxt
+# org-rd-fullstack-springboot-nuxt (2023, 2024)
 
 ## Fullstack application with Springboot and Nuxt.
 
@@ -94,6 +94,10 @@ To get started quickly, please consider the following commands:
 ```bash
 cd src/frontend                              # Go to the root of the WEB application.
 
+npm i -D vuetify vite-plugin-vuetify         # Vuetify plugins for nuxt.
+npm i @mdi/font                              # Font for Vuetify.
+
+npm cache clean --force                      # Force empty cache.
 npm install                                  # Installing dependencies.
 npm run dev                                  # Start the application with hot loading.
 npm run preview                              # View a quick production build locally.
@@ -114,6 +118,8 @@ npx nuxi init frontend                       # Creation of an empty application 
 
 This section describes development best practices for different use cases.
 
+* [REST API and error handling](./doc/restdev.md)
+* [GraphQL HTTP caching](./doc/graphqldev.md)
 * [Cloud development](./doc/clouddev.md)
 * [Building image (OCI/Docker)](./doc/ocidev.md)
 
@@ -121,7 +127,8 @@ This section describes development best practices for different use cases.
 
 A valid JWT token:
 
-eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmZTc1OGJhOS1jYjhmLTRlNmItOTgyNC1hYjRhZDlmMDYxZmQiLCJzdWIiOiJyb290IiwicmQucm9sZXMiOiJST0xFX1NFTEVDVCxST0xFX0lOU0VSVCxST0xFX1VQREFURSxST0xFX0RFTEVURSIsImlhdCI6MTY4NTQ1MTQ5NX0.d0aF0ukJDRuxRQEAzejbxiYLYDNx6GY6ImY6QB_Qqb4
+eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNzJjMDhjMS02OGY5LTQ3YmQtODdhOS1iNjY0YTIxZTZhMWMiLCJzdWIiOiJyb290IiwicmQucm9sZXMiOiJST0xFX1NFTEVDVCxST0xFX0lOU0VSVCxST0xFX1VQREFURSxST0xFX0RFTEVURSIsImlhdCI6MTcxODM4NjQ1NH0.AIS4YFJCUIIv0IzTxdDp3MqQXDyuhQBFSJnJmF6b06c
+
 
 Note:
 

@@ -19,6 +19,7 @@
     "layout" : {
         "home"       : "Welcome",
         "books"      : "Books",
+        "graphql"    : "GraphQL (Caching)",
         "scratchpad" : "ScratchPad (ui)",
         "about"      : "About"
     },
@@ -47,6 +48,15 @@
         "description" : "Description",
         "askdelete"   : "Are you sure you want to destroy this record ?"
     },
+    "cache" : {
+        "title"      : "GraphQL",
+        "icon_title" : "GraphQL.",
+        "icon_text"  : "GraphQL.",
+        "slot_title" : "GraphQL.",
+        "slot_text"  : "GraphQL.",
+        "pdf_title"  : "GraphQL.",
+        "pdf_text"   : "GraphQL."
+    },
     "ui" : {
         "title"      : "ScratchPad features a few UI components",
         "icon_title" : "FontAwesome icon.",
@@ -61,7 +71,7 @@
         "licence02" : "Version 2.0, January 2004",
         "licence03" : "http://www.apache.org/licenses/",
         "licence04" : "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
-        "licence05" : "Copyright 2023 - Réal Demers",
+        "licence05" : "Copyright 2023, 2024 - Réal Demers",
         "licence06" : "Licensed under the Apache License, Version 2.0 (the 'License');",
         "licence07" : "you may not use this file except in compliance with the License.",
         "licence08" : "You may obtain a copy of the License at",
@@ -76,8 +86,7 @@
         "title"     : "Exception windows",
         "exception" : "Application exception",
         "message"   : "Back to the homepage",
-        "msg_error" : "Internal error. Call support.",
-        "msg_cause" : "This page does not exist."
+        "msg_error" : "Internal error. Call support."
     },
     "vrd-pdfviewer" : {
         "page"                 : "Page ",

@@ -1,5 +1,5 @@
 <!--
-  * Copyright 2023; Réal Demers.
+  * Copyright 2023, 2024; Réal Demers.
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@
 <script setup lang="ts">
     import { computed, ref, onMounted } from "vue";
 
-    import Menu                    from "@/types/Menu";
+    import type Menu               from "@/types/Menu";
     import { SessionStore }        from "@/store/SessionStore";
     import { LocaleObject }        from "@nuxtjs/i18n/dist/runtime/composables";
     import authentificationService from "@/services/AuthentificationService";
@@ -68,6 +68,7 @@
     const menus:Menu[] = [ 
         { icon: "mdi-home",            title: "layout.home",       to: "/" },
         { icon: "mdi-book",            title: "layout.books",      to: "/books" },
+        { icon: "mdi-graphql",         title: "layout.graphql",    to: "/graphql/cache" },
         { icon: "mdi-developer-board", title: "layout.scratchpad", to: "/scratchpad/ui" },
         { icon: "mdi-copyright",       title: "layout.about",      to: "/about" }
     ];

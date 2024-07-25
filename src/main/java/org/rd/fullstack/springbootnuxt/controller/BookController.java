@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,6 +56,7 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
+    @SuppressWarnings("null")
     @PreAuthorize("hasRole('ROLE_SELECT')")
     @GetMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Get the list of books.", description = "Book.class")
@@ -100,6 +101,7 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @SuppressWarnings("null")
     @PreAuthorize("hasRole('ROLE_INSERT')")
     @PostMapping(value = "/books", consumes = MediaType.APPLICATION_JSON_VALUE,
                                    produces = MediaType.APPLICATION_JSON_VALUE)

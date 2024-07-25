@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-import { createVuetify } from 'vuetify'
-import * as components   from 'vuetify/components'
-import * as directives   from 'vuetify/directives'
+import "@mdi/font/css/materialdesignicons.css"
+import "vuetify/styles"
+
+import { createVuetify } from "vuetify"
+import * as components   from "vuetify/components"
+import * as directives   from "vuetify/directives"
 
 export default defineNuxtPlugin(nuxtApp => {
   const vuetify = createVuetify({
-    //ssr: true,
-    ssr: false,
+    ssr: true,
+    //ssr: false,
     components,
     directives,
     theme: {

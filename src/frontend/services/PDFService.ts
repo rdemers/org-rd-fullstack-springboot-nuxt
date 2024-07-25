@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,23 @@
  * limitations under the License.
  * 
  */
-import Session                 from "@/types/Session";
-import { SessionStore }        from "@/store/SessionStore";
-import { PDFServiceCode }      from "@/services/PDFServiceCode";
-import { PDFServiceException } from "@/services/PDFServiceException";
+import type Session                   from "@/types/Session";
+import { type PDFDocumentLoadingTask, 
+         type PDFDocumentProxy, 
+         type PDFPageProxy, 
+         type PageViewport }          from "pdfjs-dist";
 
-import printJS from "print-js";
-import { fromByteArray } from "base64-js";
-import pdfjs, { PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy, PageViewport } from "pdfjs-dist";
-import "pdfjs-dist/webpack"; // Webpack allows to initialize correctly: pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker !!!
+import { SessionStore }               from "@/store/SessionStore";
+import { PDFServiceCode }             from "@/services/PDFServiceCode";
+import { PDFServiceException }        from "@/services/PDFServiceException";
+
+import { fromByteArray }              from "base64-js";
+import printJS                        from "print-js";
+import * as pdfjs                     from 'pdfjs-dist';
+
+// Webpack allows to initialize correctly.
+// pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker.
+import "pdfjs-dist/webpack"; 
 
 // Old code.
 //if (typeof window !== "undefined" && "Worker" in window) {
@@ -30,6 +38,7 @@ import "pdfjs-dist/webpack"; // Webpack allows to initialize correctly: pdfjs.Gl
 //      new URL("./build/pdf.worker.js", import.meta.url)
 //    );
 //  }
+//const pdfjs = require("pdfjs-dist/webpack");
 
 export class PDFService {
 

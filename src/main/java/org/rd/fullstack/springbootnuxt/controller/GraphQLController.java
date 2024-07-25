@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ public class GraphQLController {
 
     @PreAuthorize("hasRole('ROLE_SELECT')")
     @QueryMapping
-    public List<Book> readBooks(@Argument int count, @Argument int offset) {
+    public List<Book> readBooks(@Argument("count") int count, @Argument("offset")  int offset) {
         List<Book> books = new ArrayList<Book>();
         bookRepository.findAll().forEach(books::add);
 
@@ -50,19 +50,13 @@ public class GraphQLController {
 
     @PreAuthorize("hasRole('ROLE_SELECT')")
     @QueryMapping
-    public List<Book> searchByTitle(@Argument String title) {
+    public List<Book> searchByTitle(@Argument("title")  String title) {
         return bookRepository.findByTitleContaining(title);
     }
 
-    // No other diagram ;-) ... For the moment.
-    //@SchemaMapping(typeName="Book", field="title")
-    //public String getFirstAuthor(Book post) {
-    //    return null;
-    //}
-
     @PreAuthorize("hasRole('ROLE_INSERT')")
     @MutationMapping
-    public Book createBook(@Argument String title, @Argument String description) {
+    public Book createBook(@Argument("title") String title, @Argument("description") String description) {
         Book book = bookRepository.save(new Book(title, description));
         return book;
    }

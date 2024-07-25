@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,11 +44,10 @@ public class AuthentificationTokenFilter extends OncePerRequestFilter {
 
     private static final String  CST_AUTHORIZATION_HEADER = "Authorization";
     private static final Pattern CST_BEARER_PATTERN       = Pattern.compile("^Bearer (.+?)$"); // https://regex101.com/.
-    private static final String  CST_API_URL_PATH         = "/api/**";    // Le URL pour l'API pour la gestion des livres.
-    private static final String  CST_REPORT_URL_PATH      = "/report/**"; // Le URL pour l'API pour la gestion des livres.
-    private static final String  CST_GRAPHPQL_URL_PATH    = "/graphql**"; // Le URL pour Graphql pour la gestion des livres.
-    private static final String  CST_HEALTH_URL_PATH      = "/health/**"; // Le URL pour le HEALTH pour le contrôle de la santé 
-                                                                          // de l'application.
+    private static final String  CST_API_URL_PATH         = "/api/**";    // URL for books API.
+    private static final String  CST_REPORT_URL_PATH      = "/report/**"; // URL for books report.
+    private static final String  CST_GRAPHPQL_URL_PATH    = "/graphql**"; // URL for GrapQL query.
+    private static final String  CST_HEALTH_URL_PATH      = "/health/**"; // URL for health check.
 
     private static final Logger logger = LoggerFactory.getLogger(AuthentificationTokenFilter.class);
 
@@ -90,7 +89,8 @@ public class AuthentificationTokenFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
-    @Override
+    @Override 
+    @SuppressWarnings("null")
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
@@ -117,6 +117,7 @@ public class AuthentificationTokenFilter extends OncePerRequestFilter {
     }
 
     @Override
+    @SuppressWarnings("null")
     protected boolean shouldNotFilter(HttpServletRequest request) {
         if (uriApiMatcher.matcher(request).isMatch()     ||
             uriReportMatcher.matcher(request).isMatch()  || 

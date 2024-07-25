@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2024; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,6 +73,7 @@ public class ReportController {
     @Autowired
     private BookRepository bookRepository;
 
+    @SuppressWarnings("null")
     @PreAuthorize("hasRole('ROLE_SELECT')")
     @GetMapping(value = "/books-report", produces = { MediaType.APPLICATION_PDF_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "Book List Report.", description = "jasper/book-report.jrxml")
