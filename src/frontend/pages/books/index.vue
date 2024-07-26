@@ -16,29 +16,35 @@
 <template>
     <v-alert v-if=isErrorBook color="error" icon="$error" 
              :title="$t('book.alert.title')" :text="$t('book.alert.text')"/>
-    <v-table theme="dark" density="compact">
-        <thead>
-            <tr>
-                <th class="text-left">{{$t('book.id')}}</th>
-                <th class="text-left">{{$t('book.title')}}</th>
-                <th class="text-left">{{$t('book.description')}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="book in books" :key="book.id">
-                <td>{{ book.id }}</td>
-                <td>{{ book.title }}</td>
-                <td>{{ book.description }}</td>
-                <td><v-btn tile outlined color="success" height="20" @click=navigateDetail(book.id)>
-                    <v-icon left>mdi-pencil</v-icon>
-                </v-btn></td>
-                <td><v-btn tile outlined color="success" height="20" @click=navigateDelete(book.id)>
-                    <v-icon left>mdi-trash-can-outline</v-icon>
-                </v-btn></td>
-            </tr>
-        </tbody>
-    </v-table>
-    <v-bottom-navigation>
+    <v-row>    
+        <v-table theme="dark" density="compact">
+            <thead>
+                <tr>
+                    <th class="text-left">{{$t('book.id')}}</th>
+                    <th class="text-left">{{$t('book.title')}}</th>
+                    <th class="text-left">{{$t('book.description')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="book in books" :key="book.id">
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.description }}</td>
+                    <td>
+                        <v-btn tile outlined color="success" height="20" @click=navigateDetail(book.id)>
+                            <v-icon left>mdi-pencil</v-icon>
+                        </v-btn>
+                    </td>
+                    <td>
+                        <v-btn tile outlined color="success" height="20" @click=navigateDelete(book.id)>
+                            <v-icon left>mdi-trash-can-outline</v-icon>
+                        </v-btn>
+                    </td>
+                </tr>
+            </tbody>
+        </v-table>
+    </v-row>
+    <v-row>
         <v-btn tile outlined color="success" height="20" @click=navigateAdd()>
             <v-icon left>mdi-pencil-plus</v-icon>
         </v-btn>
@@ -48,7 +54,7 @@
         <v-btn tile outlined color="error" height="20" @click=navigateError()>
             <v-icon left>mdi-bomb</v-icon>
         </v-btn>
-    </v-bottom-navigation>
+    </v-row>
     <v-dialog v-model="deleteDialog" persistent width="auto">
         <v-card>
             <v-card-text>{{$t('book.askdelete')}}</v-card-text>

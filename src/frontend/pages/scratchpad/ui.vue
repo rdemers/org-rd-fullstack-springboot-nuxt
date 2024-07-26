@@ -24,19 +24,17 @@
         <v-divider :thickness="4" class="border-opacity-100" color="success"/>
         <v-expansion-panels>
             <v-expansion-panel :title="$t('ui.icon_title')" :text="$t('ui.icon_text')">
-                <v-col>
-                    <font-awesome-icon class="fa-3x" icon="fa-brands fa-twitter-square"/>
-                    <font-awesome-icon class="fa-3x" icon="fa-brands fa-youtube-square"/>
-                    <font-awesome-icon class="fa-3x" icon="fa-brands fa-github-square"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-solid fa-plus"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-solid fa-minus"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-regular fa-circle-left"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-regular fa-circle-right"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-solid fa-arrow-right"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-solid fa-arrow-left"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-solid fa-magnifying-glass-plus"/>
-                    <font-awesome-icon class="fa-2x" icon="fa-solid fa-magnifying-glass-minus"/>
-                </v-col>
+                <font-awesome-icon class="fa-3x" icon="fa-brands fa-twitter-square"/>
+                <font-awesome-icon class="fa-3x" icon="fa-brands fa-youtube-square"/>
+                <font-awesome-icon class="fa-3x" icon="fa-brands fa-github-square"/>
+                <font-awesome-icon class="fa-2x" icon="fa-solid fa-plus"/>
+                <font-awesome-icon class="fa-2x" icon="fa-solid fa-minus"/>
+                <font-awesome-icon class="fa-2x" icon="fa-regular fa-circle-left"/>
+                <font-awesome-icon class="fa-2x" icon="fa-regular fa-circle-right"/>
+                <font-awesome-icon class="fa-2x" icon="fa-solid fa-arrow-right"/>
+                <font-awesome-icon class="fa-2x" icon="fa-solid fa-arrow-left"/>
+                <font-awesome-icon class="fa-2x" icon="fa-solid fa-magnifying-glass-plus"/>
+                <font-awesome-icon class="fa-2x" icon="fa-solid fa-magnifying-glass-minus"/>
             </v-expansion-panel>
         </v-expansion-panels>
     </v-row>
