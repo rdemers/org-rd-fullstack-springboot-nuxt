@@ -65,8 +65,8 @@
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M9</maven-surefire-plugin.version>
 
-        <spring.boot.version>3.3.2</spring.boot.version>
-        <springdoc.version>2.5.0</springdoc.version>
+        <spring.boot.version>3.5.4</spring.boot.version>
+        <springdoc.version>2.8.9</springdoc.version>
     </properties>
 
     <dependencyManagement>
@@ -246,8 +246,8 @@
                         </goals>
                         <configuration>
                             <target>
-                                <ant antfile="${basedir}/web-app-jamstack.xml">
-                                    <target name="prepare-web-app-jamstack"/>
+                                <ant antfile="${basedir}/build-web-app.xml">
+                                    <target name="build-web-app"/>
                                 </ant>
                             </target>
                         </configuration>

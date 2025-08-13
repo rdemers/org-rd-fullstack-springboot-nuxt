@@ -53,10 +53,10 @@
         <echo message="--" level="info"/>
         <echo message="Update of packages." level="info"/>
 
-        <exec dir="${src.dir}" os="Windows 10" executable="npm.cmd">  <!-- My workstation. -->
+        <exec dir="${src.dir}" os="Windows 10, Windows 11" executable="npm.cmd">  <!-- My workstation. -->
             <arg value="install"/>
         </exec>
-        <exec dir="${src.dir}" os="Mac OS X" executable="npm">        <!-- My personal laptop ;-) -->
+        <exec dir="${src.dir}" os="Mac OS X" executable="npm">        <!-- My personal laptop. -->
             <arg value="install"/>
         </exec>
         <exec dir="${src.dir}" os="Linux" executable="npm">           <!-- Build via a Docker image (Linux). -->
@@ -69,11 +69,11 @@
         <echo message="--" level="info"/>
         <echo message="Web/App transpilation and static/JamSTACK generation." level="info"/>
 
-        <exec dir="${src.dir}" os="Windows 10" executable="npm.cmd"> <!-- My workstation. -->
+        <exec dir="${src.dir}" os="Windows 10, Windows 11" executable="npm.cmd"> <!-- My workstation. -->
             <arg value="run"/>
             <arg value="generate"/>
         </exec>
-        <exec dir="${src.dir}" os="Mac OS X" executable="npm">       <!-- My personal laptop ;-) -->
+        <exec dir="${src.dir}" os="Mac OS X" executable="npm">       <!-- My personal laptop. -->
             <arg value="run"/>
             <arg value="generate"/>
         </exec>
@@ -104,6 +104,6 @@
     </target>
 
     <!-- We are preparing the WEB/JamSTACK application. -->
-    <target name="prepare-web-app-jamstack" depends="setup-env, npm-install, npm-generate, cp-web-app"/>
+    <target name="build-web-app" depends="setup-env, npm-install, npm-generate, cp-web-app"/>
 
 </project>
