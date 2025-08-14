@@ -14,28 +14,15 @@
  * limitations under the License.
  */
 
-import { PDFServiceCode } from "@/services/PDFServiceCode";
-export class PDFServiceException extends Error {
+// Update the import path to the correct relative location
+import { SessionStore } from "../store/SessionStore";
 
-    private code: PDFServiceCode;
+export default defineNuxtRouteMiddleware((to, from) => {
 
-    constructor(code: PDFServiceCode, msg?: string) {
-        super(msg);
-        this.code = code;
-
-        // Set the prototype explicitly.
-        Object.setPrototypeOf(this, PDFServiceException.prototype);
+    const authPage:string = "/login";
+    if ((to.fullPath !== authPage) && 
+        (! SessionStore().isActiveSession())) {
+        return navigateTo(authPage, {replace:true});
     }
 
-    public getCode(): PDFServiceCode {
-        return this.code;
-    }    
-
-    public getmessage(): string {
-        return this.message;
-    }    
-
-    public toString() {
-        return this.code + "/" + this.message;
-    }
-}
+});

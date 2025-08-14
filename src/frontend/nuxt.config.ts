@@ -18,7 +18,7 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify"
 
 export default defineNuxtConfig({
  
-    compatibilityDate: "2024-07-24",
+    compatibilityDate: "2025-08-14",
 
     ssr: false,
     //ssr: true,

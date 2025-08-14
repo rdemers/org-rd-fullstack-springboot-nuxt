@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { jwtApi }        from "@/services/HTTPService";
-import type LoginRequest from "@/types/LoginRequest";
-import { SessionStore }  from "@/store/SessionStore";
+import { jwtApi }        from "../services/HTTPService";
+import type LoginRequest from "../types/LoginRequest";
+import { SessionStore }  from "../store/SessionStore";
 
 class AuthentificationService {
 

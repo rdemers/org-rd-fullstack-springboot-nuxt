@@ -59,10 +59,10 @@
 <script setup lang="ts">
     import { computed, ref, onMounted } from "vue";
 
-    import type Menu               from "@/types/Menu";
-    import type { LocaleObject }   from "@nuxtjs/i18n/dist/runtime/composables";
-    import { SessionStore }        from "@/store/SessionStore";
-    import authentificationService from "@/services/AuthentificationService";
+    import type Menu               from "../types/Menu";
+    import type { LocaleObject }   from "@nuxtjs/i18n";
+    import { SessionStore }        from "../store/SessionStore";
+    import authentificationService from "../services/AuthentificationService";
 
     const title:string = "org.rd.fullstack.springboot-nuxt";
     const menus:Menu[] = [ 

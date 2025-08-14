@@ -29,10 +29,9 @@
 <script setup lang="ts">
     import { onMounted, ref } from "vue";
 
-    import type Book         from "@/types/Book";
-    import type ResponseData from "@/types/ResponseData";
-
-    import BookService       from "@/services/BookService";
+    import type Book         from "../../../types/Book";
+    import type ResponseData from "../../../types/ResponseData";
+    import BookService       from "../../../services/BookService";
   
     definePageMeta({
         validate: async (route) => {

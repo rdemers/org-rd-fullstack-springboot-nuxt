@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import type Book        from "@/types/Book";
-import type Session     from "@/types/Session";
+import type Book        from "../types/Book";
+import type Session     from "../types/Session";
 
-import { bookApi }      from "@/services/HTTPService";
-import { SessionStore } from "@/store/SessionStore";
+import { bookApi }      from "../services/HTTPService";
+import { SessionStore } from "../store/SessionStore";
 
 class BookService {
 
