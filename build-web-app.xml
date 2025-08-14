@@ -53,7 +53,7 @@
         <echo message="--" level="info"/>
         <echo message="Update of packages." level="info"/>
 
-        <exec dir="${src.dir}" os="Windows 10, Windows 11" executable="npm.cmd">  <!-- My workstation. -->
+        <exec dir="${src.dir}" os="Windows 10,Windows 11" executable="npm.cmd">  <!-- My workstation. -->
             <arg value="install"/>
         </exec>
         <exec dir="${src.dir}" os="Mac OS X" executable="npm">        <!-- My personal laptop. -->
@@ -67,9 +67,9 @@
     <!-- Compilation and static generation, according to JamSTACK specifications. -->
     <target name="npm-generate" depends="npm-install" unless="jamstack.app.present">
         <echo message="--" level="info"/>
-        <echo message="Web/App transpilation and static/JamSTACK generation." level="info"/>
+        <echo message="Web/App transpilation and static generation." level="info"/>
 
-        <exec dir="${src.dir}" os="Windows 10, Windows 11" executable="npm.cmd"> <!-- My workstation. -->
+        <exec dir="${src.dir}" os="Windows 10,Windows 11" executable="npm.cmd"> <!-- My workstation. -->
             <arg value="run"/>
             <arg value="generate"/>
         </exec>

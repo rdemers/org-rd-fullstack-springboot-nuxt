@@ -17,8 +17,7 @@
 import { defineStore } from "pinia";
 import type Session    from "@/types/Session";
 
-export const SessionStore = defineStore({
-    id: "SessionStore",
+export const SessionStore = defineStore("SessionStore", {
 
     state: () => ({
         currentSession: {

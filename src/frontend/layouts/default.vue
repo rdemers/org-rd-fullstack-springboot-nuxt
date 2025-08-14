@@ -60,8 +60,8 @@
     import { computed, ref, onMounted } from "vue";
 
     import type Menu               from "@/types/Menu";
+    import type { LocaleObject }   from "@nuxtjs/i18n/dist/runtime/composables";
     import { SessionStore }        from "@/store/SessionStore";
-    import { LocaleObject }        from "@nuxtjs/i18n/dist/runtime/composables";
     import authentificationService from "@/services/AuthentificationService";
 
     const title:string = "org.rd.fullstack.springboot-nuxt";

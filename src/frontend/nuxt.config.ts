@@ -20,11 +20,15 @@ export default defineNuxtConfig({
  
     compatibilityDate: "2024-07-24",
 
-    //ssr: false,
-    ssr: true,
+    ssr: false,
+    //ssr: true,
     
-    devtools: { 
-        enabled: true 
+    devtools: {
+     enabled: true,
+
+     timeline: {
+      enabled: true,
+     },
     },
 
     typescript: {
