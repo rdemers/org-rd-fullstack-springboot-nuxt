@@ -1,5 +1,5 @@
 <!--
-  * Copyright 2023, 2024; Réal Demers.
+  * Copyright 2023; Réal Demers.
   *
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -65,11 +65,10 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-    <v-dialog v-model="pdfDialog" persistent width="900" height="600">
+    <v-dialog v-model="pdfDialog" persistent width="900">
         <v-card>
             <vrd-pdfviewer url="http://localhost:8080/report/books-report"/>
             <v-card-actions>
-                <v-spacer/>
                 <v-btn color="success" class="mx-2" flat @click="pdfDialog = false">{{$t('common.button.ok')}}</v-btn>
             </v-card-actions>
         </v-card>

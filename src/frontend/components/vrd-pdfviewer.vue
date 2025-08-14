@@ -175,7 +175,7 @@
         background-color: rgb(226, 226, 226);
         overflow-y: scroll;
         width: auto;
-        height: 400px;
+        height: 450px;
     }
     .vrd_canvas {
         padding: 0;
