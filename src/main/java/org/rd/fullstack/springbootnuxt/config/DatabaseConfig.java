@@ -42,7 +42,7 @@ public class DatabaseConfig {
 
             logger.info("Generating dummy data...");
 
-            // Les livres avec un titre et une description.
+            // The books with a title and a description.
             logger.info("Books ...");
             
             bookRepository.save(new Book("Maverick", "The life and fate of a Navy Pilot."));

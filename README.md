@@ -6,11 +6,11 @@ This project uses Spring Boot, Nuxt, Apache Maven, and Docker to build an OCI-co
 
 ![alt text](./doc/asserts/springboot-nuxt.png "Springboot-Nuxt")
 
-* [Source : AppLogin.png](./doc/asserts/applogin.png)
-* [Source : AppCRUD.png](./doc/asserts/appcrud.png)
-* [Source : AppPDF.png](./doc/asserts/apppdf.png)
-* [Source : Swagger.png](./doc/asserts/swagger.png)
-* [Source : GraphQL.png](./doc/asserts/graphql.png)
+* Source : [AppLogin.png](./doc/asserts/applogin.png)
+* Source : [AppCRUD.png](./doc/asserts/appcrud.png)
+* Source : [AppPDF.png](./doc/asserts/apppdf.png)
+* Source : [Swagger.png](./doc/asserts/swagger.png)
+* Source : [GraphQL.png](./doc/asserts/graphql.png)
 
 ## Important
 
@@ -25,7 +25,7 @@ The following software must be installed on your workstation to build and run th
 * [Apache/Maven](https://maven.apache.org/download.cgi)
 * [Optional - GIT or Zip download](https://git-scm.com/downloads)
 * [Optional - VSCode/IDE](https://code.visualstudio.com/download)
-* [Optional - VSCode/Plugin](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+* [Optional - VSCode/Plugin](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 * [Optional - Docker to build image](https://www.docker.com/products/docker-desktop/)
 
 ## Springboot - Getting started

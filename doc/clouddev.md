@@ -41,8 +41,8 @@ Ideally, the application's container is bundled or bootstrapped within the relea
 
 This project uses Maven for managing dependencies in the Spring Boot backend and NPM for the frontend application:
 
-* [Source: pom.xml](../pom.xml)
-* [Source: package.json](../src/frontend/package.json)
+* Source: [pom.xml](../pom.xml)
+* Source: [package.json](../src/frontend/package.json)
 
 ## 4. Design, build, release, and run
 
@@ -75,8 +75,8 @@ org:
         authorities: rd.roles
 ```
 
-* [Source : application.yml](../src/main/resources/application.yml)
-* [Documentation : Springboot/External configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.external-config)
+* Source : [application.yml](../src/main/resources/application.yml)
+* Documentation : [Springboot/External configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.external-config)
 
 ## 6. Logs
 
@@ -102,7 +102,7 @@ logging:
         node-name: DEV
 ```
 
-* [Source : application.yml](../src/main/resources/application.yml)
+* Source : [application.yml](../src/main/resources/application.yml)
 
 ## 7. Disposability
 
@@ -118,7 +118,7 @@ server:
 
 For more details, refer to the [Spring Boot documentation on graceful shutdown](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.shutdown).
 
-* [Source : application.yml](../src/main/resources/application.yml)
+* Source : [application.yml](../src/main/resources/application.yml)
 
 ## 8. Backing services
 
@@ -169,7 +169,7 @@ management:
     port: 8081
 ```
 
-* [Source: application.yml](../src/main/resources/application.yml)
+* Source: [application.yml](../src/main/resources/application.yml)
 
 By externalizing port configuration, the application remains portable and adaptable to different cloud environments.
 
@@ -205,7 +205,7 @@ spring:
 
 ```
 
-* [Source : application.yml](../src/main/resources/application.yml)
+* Source : [application.yml](../src/main/resources/application.yml)
 
 This configuration enables the application to expose the following telemetry endpoints:
 
@@ -237,7 +237,7 @@ To enable security in your Spring Boot application, add the following dependency
 </dependency>
 ```
 
-* [Source: pom.xml](../pom.xml)
+* Source: [pom.xml](../pom.xml)
 
 ### Configuration
 
