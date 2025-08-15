@@ -268,5 +268,5 @@ return http.build();
 
 This configuration enables CORS, disables CSRF protection, sets up request authorization rules, configures exception handling, enforces stateless session management, specifies an authentication provider, and adds a JWT authentication filter.
 
-* [Source: SecurityConfig.java](../src/main/java/org/rd/fullstack/springbootnuxt/config/SecurityConfig.java)
-* [Documentation: Spring Security](https://docs.spring.io/spring-security/reference/index.html)
+* Source: [SecurityConfig.java](../src/main/java/org/rd/fullstack/springbootnuxt/config/SecurityConfig.java)
+* Documentation: [Spring Security](https://docs.spring.io/spring-security/reference/index.html)
