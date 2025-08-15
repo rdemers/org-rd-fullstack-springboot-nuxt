@@ -1,5 +1,5 @@
 /*
- * Copyright 2023; Réal Demers.
+ * Copyright 2023, 2025; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,18 +30,16 @@ import org.springframework.util.ResourceUtils;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.util.JRSaver;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
-import net.sf.jasperreports.export.SimplePdfReportConfiguration;
 import net.sf.jasperreports.export.SimpleWriterExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
@@ -81,23 +79,7 @@ public class JasperUtils
         Assert.notNull(jasperPrint, "JasperUtils::exportToPdf - jasperPrint is NULL.");
         Assert.notNull(pdfTarget, "JasperUtils::exportToPdf - target is NULL.");
 
-        JRPdfExporter exporter = new JRPdfExporter();
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfTarget));
-
-        SimplePdfReportConfiguration reportConfig = new SimplePdfReportConfiguration();
-        reportConfig.setSizePageToContent(true);
-        reportConfig.setForceLineBreakPolicy(false);
-
-        SimplePdfExporterConfiguration exportConfig = new SimplePdfExporterConfiguration();
-        exportConfig.setMetadataAuthor("Réal Demers. All rights reserved.");
-        exportConfig.setEncrypted(false);
-        exportConfig.setAllowedPermissionsHint("PRINTING");
-
-        exporter.setConfiguration(reportConfig);
-        exporter.setConfiguration(exportConfig);
-
-        exporter.exportReport();
+        JasperExportManager.exportReportToPdfFile(jasperPrint, pdfTarget);
     }
 
     public static void exportToPdf(JasperPrint jasperPrint, ByteArrayOutputStream pdfTarget) throws JRException
@@ -105,23 +87,7 @@ public class JasperUtils
         Assert.notNull(jasperPrint, "JasperUtils::exportToPdf - jasperPrint is NULL.");
         Assert.notNull(pdfTarget, "JasperUtils::exportToPdf - target is NULL.");
 
-        JRPdfExporter exporter = new JRPdfExporter();
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfTarget));
-
-        SimplePdfReportConfiguration reportConfig = new SimplePdfReportConfiguration();
-        reportConfig.setSizePageToContent(true);
-        reportConfig.setForceLineBreakPolicy(false);
-
-        SimplePdfExporterConfiguration exportConfig = new SimplePdfExporterConfiguration();
-        exportConfig.setMetadataAuthor("Réal Demers. All rights reserved.");
-        exportConfig.setEncrypted(false);
-        exportConfig.setAllowedPermissionsHint("PRINTING");
-
-        exporter.setConfiguration(reportConfig);
-        exporter.setConfiguration(exportConfig);
-
-        exporter.exportReport();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, pdfTarget);
     }
    
     public static void exportToXlsx(JasperPrint jasperPrint, String xlsTarget, String xlsSheetName) throws JRException

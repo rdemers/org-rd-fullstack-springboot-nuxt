@@ -13,6 +13,20 @@ management:
       exposure:
         include: "info,health,prometheus"
 #
+logging: 
+  file:
+    name: log/springboot-nuxt-log.json
+  structured: 
+    format:
+      console: ecs
+      file: ecs
+    ecs:
+      service:
+        name: org.rd.fullstack.springboot-nuxt
+        version: unspecified
+        environment: DEV
+        node-name: DEV
+#
 spring:
   main:
     cloud-platform: kubernetes

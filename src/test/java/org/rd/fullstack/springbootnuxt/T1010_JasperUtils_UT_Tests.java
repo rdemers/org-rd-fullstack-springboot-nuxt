@@ -51,7 +51,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JsonDataSource;
+import net.sf.jasperreports.json.data.JsonDataSource;
 
 /*
  * See POM.XML file

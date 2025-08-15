@@ -27,7 +27,7 @@ public class GraphQLConfig {
         super();
     }
 
-    //::TODO::@Bean
+    //@Bean
     //@Order(-1)
     //public RouterFunction<ServerResponse> graphQlGetRouterFunction(GraphQlHttpHandler GetRequestGraphQlHttpHandler, GraphQlProperties properties) {
     //    return RouterFunctions

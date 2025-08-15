@@ -29,7 +29,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -61,10 +61,11 @@ public class AuthentificationTokenFilter extends OncePerRequestFilter {
 
     public AuthentificationTokenFilter() {
         super();
-        uriApiMatcher     = new AntPathRequestMatcher(CST_API_URL_PATH);
-        uriReportMatcher  = new AntPathRequestMatcher(CST_REPORT_URL_PATH);
-        uriGraphQLMatcher = new AntPathRequestMatcher(CST_GRAPHPQL_URL_PATH);
-        uriHealthMatcher  = new AntPathRequestMatcher(CST_HEALTH_URL_PATH);
+
+        uriApiMatcher     = PathPatternRequestMatcher.withDefaults().matcher(CST_API_URL_PATH);
+        uriReportMatcher  = PathPatternRequestMatcher.withDefaults().matcher(CST_REPORT_URL_PATH);
+        uriGraphQLMatcher = PathPatternRequestMatcher.withDefaults().matcher(CST_GRAPHPQL_URL_PATH);
+        uriHealthMatcher  = PathPatternRequestMatcher.withDefaults().matcher(CST_HEALTH_URL_PATH);
 
         this.jwtUtils = null;
         this.userDetailsService = null;
@@ -72,10 +73,10 @@ public class AuthentificationTokenFilter extends OncePerRequestFilter {
 
     public AuthentificationTokenFilter(JwtUtils jwtUtils, UserDetailsService userDetailsService) {
         super();
-        uriApiMatcher     = new AntPathRequestMatcher(CST_API_URL_PATH);
-        uriReportMatcher  = new AntPathRequestMatcher(CST_REPORT_URL_PATH);
-        uriGraphQLMatcher = new AntPathRequestMatcher(CST_GRAPHPQL_URL_PATH);
-        uriHealthMatcher  = new AntPathRequestMatcher(CST_HEALTH_URL_PATH);
+        uriApiMatcher     = PathPatternRequestMatcher.withDefaults().matcher(CST_API_URL_PATH);
+        uriReportMatcher  = PathPatternRequestMatcher.withDefaults().matcher(CST_REPORT_URL_PATH);
+        uriGraphQLMatcher = PathPatternRequestMatcher.withDefaults().matcher(CST_GRAPHPQL_URL_PATH);
+        uriHealthMatcher  = PathPatternRequestMatcher.withDefaults().matcher(CST_HEALTH_URL_PATH);
 
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;

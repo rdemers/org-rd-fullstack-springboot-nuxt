@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-//::TODO::
 package org.rd.fullstack.springbootnuxt.util;
 
 public class HttpGetHandlerGraphQl /* extends AbstractGraphQlHttpHandler  */{

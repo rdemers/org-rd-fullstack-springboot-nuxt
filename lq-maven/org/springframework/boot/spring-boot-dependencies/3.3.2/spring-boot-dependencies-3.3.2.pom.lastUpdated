@@ -1,8 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Tue Aug 12 15:29:24 EDT 2025
-@default-Maven\ -\ Entrep\u00F4t\ Java-http\://download.java.net/maven/2/.lastUpdated=1755026962418
-@default-lq.nexus-http\://std.loto-quebec.com/nexus/content/groups/nexus/.lastUpdated=1755026964541
-http\://download.java.net/maven/2/.error=Could not transfer artifact org.springframework.boot\:spring-boot-dependencies\:pom\:3.3.2 from/to Maven - Entrep\u00F4t Java (http\://download.java.net/maven/2/)\: PKIX path building failed\: sun.security.provider.certpath.SunCertPathBuilderException\: unable to find valid certification path to requested target
-http\://maven.vaadin.com/vaadin-addons/.error=
-http\://maven.vaadin.com/vaadin-addons/.lastUpdated=1755019631905
-http\://std.loto-quebec.com/nexus/content/groups/nexus/.error=Could not transfer artifact org.springframework.boot\:spring-boot-dependencies\:pom\:3.3.2 from/to lq.nexus (http\://std.loto-quebec.com/nexus/content/groups/nexus)\: Connect to std.loto-quebec.com\:80 [std.loto-quebec.com/10.8.5.12] failed\: Connection refused\: getsockopt
