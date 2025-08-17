@@ -1,4 +1,4 @@
-# org-rd-fullstack-springboot-nuxt (2023, 2024, 2025)
+# org-rd-fullstack-springboot-nuxt
 
 ## Fullstack application with Springboot and Nuxt
 

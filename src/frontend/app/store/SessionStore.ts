@@ -15,7 +15,7 @@
  */
 
 import { defineStore } from "pinia";
-import type Session    from "../types/Session";
+import type Session    from "@/types/Session";
 
 export const SessionStore = defineStore("SessionStore", {
 

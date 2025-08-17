@@ -43,18 +43,15 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleWriterExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
-public class JasperUtils
-{
+public class JasperUtils {
     private static final Logger logger = LoggerFactory.getLogger(JasperUtils.class);
     private JasperUtils() { } // Static usage only.
 
-    static public JasperReport compileReport(String reportSource) throws IOException, JRException, URISyntaxException, FileNotFoundException
-    {
+    static public JasperReport compileReport(String reportSource) throws IOException, JRException, URISyntaxException, FileNotFoundException {
         return compileReport(reportSource, false);
     }
 
-    static public JasperReport compileReport(String reportSource, boolean bFile) throws IOException, JRException, URISyntaxException, FileNotFoundException
-    {
+    static public JasperReport compileReport(String reportSource, boolean bFile) throws IOException, JRException, URISyntaxException, FileNotFoundException {
         Assert.notNull(reportSource, "JasperUtils::compileReport - reportSource is NULL.");
         File file = ResourceUtils.getFile("classpath:" + reportSource);
         InputStream reportStream = new FileInputStream(file);
@@ -74,24 +71,21 @@ public class JasperUtils
         return jasperReport;
     }
 
-    public static void exportToPdf(JasperPrint jasperPrint, String pdfTarget) throws JRException
-    {
+    public static void exportToPdf(JasperPrint jasperPrint, String pdfTarget) throws JRException {
         Assert.notNull(jasperPrint, "JasperUtils::exportToPdf - jasperPrint is NULL.");
         Assert.notNull(pdfTarget, "JasperUtils::exportToPdf - target is NULL.");
 
         JasperExportManager.exportReportToPdfFile(jasperPrint, pdfTarget);
     }
 
-    public static void exportToPdf(JasperPrint jasperPrint, ByteArrayOutputStream pdfTarget) throws JRException
-    {
+    public static void exportToPdf(JasperPrint jasperPrint, ByteArrayOutputStream pdfTarget) throws JRException {
         Assert.notNull(jasperPrint, "JasperUtils::exportToPdf - jasperPrint is NULL.");
         Assert.notNull(pdfTarget, "JasperUtils::exportToPdf - target is NULL.");
 
         JasperExportManager.exportReportToPdfStream(jasperPrint, pdfTarget);
     }
    
-    public static void exportToXlsx(JasperPrint jasperPrint, String xlsTarget, String xlsSheetName) throws JRException
-    {
+    public static void exportToXlsx(JasperPrint jasperPrint, String xlsTarget, String xlsSheetName) throws JRException {
         Assert.notNull(jasperPrint, "JasperUtils::exportToXlsx - jasperPrint is NULL.");
         Assert.notNull(xlsTarget, "JasperUtils::exportToXlsx - xlsTarget is NULL.");
         Assert.notNull(xlsSheetName, "JasperUtils::exportToXlsx - xlsSheetName is NULL.");
@@ -108,8 +102,7 @@ public class JasperUtils
         exporter.exportReport();
     }
     
-    public static void exportToCsv(JasperPrint jasperPrint, String csvTarget) throws JRException
-    {
+    public static void exportToCsv(JasperPrint jasperPrint, String csvTarget) throws JRException {
         Assert.notNull(jasperPrint, "JasperUtils::exportToCsv - jasperPrint is NULL.");
         Assert.notNull(csvTarget, "JasperUtils::exportToCsv - csvTarget is NULL.");
 
@@ -121,8 +114,7 @@ public class JasperUtils
         exporter.exportReport();
      }
 
-    public static void exportToHtml(JasperPrint jasperPrint, String htmlTarget) throws JRException
-    {
+    public static void exportToHtml(JasperPrint jasperPrint, String htmlTarget) throws JRException {
         Assert.notNull(jasperPrint, "JasperUtils::exportToCsv - jasperPrint is NULL.");
         Assert.notNull(htmlTarget, "JasperUtils::exportToCsv - htmlTarget is NULL.");
 

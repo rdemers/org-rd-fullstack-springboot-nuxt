@@ -14,15 +14,15 @@
  * limitations under the License.
  * 
  */
-import type Session                   from "../types/Session";
+import type Session                   from "@/types/Session";
 import { type PDFDocumentLoadingTask, 
          type PDFDocumentProxy, 
          type PDFPageProxy, 
          type PageViewport }          from "pdfjs-dist";
 
-import { SessionStore }               from "../store/SessionStore";
-import { PDFServiceCode }             from "../services/PDFServiceCode";
-import { PDFServiceException }        from "../services/PDFServiceException";
+import { SessionStore }               from "@/store/SessionStore";
+import { PDFServiceCode }             from "@/services/PDFServiceCode";
+import { PDFServiceException }        from "@/services/PDFServiceException";
 
 import { fromByteArray }              from "base64-js";
 import printJS                        from "print-js";

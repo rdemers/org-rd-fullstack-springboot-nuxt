@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { PDFServiceCode } from "../services/PDFServiceCode";
+import { PDFServiceCode } from "@/services/PDFServiceCode";
 export class PDFServiceException extends Error {
 
     private code: PDFServiceCode;

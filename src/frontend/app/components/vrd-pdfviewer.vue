@@ -58,9 +58,9 @@
 <script setup lang="ts">
     import { onMounted, ref, watch } from "vue";
 
-    import { PDFService }          from "../services/PDFService";
-    import { PDFServiceException } from "../services/PDFServiceException";
-    import { PDFServiceCode }      from "../services/PDFServiceCode";
+    import { PDFService }          from "@/services/PDFService";
+    import { PDFServiceException } from "@/services/PDFServiceException";
+    import { PDFServiceCode }      from "@/services/PDFServiceCode";
 
     const { t } = useI18n();
     const noPage = ref<number>(0);

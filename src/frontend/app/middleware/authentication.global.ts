@@ -15,7 +15,7 @@
  */
 
 // Update the import path to the correct relative location
-import { SessionStore } from "../store/SessionStore";
+import { SessionStore } from "@/store/SessionStore";
 
 export default defineNuxtRouteMiddleware((to, from) => {
 

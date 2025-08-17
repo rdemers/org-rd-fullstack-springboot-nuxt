@@ -39,12 +39,12 @@
 </template>
 
 <script setup lang="ts">
-    import type LoginRequest       from "../types/LoginRequest";
-    import type ResponseData       from "../types/ResponseData";
-    import type Session            from "../types/Session";
+    import type LoginRequest       from "@/types/LoginRequest";
+    import type ResponseData       from "@/types/ResponseData";
+    import type Session            from "@/types/Session";
 
-    import { SessionStore }        from "../store/SessionStore";
-    import authentificationService from "../services/AuthentificationService";
+    import { SessionStore }        from "@/store/SessionStore";
+    import authentificationService from "@/services/AuthentificationService";
 
     const isActionDisabled = ref<boolean>(false);
     const isErrorLogin     = ref<boolean>(false);

@@ -78,9 +78,9 @@
 <script setup lang="ts">
     import { onMounted, ref } from "vue";
 
-    import type Book         from "../../types/Book"
-    import type ResponseData from "../../types/ResponseData";
-    import BookService       from "../../services/BookService";
+    import type Book         from "@/types/Book";
+    import type ResponseData from "@/types/ResponseData";
+    import BookService       from "@/services/BookService";
 
     const books        = ref<Book[]>();
     const isErrorBook  = ref<boolean>(false);

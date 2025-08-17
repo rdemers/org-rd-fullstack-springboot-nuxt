@@ -29,7 +29,7 @@ target/
 !**/src/test/**/target/
 
 # VS Code.
-.vscode/
+# .vscode/
 .vscode-test
 
 # Runtime.
