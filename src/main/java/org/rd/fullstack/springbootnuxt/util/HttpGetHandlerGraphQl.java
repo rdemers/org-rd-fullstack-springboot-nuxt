@@ -1,5 +1,5 @@
 /*
- * Copyright 2024; Réal Demers.
+ * Copyright 2023; Réal Demers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,64 +13,101 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
-public class HttpGetHandlerGraphQl /* extends AbstractGraphQlHttpHandler  */{
+import java.net.URI;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
-        /*
-    @SuppressWarnings("unchecked")
-    @Override
-    protected Mono<ServerResponse> prepareResponse(ServerRequest request, WebGraphQlResponse response) {
-        //throw new UnsupportedOperationException("Unimplemented method 'prepareResponse'");
-        return (Mono<ServerResponse>) new ServerResponse();
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.graphql.server.WebGraphQlHandler;
+import org.springframework.graphql.server.WebGraphQlRequest;
+import org.springframework.graphql.server.WebGraphQlResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import reactor.core.publisher.Mono;
+
+@Controller
+public class HttpGetHandlerGraphQl {
+
+    private static final Log logger = LogFactory.getLog(HttpGetHandlerGraphQl.class);
+    private final WebGraphQlHandler graphQlHandler;
+    private final ObjectMapper objectMapper;
+
+    public HttpGetHandlerGraphQl(WebGraphQlHandler graphQlHandler, ObjectMapper objectMapper) {
+        this.graphQlHandler = graphQlHandler;
+        this.objectMapper = objectMapper;
     }
 
+    @GetMapping(value = "/graphql", produces = { MediaType.APPLICATION_JSON_VALUE, "application/graphql-response+json" })
+    @ResponseBody
+    public Mono<ResponseEntity<Map<String, Object>>> handleRequest(
+            @RequestParam(name = "query") String query,
+            @RequestParam(name = "operationName", required = false) String operationName,
+            @RequestParam(name = "variables", required = false) String variablesJson,
+            @RequestHeader Map<String, String> headers
+    ) {
+        Locale locale = LocaleContextHolder.getLocale();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        headers.forEach(httpHeaders::add);
 
-       //private static final Log logger = LogFactory.getLog(GetRequestGraphQlHttpHandler.class);
+        Map<String, Object> input = Map.of("query", query);
 
-        private static final List<MediaType> SUPPORTED_MEDIA_TYPES = Arrays.asList(MediaType.APPLICATION_GRAPHQL_RESPONSE, MediaType.APPLICATION_JSON);
+        try {
+            // Préparer le corps de la requête GraphQL
+            Map<String, Object> requestInput = new java.util.HashMap<>(input);
 
-        // private final IdGenerator idGenerator = new AlternativeJdkIdGenerator();
-
-        private final WebGraphQlHandler graphQlHandler;
-
-        GetRequestGraphQlHttpHandler(WebGraphQlHandler graphQlHandler) {
-            this.graphQlHandler = graphQlHandler;
-        }
-
-        public ServerResponse handleRequest(ServerRequest serverRequest) {
-            String query = serverRequest.param("query").orElseThrow(() -> new RuntimeException("'query' parameter not set"));
-
-            WebGraphQlRequest graphQlRequest = new WebGraphQlRequest(
-                serverRequest.uri(), serverRequest.headers().asHttpHeaders(), Map.of("query", query));
-                //this.idGenerator.generateId().toString(), LocaleContextHolder.getLocale());
-
-            //if (logger.isDebugEnabled()) {
-            //    logger.debug("Executing: " + graphQlRequest);
-            //}
-
-            Mono<ServerResponse> responseMono = this.graphQlHandler.handleRequest(graphQlRequest)
-                .map(response -> {
-                    //if (logger.isDebugEnabled()) {
-                    //    logger.debug("Execution complete");
-                    //}
-                    ServerResponse.BodyBuilder builder = ServerResponse.ok();
-                    builder.headers(headers -> headers.putAll(response.getResponseHeaders()));
-                    builder.contentType(selectResponseMediaType(serverRequest));
-                    return builder.body(response.toMap());
-                });
-
-            return ServerResponse.async(responseMono);
-        }
-
-        private static MediaType selectResponseMediaType(ServerRequest serverRequest) {
-            for (MediaType accepted : serverRequest.headers().accept()) {
-                if (SUPPORTED_MEDIA_TYPES.contains(accepted)) {
-                    return accepted;
+            if (variablesJson != null && !variablesJson.isBlank()) {
+                Map<String, Object> variables = objectMapper.readValue(variablesJson, new TypeReference<>() {});
+                requestInput.put("variables", variables);
             }
+
+            if (operationName != null && !operationName.isBlank()) {
+                requestInput.put("operationName", operationName);
+            }
+
+WebGraphQlRequest graphQlRequest = new WebGraphQlRequest(
+    URI.create("/graphql"),
+    httpHeaders,
+    null, requestInput,
+    Map.of(), // attributes (peut rester vide)
+    UUID.randomUUID().toString(),
+    locale
+);
+
+
+            if (logger.isDebugEnabled()) {
+                logger.debug("GraphQL Request: " + graphQlRequest);
+            }
+
+            return graphQlHandler.handleRequest(graphQlRequest)
+                    .map(response -> {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("GraphQL Execution complete");
+                        }
+
+                        return ResponseEntity
+                                .ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .headers(respHeaders -> respHeaders.putAll(response.getResponseHeaders()))
+                                .body(response.toMap());
+                    });
+
+        } catch (Exception e) {
+            logger.error("Failed to parse variables JSON", e);
+            return Mono.just(ResponseEntity.badRequest().body(Map.of(
+                    "errors", java.util.List.of(Map.of("message", "Invalid 'variables' JSON"))
+            )));
         }
-        return MediaType.APPLICATION_JSON;
     }
- */
-    }                                                                                                                                                                                                                                                        
+}
