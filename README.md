@@ -106,7 +106,7 @@ When the application is running, you can access the following endpoints:
 * [Readiness Probe](http://localhost:8081/actuator/health/readiness)
 * [Prometheus Metrics](http://localhost:8081/actuator/prometheus)
 
-## Nuxt3 - Getting started
+## Nuxt4 - Getting started
 
 To get started quickly, run the following commands:
 
