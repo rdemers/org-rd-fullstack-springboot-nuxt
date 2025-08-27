@@ -94,7 +94,7 @@ java -Djarmode=layertools -jar target/springboot-nuxt-unspecified.jar extract --
 
 When the application is running, you can access the following endpoints:
 
-* [Nuxt3 Web Application](http://localhost:8080/app)
+* [Nuxt4 Web Application](http://localhost:8080/app)
 * [Ping Endpoint (startup verification)](http://localhost:8080/jwt/ping)
 * [Swagger UI (API testing)](http://localhost:8080/swagger-ui)
 * [GraphiQL (GraphQL API testing)](http://localhost:8080/graphiql)
