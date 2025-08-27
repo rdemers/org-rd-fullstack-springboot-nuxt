@@ -33,7 +33,7 @@ The following software must be installed on your workstation to build and run th
 To get started quickly, run the following commands:
 
 ```bash
-# Nuxt3 (Frontend)
+# Nuxt4 (Frontend)
 cd src/frontend                                  # Navigate to the web application root.
 
 npm i -D vuetify vite-plugin-vuetify             # Install Vuetify plugins for Nuxt.
