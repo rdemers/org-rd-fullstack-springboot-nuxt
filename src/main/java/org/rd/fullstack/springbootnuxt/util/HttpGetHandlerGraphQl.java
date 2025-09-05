@@ -25,7 +25,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.graphql.server.WebGraphQlHandler;
 import org.springframework.graphql.server.WebGraphQlRequest;
-import org.springframework.graphql.server.WebGraphQlResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -76,14 +75,16 @@ public class HttpGetHandlerGraphQl {
                 requestInput.put("operationName", operationName);
             }
 
-WebGraphQlRequest graphQlRequest = new WebGraphQlRequest(
-    URI.create("/graphql"),
-    httpHeaders,
-    null, requestInput,
-    Map.of(), // attributes (peut rester vide)
-    UUID.randomUUID().toString(),
-    locale
-);
+            WebGraphQlRequest graphQlRequest = new WebGraphQlRequest(
+                URI.create("/graphql"),
+                httpHeaders,
+                null,
+                null, 
+                requestInput,
+                Map.of(), // attributes.
+                UUID.randomUUID().toString(),
+                locale
+            );
 
 
             if (logger.isDebugEnabled()) {

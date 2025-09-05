@@ -16,19 +16,9 @@
 
 package org.rd.fullstack.springbootnuxt.config;
 
-import java.util.Objects;
-
 import org.rd.fullstack.springbootnuxt.util.ExceptionHandlerGraphQL;
-import org.rd.fullstack.springbootnuxt.util.HttpGetHandlerGraphQl;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.graphql.server.webflux.GraphQlHttpHandler;
-import org.springframework.web.servlet.function.RequestPredicates;
-import org.springframework.web.servlet.function.RouterFunction;
-import org.springframework.web.servlet.function.RouterFunctions;
-import org.springframework.web.servlet.function.ServerResponse;
 
 @Configuration
 public class GraphQLConfig {
@@ -42,24 +32,22 @@ public class GraphQLConfig {
         return new ExceptionHandlerGraphQL();
     }
    
-    // Inutile ... Pas de webflux, seulement un contrôleur standard mvc.
+    // No webflux, only a standard mvc controller.
     //@Bean
-    //@Order(-1)
+    // @Order(-1)
     //public RouterFunction<ServerResponse> graphQlGetRouterFunction(GraphQlHttpHandler GetRequestGraphQlHttpHandler, GraphQlProperties properties) {
     //    return RouterFunctions
-    //            .route()
-    //            .GET(properties.getHttp().getPath(), 
-    //                 RequestPredicates.param("query", Objects::nonNull), 
-     //                gethttpHandler::handleRequest)
-     //           .build();
+    //          .route()
+    //          .GET(properties.getHttp().getPath(), 
+    //               RequestPredicates.param("query", Objects::nonNull), 
+    //               gethttpHandler::handleRequest)
+    //          .build();
     //}
 
-
     //@Bean
-//public RouterFunction<ServerResponse> graphQlRouter(HttpGetHandlerGraphQl handler) {
- //   return RouterFunctions.route()
-   //         .GET("/graphql", handler::handle)
-     //       .build();
-//}
-
+    //public RouterFunction<ServerResponse> graphQlRouter(HttpGetHandlerGraphQl handler) {
+    //   return RouterFunctions.route()
+    //          .GET("/graphql", handler::handle)
+    //          .build();
+    //}
 }
