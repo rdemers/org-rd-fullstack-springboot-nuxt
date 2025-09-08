@@ -61,7 +61,7 @@
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
 
-        <spring.boot.version>3.5.4</spring.boot.version>
+        <spring.boot.version>3.5.5</spring.boot.version>
         <springdoc.version>2.8.9</springdoc.version>
     </properties>
 
