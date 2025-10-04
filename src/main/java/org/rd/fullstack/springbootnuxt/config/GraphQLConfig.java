@@ -27,19 +27,27 @@ public class GraphQLConfig {
         super();
     }
 
-    //@Bean
-    //@Order(-1)
-    //public RouterFunction<ServerResponse> graphQlGetRouterFunction(GraphQlHttpHandler GetRequestGraphQlHttpHandler, GraphQlProperties properties) {
-    //    return RouterFunctions
-    //            .route()
-    //            .GET(properties.getPath(), RequestPredicates.param("query", Objects::nonNull), gethttpHandler::handleRequest)
-    //            .build();
-    //}
-
-
- 
     @Bean
     ExceptionHandlerGraphQL graphQLExceptionResolver() {
         return new ExceptionHandlerGraphQL();
     }
+   
+    // No webflux, only a standard mvc controller.
+    //@Bean
+    // @Order(-1)
+    //public RouterFunction<ServerResponse> graphQlGetRouterFunction(GraphQlHttpHandler GetRequestGraphQlHttpHandler, GraphQlProperties properties) {
+    //    return RouterFunctions
+    //          .route()
+    //          .GET(properties.getHttp().getPath(), 
+    //               RequestPredicates.param("query", Objects::nonNull), 
+    //               gethttpHandler::handleRequest)
+    //          .build();
+    //}
+
+    //@Bean
+    //public RouterFunction<ServerResponse> graphQlRouter(HttpGetHandlerGraphQl handler) {
+    //   return RouterFunctions.route()
+    //          .GET("/graphql", handler::handle)
+    //          .build();
+    //}
 }

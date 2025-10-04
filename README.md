@@ -33,7 +33,7 @@ The following software must be installed on your workstation to build and run th
 To get started quickly, run the following commands:
 
 ```bash
-# Nuxt3 (Frontend)
+# Nuxt4 (Frontend)
 cd src/frontend                                  # Navigate to the web application root.
 
 npm i -D vuetify vite-plugin-vuetify             # Install Vuetify plugins for Nuxt.
@@ -94,7 +94,7 @@ java -Djarmode=layertools -jar target/springboot-nuxt-unspecified.jar extract --
 
 When the application is running, you can access the following endpoints:
 
-* [Nuxt3 Web Application](http://localhost:8080/app)
+* [Nuxt4 Web Application](http://localhost:8080/app)
 * [Ping Endpoint (startup verification)](http://localhost:8080/jwt/ping)
 * [Swagger UI (API testing)](http://localhost:8080/swagger-ui)
 * [GraphiQL (GraphQL API testing)](http://localhost:8080/graphiql)
@@ -106,7 +106,7 @@ When the application is running, you can access the following endpoints:
 * [Readiness Probe](http://localhost:8081/actuator/health/readiness)
 * [Prometheus Metrics](http://localhost:8081/actuator/prometheus)
 
-## Nuxt3 - Getting started
+## Nuxt4 - Getting started
 
 To get started quickly, run the following commands:
 

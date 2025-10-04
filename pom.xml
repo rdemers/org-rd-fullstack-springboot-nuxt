@@ -55,14 +55,12 @@
         <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
         <jjwt.version>0.12.6</jjwt.version>
 
-        <logstash.logback.encoder.version>7.4</logstash.logback.encoder.version>
-
         <maven-ant-plugin.version>3.1.0</maven-ant-plugin.version>
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-compile-plugin.version>3.14.0</maven-compile-plugin.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
 
-        <spring.boot.version>3.5.4</spring.boot.version>
+        <spring.boot.version>3.5.5</spring.boot.version>
         <springdoc.version>2.8.9</springdoc.version>
     </properties>
 
@@ -315,7 +313,7 @@
                         </goals>
                         <configuration>
                             <additionalProperties>
-                                <auteur>R. Demers; 2023.</auteur>
+                                <author>R. Demers; 2023.</author>
                                 <copyright>Réal Demers.</copyright>
                             </additionalProperties>
                         </configuration>
