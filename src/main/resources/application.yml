@@ -18,7 +18,7 @@ logging:
     name: log/springboot-nuxt-log.json
   structured: 
     format:
-      console: ecs
+      # console: ecs
       file: ecs
     ecs:
       service:
