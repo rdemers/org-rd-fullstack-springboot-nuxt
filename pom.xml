@@ -239,10 +239,6 @@
                             <followSymlinks>false</followSymlinks>
                         </fileset>
                         <fileset>
-                            <directory>src/frontend/dist</directory>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                        <fileset>
                             <directory>src/main/resources/static/app</directory>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
