@@ -13,22 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import axios, { type AxiosInstance, AxiosError } from "axios";
+import type Session                              from "@/types/Session";
+import { SessionStore }                          from "@/store/SessionStore";
 
-import axios, { type AxiosInstance } from "axios";
-
-const jwtApi: AxiosInstance = axios.create({
-    baseURL: useRuntimeConfig().public.jwtURL,
+const apiAuth: AxiosInstance = axios.create({
+    baseURL: useRuntimeConfig().public.authURL,
     headers: {
         "Content-type": "application/json",
+        "Accept": "application/json"
     },
 });
 
-const bookApi: AxiosInstance = axios.create({
+const apiClient: AxiosInstance = axios.create({
     baseURL: useRuntimeConfig().public.apiURL,
     headers: {
         "Content-type": "application/json",
-    },
-});
+        "Accept": "application/json",
+    }
+})
 
-export { jwtApi };
-export { bookApi };
+apiClient.interceptors.request.use((config) => {
+    const session:Session = SessionStore().getSession;
+    if (session.jwtToken) {
+        config.headers.Authorization = "Bearer " + session.jwtToken;
+    }
+    return config;
+})
+
+apiClient.interceptors.response.use((response) => response,(error: AxiosError) => {
+    if (error.response?.status === 401) {
+        return navigateTo('/login');
+    }
+    return Promise.reject(error);
+})
+
+export { 
+    apiClient,
+    apiAuth 
+};
+

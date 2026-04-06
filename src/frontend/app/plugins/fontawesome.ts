@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import { library, config } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
@@ -24,14 +23,14 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 //
 // Global.
 //
-import { fab } from "@fortawesome/free-brands-svg-icons"
-import { far } from "@fortawesome/free-regular-svg-icons"
-import { fas } from "@fortawesome/free-solid-svg-icons"
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 library.add(fab, far, fas);
 
-// C'est important, nous allons laisser Nuxt s'occuper du CSS.
+// This is important, we're going to let Nuxt handle the CSS.
 config.autoAddCss = false;
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon);
-})
+});

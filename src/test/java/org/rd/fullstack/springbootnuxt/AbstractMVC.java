@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt;
+
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import java.lang.invoke.MethodHandles;
 
@@ -25,34 +26,29 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public abstract class AbstractMVC {
+   protected static MockMvc mvcInstance  = null;
+   protected static final Logger logger  = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected final String CST_JWT_TOKEN = 
+        "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNzJjMDhjMS02OGY5LTQ3YmQtODdhOS1iNjY0YTIxZTZhMWMiLCJzdWIiOiJyb290IiwicmQucm9sZXMiOiJST0xFX1NFTEVDVCxST0xFX0lOU0VSVCxST0xFX1VQREFURSxST0xFX0RFTEVURSIsImlhdCI6MTcxODM4NjQ1NH0.AIS4YFJCUIIv0IzTxdDp3MqQXDyuhQBFSJnJmF6b06c";
 
-   protected static MockMvc mvcInstance = null;
-   protected static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
     WebApplicationContext webApplicationContext;
 
     public AbstractMVC() {
-       super();
+
+        super();
     }
 
     protected synchronized MockMvc getMvcInstance() {
-        if (mvcInstance == null)
-          mvcInstance = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        return mvcInstance;
-    }
+      if (mvcInstance == null)
+          mvcInstance = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
 
-    protected String mapToJson(Object obj) throws Exception {
-       ObjectMapper objectMapper = new ObjectMapper();
-       return objectMapper.writeValueAsString(obj);
-    }
-
-    protected <T> T mapFromJson(String json, Class<T> clazz) throws Exception {
-       ObjectMapper objectMapper = new ObjectMapper();
-       return objectMapper.readValue(json, clazz);
+      return mvcInstance;
     }
 }

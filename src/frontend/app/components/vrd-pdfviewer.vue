@@ -15,172 +15,269 @@
   *
   -->
 <template>
-    <div>
-        <ul class="vrd_navigation">
+    <!-- Loading error. -->
+    <div v-if="error" class="vrd_error">
+        <span>{{ error }}</span>
+    </div>
 
-            <!-- Navigate through the pages. -->
-            <li class="vrd_navigation_item_left">
-                <button class="vrd_item" id="prev_page" @click=prevPage()>
-                    <font-awesome-icon class="fa-lg" icon="fa-solid fa-arrow-left"/>
-                </button>
-                <input class="vrd_item vrd_item_width" type="number" id="current_page" v-model="noPage"/>
-                <button class="vrd_item" id="next_page" @click=nextPage()>
-                    <font-awesome-icon class="fa-lg" icon="fa-solid fa-arrow-right"/>
-                </button>
-            </li>
+    <!-- Loading indicator. -->
+    <div v-if="isLoading && !error" class="vrd_loading">
+        <span>{{ t("vrd-pdfviewer.loading") }}</span>
+    </div>
 
-            <!-- Information on the current page. -->
-            <li class="vrd_navigation_item_left">
-                <span class="vrd_item" id="page_num">{{ docSummary }}</span>
-            </li>
-
-            <!-- Zoom In / Out. -->
-            <li class="vrd_navigation_item_right">
-                <button class="vrd_item" id="printing" @click=print()>
-                    <font-awesome-icon class="fa-lg" icon="fa-solid fa-print"/>
-                </button>
-                <button class="vrd_item" id="zoom_in" @click=scaleIN()>
-                    <font-awesome-icon class="fa-lg" icon="fa-solid fa-magnifying-glass-plus"/>
-                </button>
-                <button class="vrd_item" id="zoom_out" @click=scaleOUT()>
-                    <font-awesome-icon class="fa-lg" icon="fa-solid fa-magnifying-glass-minus"/>
-                </button>
-            </li>
-        </ul>
-
-        <!-- Container for the PDF. -->
-        <div class="vrd_viewport">
-            <canvas id="canvas" ref="canvasReference" class="vrd_canvas"/>
-        </div>
+    <!-- Navigation bar (visible only when the PDF is ready). -->
+    <ul v-if="!isLoading && !error" class="vrd_navigation">
+        <!--Navigate through the pages. -->
+        <li class="vrd_navigation_item_left">
+            <button class="vrd_item" :aria-label="t('vrd-pdfviewer.prevPage')" @click="prevPage()">
+                <font-awesome-icon class="fa-lg" icon="fa-solid fa-arrow-left"/>
+            </button>
+            <input
+                class="vrd_item vrd_item_input"
+                type="number"
+                v-model.number="page"
+                :min="1"
+                :max="numPages"
+                :aria-label="t('vrd-pdfviewer.pageInput')"
+            />
+            <button class="vrd_item" :aria-label="t('vrd-pdfviewer.nextPage')" @click="nextPage()">
+                <font-awesome-icon class="fa-lg" icon="fa-solid fa-arrow-right"/>
+            </button>
+        </li>
+        <!-- Information about the current page. -->
+        <li class="vrd_navigation_item_left">
+            <span class="vrd_item" aria-live="polite">{{ summary }}</span>
+        </li>
+        <!-- Zoom / Print. -->
+        <li class="vrd_navigation_item_right">
+            <button class="vrd_item" :aria-label="t('vrd-pdfviewer.print')" @click="print()">
+                <font-awesome-icon class="fa-lg" icon="fa-solid fa-print"/>
+            </button>
+            <button class="vrd_item" :aria-label="t('vrd-pdfviewer.zoomIn')" @click="zoomIn()">
+                <font-awesome-icon class="fa-lg" icon="fa-solid fa-magnifying-glass-plus"/>
+            </button>
+            <button class="vrd_item" :aria-label="t('vrd-pdfviewer.zoomOut')" @click="zoomOut()">
+                <font-awesome-icon class="fa-lg" icon="fa-solid fa-magnifying-glass-minus"/>
+            </button>
+        </li>
+    </ul>
+    <div class="vrd_viewport">
+        <canvas ref="canvasRef" class="vrd_canvas"/>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { onMounted, ref, watch } from "vue";
+    import { ref, computed, onMounted, 
+             onUnmounted, watch }  from "vue";
 
     import { PDFService }          from "@/services/PDFService";
-    import { PDFServiceException } from "@/services/PDFServiceException";
     import { PDFServiceCode }      from "@/services/PDFServiceCode";
+    import { PDFServiceException } from "@/services/PDFServiceException";
 
-    const { t } = useI18n();
-    const noPage = ref<number>(0);
-    const props = defineProps({ url: String });
-    const pdfService:PDFService = new PDFService(props.url as string);
-    const canvasReference = ref<HTMLCanvasElement | null>(null); // Get access to canvas.
+    const props = withDefaults(
+        defineProps<{
+            url: string;
+            useAuthorization?: boolean;
+            title?: string;
+            subtitle?: string;
+        }>(),
+        { useAuthorization: true }
+    );
 
-    const docSummary = computed<string>(() => {
-        return t('vrd-pdfviewer.page') + noPage.value + t('vrd-pdfviewer.of') + pdfService.getNumPages();
-    })
+    const { t }     = useI18n();
+    const canvasRef = ref<HTMLCanvasElement | null>(null);
+    const page      = ref(1);
+    const numPages  = ref(0);
+    const isLoading = ref(true);
+    const error     = ref<string | null>(null);
+
+    const pdfService:PDFService = new PDFService({
+        pdfSource: props.url,
+        useAuthorization: props.useAuthorization,
+        title: props.title,
+        subtitle: props.subtitle
+    });
+
+    // Guard to avoid the infinite loop of the watcher.
+    let suppressWatch = false;
+
+    const summary = computed(() =>
+        `${t("vrd-pdfviewer.page")} ${page.value} ${t("vrd-pdfviewer.of")} ${numPages.value}`
+    );
 
     onMounted((): void => {
-        pdfService.init(canvasReference.value as HTMLCanvasElement).then(() => {
-            pdfService.render().then(() => {
-                noPage.value = pdfService.getPage();
-            }).catch((e: Error) => {
-                if (e instanceof PDFServiceException) {
-                    switch((e as PDFServiceException).getCode()) { 
-                        case PDFServiceCode.NO_SOURCE: { 
-                            displayMessage(t('vrd-pdfviewer.ex_no_source')); 
-                            break; 
-                        } 
-                        case PDFServiceCode.NO_NODE_SUPPORTED: { 
-                            displayMessage(t('vrd-pdfviewer.ex_no_node_supported')); 
-                            break; 
-                        } 
-                        default: { 
-                            displayMessage(t('vrd-pdfviewer.ex_unknown')); 
-                            break; 
-                        } 
-                    } 
-                }
-                console.log(e);
-            })          
-        })
-    })    
+        error.value = null;
+        isLoading.value = true;
 
-    function displayMessage(msg:string) : void {
-        if (!msg) {
+        if (!canvasRef.value) {
+            error.value = t("vrd-pdfviewer.no-canvas");
+            isLoading.value = false;
             return;
+       }
+
+        pdfService.init(canvasRef.value as HTMLCanvasElement).then(() => {
+            page.value = pdfService.getPage();
+            numPages.value = pdfService.getNumPages();
+        }).catch((ex: Error) => {
+            if (ex instanceof PDFServiceException) {
+                switch((ex as PDFServiceException).getCode()) {
+                    case PDFServiceCode.NO_SOURCE: {
+                        error.value = t('vrd-pdfviewer.no-source');
+                        break;
+                    }
+                    case PDFServiceCode.NO_NODE_SUPPORTED: {
+                        error.value = t('vrd-pdfviewer.no-node-supported');
+                        break;
+                    }
+                    default: {
+                        error.value = t('vrd-pdfviewer.unknown');
+                        break;
+                    }
+                }
+            }
+            console.log(ex);
+        }).finally(() => {
+            isLoading.value = false;
+        });
+    });   
+
+    onUnmounted(() => {
+        pdfService.destroy();
+    });
+
+    watch(page, async (newPage) => {
+        if (suppressWatch)
+            return;
+
+        try {
+            await pdfService.setPage(newPage);
+        } catch (ex) {
+            console.error("Error changing page:", ex);
+        } finally {
+            suppressWatch = true;
+            page.value = pdfService.getPage();
+            nextTick(() => { suppressWatch = false; });
         }
+    });
 
-        const context:CanvasRenderingContext2D = (canvasReference.value  as HTMLCanvasElement).getContext('2d') as CanvasRenderingContext2D;
-        context.font = "20px Arial";
-        context.fillStyle = "rgb(139,0,0)"; // Dark red.
-        context.textAlign = "center";
+    const nextPage = async () => {
+        try {
+            await pdfService.nextPage();
+            suppressWatch = true;
+            page.value = pdfService.getPage();
+            nextTick(() => { suppressWatch = false; });
+        } catch (ex) {
+            console.error("Error navigating:", ex);
+        }
+    };
 
-        const width:number = (canvasReference.value  as HTMLCanvasElement).width/2; 
-        const height:number = (canvasReference.value  as HTMLCanvasElement).height/2;
+    const prevPage = async () => {
+        try {
+            await pdfService.prevPage();
+            suppressWatch = true;
+            page.value = pdfService.getPage();
+            nextTick(() => { suppressWatch = false; });
+        } catch (ex) {
+            console.error("Error navigating:", ex);
+        }
+    };
 
-        context.fillText(msg, width, height);
-    }
-            
-    function prevPage(): void {
-        pdfService.prevPage();
-        noPage.value = pdfService.getPage(); 
-    }
+    const zoomIn = async () => {
+        try {
+            await pdfService.zoomIn();
+        } catch (ex) {
+            console.error("Error zooming in:", ex);
+        }
+    };
 
-    function nextPage(): void {
-        pdfService.nextPage();
-        noPage.value = pdfService.getPage(); 
-    }
+    const zoomOut = async () => {
+        try {
+            await pdfService.zoomOut();
+        } catch (ex) {
+            console.error("Error zooming out:", ex);
+        }
+    };
 
-    function print(): void {
-        pdfService.print();
-    }
-
-    function scaleIN(): void {
-        pdfService.scaleIN();
-    }
-
-    function scaleOUT(): void {
-        pdfService.scaleOUT();
-    }
-
-    watch(noPage, function(newValue, oldValue) {
-        pdfService.setPage(newValue);
-        if (pdfService.getPage() != newValue)
-            noPage.value = pdfService.getPage();
-    })
- </script>
+    const print = async () => {
+        try {
+            await pdfService.print();
+        } catch (ex) {
+            console.error("Error printing:", ex);
+        }
+    };
+</script>
 
 <style scoped>
     .vrd_navigation {
-        list-style-type: none;
+        list-style: none;
         margin: 0;
         padding: 0;
-        overflow: hidden;
-        background-color: #333333;
-    }
-    .vrd_navigation_item_left {
-        float: left;
-    }
-    .vrd_navigation_item_right {
-        float: right;
-    }
-    .vrd_item {
-        float: left;
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        background: #333;
         color: white;
+    }
+
+    .vrd_navigation_item_left,
+    .vrd_navigation_item_right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .vrd_item {
+        background: transparent;
+        border: none;
+        color: white;
+        padding: 12px 16px;
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+    .vrd_item:hover,
+    .vrd_item:focus {
+        background: #111;
+    }
+
+    .vrd_item_input {
+        width: 4rem;
         text-align: center;
-        padding: 16px;
-        text-decoration: none;
+        border-radius: 4px;
+        appearance: textfield;
     }
-    .vrd_item_width {
-        width: 100px;
+
+    .vrd_item_input::-webkit-outer-spin-button,
+    .vrd_item_input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
-    .vrd_item:hover {
-        background-color: #111111;
+
+    .vrd_viewport {
+        background: #e2e2e2;
+        overflow: auto;
+        height: 70vh;
+        min-height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 0;
     }
-    .vrd_viewport{
-        background-color: rgb(226, 226, 226);
-        overflow-y: scroll;
-        width: auto;
-        height: 450px;
+
+    .vrd_error {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        color: #c0392b;
+        font-size: 1.1rem;
     }
-    .vrd_canvas {
-        padding: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
+
+    .vrd_loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        color: #fdf9f9;
+        font-size: 1.1rem;
     }
 </style>

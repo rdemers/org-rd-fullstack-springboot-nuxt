@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify"
 
 export default defineNuxtConfig({
- 
-    compatibilityDate: "2025-08-14",
-
-    ssr: false,
-    //ssr: true,
+    compatibilityDate: "2026-08-14",
+    ssr: false, // Springboot static server.
     
     devtools: {
      enabled: true,
@@ -37,8 +33,8 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         "public": {
-            "jwtURL": "http://localhost:8080/jwt",
-            "apiURL": "http://localhost:8080/api"
+            "apiURL"  : "http://localhost:8080/api",
+            "authURL" : "http://localhost:8080/auth"
         }
     },
 
@@ -57,8 +53,8 @@ export default defineNuxtConfig({
     },
 
     sourcemap: {
-        "server": true,
-        "client": true,
+        "server" : true,
+        "client" : true,
     },
  
     modules: [
@@ -108,6 +104,10 @@ export default defineNuxtConfig({
             template: {
                 transformAssetUrls,
             },
+        },
+
+        build: {
+            chunkSizeWarningLimit: 8192 // 8 Ko
         },
     },
 

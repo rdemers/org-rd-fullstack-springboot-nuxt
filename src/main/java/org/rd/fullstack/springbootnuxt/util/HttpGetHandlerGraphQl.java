@@ -39,7 +39,9 @@ import reactor.core.publisher.Mono;
 @Controller
 public class HttpGetHandlerGraphQl {
 
-    private static final Log logger = LogFactory.getLog(HttpGetHandlerGraphQl.class);
+    private static final Log logger = 
+        LogFactory.getLog(HttpGetHandlerGraphQl.class);
+
     private final WebGraphQlHandler graphQlHandler;
     private final ObjectMapper objectMapper;
 
@@ -54,8 +56,7 @@ public class HttpGetHandlerGraphQl {
             @RequestParam(name = "query") String query,
             @RequestParam(name = "operationName", required = false) String operationName,
             @RequestParam(name = "variables", required = false) String variablesJson,
-            @RequestHeader Map<String, String> headers
-    ) {
+            @RequestHeader Map<String, String> headers) {
         Locale locale = LocaleContextHolder.getLocale();
         HttpHeaders httpHeaders = new HttpHeaders();
         headers.forEach(httpHeaders::add);

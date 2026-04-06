@@ -14,37 +14,68 @@
   * limitations under the License.
   -->
 <template>
-    <v-row>
-        <v-col class="text-center">
-            <vrd-osl-logo/>
-            <blockquote class="blockquote">
-                {{$t('about.licence01')}}<br>
-                {{$t('about.licence02')}}<br>
-                {{$t('about.licence03')}}<br>
-                <br>
-                {{$t('about.licence04')}}<br>
-                <br>
-                {{$t('about.licence05')}}<br>
-                <br>
-                {{$t('about.licence06')}}<br>
-                {{$t('about.licence07')}}<br>
-                {{$t('about.licence08')}}<br>
-                <br>
-                <a href="http://www.apache.org/licenses/LICENSE-2.0" 
-                   target="_blank" rel="noopener noreferrer">{{$t('about.licence09')}}</a>
-                <br><br>
-                {{$t('about.licence10')}}<br>
-                {{$t('about.licence11')}}<br>
-                {{$t('about.licence12')}}<br>
-                {{$t('about.licence13')}}<br>
-                {{$t('about.licence14')}}
-            </blockquote>
-        </v-col>
-    </v-row>
+  <v-row justify="center" align="center" class="fill-height">
+    <v-col cols="12" md="10" lg="8" class="text-center">
+      <div class="mb-6"><vrd-osl-logo/></div>
+      <v-card flat color="transparent" class="mx-auto license-container">
+        <blockquote class="license-text text-body-2 text-medium-emphasis">
+          <p class="mb-4">
+            {{ t('about.licence-01') }}<br>
+            {{ t('about.licence-02') }}<br>
+            {{ t('about.licence-03') }}
+          </p>
+          <p class="mb-4">
+            {{ t('about.licence-04') }}
+          </p>
+          <p class="mb-4">
+            {{ t('about.licence-05') }}
+          </p>
+          <p class="mb-4">
+            {{ t('about.licence-06') }}<br>
+            {{ t('about.licence-07') }}<br>
+            {{ t('about.licence-08') }}
+          </p>
+          <p class="mb-6">
+            <v-btn
+              variant="text"
+              color="primary"
+              href="http://www.apache.org/licenses/LICENSE-2.0"
+              target="_blank"
+              rel="noopener noreferrer"
+              prepend-icon="mdi-file-certificate-outline"
+              class="text-none">
+              {{ t('about.licence-09') }}
+            </v-btn>
+          </p>
+          <p class="font-italic opacity-70">
+            {{ t('about.licence-10') }}<br>
+            {{ t('about.licence-11') }}<br>
+            {{ t('about.licence-12') }}<br>
+            {{ t('about.licence-13') }}<br>
+            {{ t('about.licence-14') }}
+          </p>
+        </blockquote>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
+    const { t } = useI18n();
 </script>
 
 <style scoped>
+    .license-container {
+        max-width: 700px;
+    }
+    .license-text {
+        line-height: 1.6;
+        border-left: 3px solid rgba(var(--v-theme-primary), 0.2);
+        padding-left: 24px;
+        text-align: left;
+        display: inline-block;
+    }
+    .opacity-70 {
+        opacity: 0.7;
+    }
 </style>

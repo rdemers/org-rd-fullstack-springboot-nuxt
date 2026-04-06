@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.dto;
 
 public class LoginRequest {
-
     private String username;
     private String password;
 

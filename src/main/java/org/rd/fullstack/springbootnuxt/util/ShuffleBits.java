@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
 public class ShuffleBits {
-	
 	public final static int USHORT_MIN_VALUE = 0;
 	public final static int USHORT_MAX_VALUE = 0xffff;
 	
@@ -88,7 +86,6 @@ public class ShuffleBits {
 	}
 	
 	private void mix32Fwd() {
-
 		// value - (INDEPENDANT de SeedA & SeedB).
 		int high, low;
 		high  = getUnShort((int)value>>16);
@@ -134,7 +131,6 @@ public class ShuffleBits {
 	}
 
 	private void mix32Rwd() {
-
 		// value - (INDEPENDANT de SeedA & SeedB).
 		int high, low;
 		high = getUnShort((int)value>>16);

@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import { PDFServiceCode } from "@/services/PDFServiceCode";
-export class PDFServiceException extends Error {
 
+export class PDFServiceException extends Error {
     private code: PDFServiceCode;
 
     constructor(code: PDFServiceCode, msg?: string) {
@@ -33,9 +32,9 @@ export class PDFServiceException extends Error {
 
     public getmessage(): string {
         return this.message;
-    }    
-
-    public override toString() {
-        return this.code + "/" + this.message;
     }
+
+    public override toString(): string {
+        return `${this.code} : ${this.message}`;
+  }
 }

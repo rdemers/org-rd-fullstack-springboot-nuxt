@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ import java.util.stream.Collectors;
 import javax.crypto.SecretKey;
 
 import org.rd.fullstack.springbootnuxt.dto.ERole;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,9 +58,9 @@ public class JwtUtils {
         this.CST_AUTHORITIES = null;
     }
 
-    public JwtUtils(@Value("${org.rd.fullstack.springbootnuxt.secret}") String secret,
-                    @Value("${org.rd.fullstack.springbootnuxt.expiration}") int expiration,
-                    @Value("${org.rd.fullstack.springbootnuxt.authorities}") String authorities) {
+    public JwtUtils(@Value("${org.rd.fullstack.springbootnnuxt.secret}") String secret,
+                    @Value("${org.rd.fullstack.springbootnnuxt.expiration}") int expiration,
+                    @Value("${org.rd.fullstack.springbootnnuxt.authorities}") String authorities) {
         super();
         this.CST_SECRET = secret;
         this.CST_EXPIRATION = expiration;
@@ -100,7 +100,6 @@ public class JwtUtils {
         return roles;
     }
 
-
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser()
@@ -135,7 +134,7 @@ public class JwtUtils {
         return jws.getPayload().toString();
     }
 
-private SecretKey getSigningKey() {
+    private SecretKey getSigningKey() {
         byte[] keyBytes = CST_SECRET.getBytes();
         return Keys.hmacShaKeyFor(keyBytes);
     }

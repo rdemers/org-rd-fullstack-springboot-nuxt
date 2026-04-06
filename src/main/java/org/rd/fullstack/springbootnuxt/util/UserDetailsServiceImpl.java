@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
 import java.util.List;
@@ -26,7 +25,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
-
     @Autowired
     private UserUtils userUtils;
 

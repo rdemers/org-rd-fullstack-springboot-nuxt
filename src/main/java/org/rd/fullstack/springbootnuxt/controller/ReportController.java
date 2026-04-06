@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.controller;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,9 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.rd.fullstack.springbootnuxt.dao.BookRepository;
-import org.rd.fullstack.springbootnuxt.dto.Book;
-import org.rd.fullstack.springbootnuxt.dto.BooksReport;
+import org.rd.fullstack.springbootnuxt.dao.InventoryRepository;
+import org.rd.fullstack.springbootnuxt.dto.InventoryView;
+import org.rd.fullstack.springbootnuxt.dto.InventsReport;
 import org.rd.fullstack.springbootnuxt.util.JasperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -61,9 +61,9 @@ import net.sf.jasperreports.json.data.JsonDataSource;
 @SecurityRequirement(name = "SecureAPI")
 public class ReportController {
 
-    static final String CST_TITLE            = "Beautiful books";
-    static final String CST_SUBTITLE         = "Beautiful books to collect";
-    static final String CST_REPORT_BOOKS_SRC = "jasper/book-report.jrxml";
+    static final String CST_TITLE            = "Inventory report";
+    static final String CST_SUBTITLE         = "Control and corroboration";
+    static final String CST_REPORT_BOOKS_SRC = "jasper/invent-report.jrxml";
     static final String CST_DATE_FORMAT      = "yyyy-MM-dd HH:mm:ss";
 
     public ReportController() {
@@ -71,12 +71,11 @@ public class ReportController {
     }
 
     @Autowired
-    private BookRepository bookRepository;
+    private InventoryRepository inventoryRepository;
 
-    @SuppressWarnings("null")
     @PreAuthorize("hasRole('ROLE_SELECT')")
-    @GetMapping(value = "/books-report", produces = { MediaType.APPLICATION_PDF_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    @Operation(summary = "Book List Report.", description = "jasper/book-report.jrxml")
+    @GetMapping(value = "/invents-report", produces = { MediaType.APPLICATION_PDF_VALUE, MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @Operation(summary = "Invents List Report.", description = "jasper/invents-report.jrxml")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Report created|OK."),
         @ApiResponse(responseCode = "401", description = "Authentication/Authorization required."),
@@ -86,7 +85,6 @@ public class ReportController {
     public ResponseEntity<byte[]> getBooksReport(@RequestHeader(HttpHeaders.ACCEPT) String mediaType,
                                                  @RequestParam(name="title", required = false) String title,
                                                  @RequestParam(name="sub-title", required = false) String subTitle) {
-        
         // Response.
         HttpHeaders headers = new HttpHeaders();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -98,8 +96,8 @@ public class ReportController {
             if ((mediaType == null) || (subTitle.length() == 0)) mediaType = MediaType.APPLICATION_PDF_VALUE;
             
             // Get report data.
-            List<Book> books = new ArrayList<Book>();
-            bookRepository.findAll().forEach(books::add);
+            List<InventoryView> invents = new ArrayList<InventoryView>();
+            inventoryRepository.findAllView().forEach(invents::add);
 
             // Setting up header (parameters).
             Map<String, Object> header = new HashMap<>();
@@ -114,15 +112,15 @@ public class ReportController {
             switch (mediaType) {
                 case MediaType.APPLICATION_PDF_VALUE:
                     headers.setContentType(MediaType.APPLICATION_PDF);
-                    generatePDF(baos, header, books);  
+                    generatePDF(baos, header, invents);  
                     break;
                 case MediaType.APPLICATION_JSON_VALUE:
                     headers.setContentType(MediaType.APPLICATION_JSON);
-                    generateJSON(baos, header, books, footer);
+                    generateJSON(baos, header, invents, footer);
                     break;
                 case MediaType.APPLICATION_XML_VALUE:
                     headers.setContentType(MediaType.APPLICATION_XML);
-                    generateXML(baos, header, books, footer);
+                    generateXML(baos, header, invents, footer);
                     break;
                 default:
                     throw new InvalidMediaTypeException(mediaType, MediaType.APPLICATION_PDF_VALUE  + "|" + 
@@ -130,12 +128,13 @@ public class ReportController {
                                                                    MediaType.APPLICATION_XML_VALUE);
             }
         } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.getMessage().getBytes(StandardCharsets.UTF_8), 
+                HttpStatus.INTERNAL_SERVER_ERROR);
         }   
-        return new ResponseEntity<byte[]> (baos.toByteArray(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
     }
 
-    private void generatePDF(ByteArrayOutputStream baos, Map<String, Object> parameters, List<Book> books) throws Exception {
+    private void generatePDF(ByteArrayOutputStream baos, Map<String, Object> parameters, List<InventoryView> books) throws Exception {
         String strJSONReport = new ObjectMapper().writeValueAsString(books);
         JsonDataSource datasource = new JsonDataSource(new java.io.ByteArrayInputStream(strJSONReport.getBytes("UTF-8")));
         JasperReport jasperReport = JasperUtils.compileReport(CST_REPORT_BOOKS_SRC, false);
@@ -143,13 +142,13 @@ public class ReportController {
         JasperUtils.exportToPdf(jasperPrint, baos);
     }
 
-    private void generateJSON(ByteArrayOutputStream baos, Map<String, Object> parameters, List<Book> books, Map<String, Object> footer) throws Exception {
-        BooksReport report = new BooksReport(Arrays.asList(parameters), books, Arrays.asList(footer));
+    private void generateJSON(ByteArrayOutputStream baos, Map<String, Object> parameters, List<InventoryView> books, Map<String, Object> footer) throws Exception {
+        InventsReport report = new InventsReport(Arrays.asList(parameters), books, Arrays.asList(footer));
         baos.write(new ObjectMapper().writeValueAsString(report).getBytes());
     }
 
-    private void generateXML(ByteArrayOutputStream baos, Map<String, Object> parameters, List<Book> books, Map<String, Object> footer) throws Exception {
-        BooksReport report = new BooksReport(Arrays.asList(parameters), books,  Arrays.asList(footer));
+    private void generateXML(ByteArrayOutputStream baos, Map<String, Object> parameters, List<InventoryView> books, Map<String, Object> footer) throws Exception {
+        InventsReport report = new InventsReport(Arrays.asList(parameters), books,  Arrays.asList(footer));
         baos.write("<?xml version=\"1.0\" encoding=\"UTF-8\">".getBytes());
         baos.write(new XmlMapper().writeValueAsString(report).getBytes());
     }

@@ -44,26 +44,36 @@
         </developer>
     </developers>
 
-    <properties>
-        <java.version>17</java.version>
+     <properties>
+        <java.version>21</java.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jasperreports.version>7.0.3</jasperreports.version>
-        <jaxb-api.version>2.3.1</jaxb-api.version>
-        <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
-        <jjwt.version>0.12.6</jjwt.version>
+        <!-- SpringBoot. -->
+        <spring.boot.version>4.0.4</spring.boot.version>
+        <springdoc.version>3.0.1</springdoc.version>
 
+        <!-- Tools. -->
         <maven-ant-plugin.version>3.1.0</maven-ant-plugin.version>
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
-        <maven-compile-plugin.version>3.14.0</maven-compile-plugin.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+        <jaxb-api.version>2.3.1</jaxb-api.version>
+        <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
+        
+        <!-- Others. -->
+        <jasperreports.version>7.0.6</jasperreports.version>
+        <jjwt.version>0.13.0</jjwt.version>
 
-        <spring.boot.version>3.5.7</spring.boot.version>
-        <springdoc.version>2.8.9</springdoc.version>
+        <!-- Skip test.
+        <maven.test.skip>true</maven.test.skip>
+            OR ... 
+            mvn clean install -DskipTests
+          -->
     </properties>
 
+    <!-- Spring Boot BOM. -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -77,7 +87,8 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- Starter dependencies -->
+
+        <!-- Spring Boot starters. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -85,14 +96,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-graphql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -106,22 +109,32 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
-        <!-- Standard/Application dependencies -->
-        <dependency> <!-- Voir: https://springdoc.org/ -->
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc.version}</version>
-        </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-core</artifactId>
         </dependency>
+         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
+
+        <!-- OpenAPI. -->
+        <!-- See: https://springdoc.org/. -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+
+        <!-- JasperSoft. -->
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
@@ -168,19 +181,23 @@
             <artifactId>jasperreports-pdf</artifactId>
             <version>${jasperreports.version}</version>
         </dependency>
+
+        <!-- Others. -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
         </dependency>
 
+        <!-- Missing JDK modules. -->
         <!-- JDK 9+ dependencies - No longer included with the JDK. -->
-        <dependency> <!-- JAXB API only -->
+        <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>${jaxb-api.version}</version>
         </dependency>
 
-        <!-- Runtime dependencies -->
+        <!-- Runtime dependencies. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -193,12 +210,12 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Test dependencies -->
+        <!-- Tests dependencies. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -210,11 +227,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.graphql</groupId>
-            <artifactId>spring-graphql-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
@@ -222,11 +234,14 @@
     </dependencies>
 
     <build>
+        <!-- Tests resources dependencies. -->
         <testResources>
             <testResource>
                 <directory>${project.basedir}/src/test/resources</directory>
             </testResource>
         </testResources>
+
+        <!-- Plugins dependencies. -->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -252,7 +267,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compile-plugin.version}</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <release>${java.version}</release>
                 </configuration>
@@ -269,7 +284,7 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <target>
+                            <target>  <!-- Nuxt/VueJS application. -->
                                 <ant antfile="${basedir}/build-web-app.xml">
                                     <target name="build-web-app"/>
                                 </ant>
@@ -289,6 +304,12 @@
                     <excludes>
                         <exclude>**/*IT_Tests.java</exclude>
                     </excludes>
+
+                    <!-- Ensure no parallel parameters are set. -->
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <parallel>none</parallel> 
+                    <threadCount>1</threadCount>
                 </configuration>
             </plugin>
             <plugin>
@@ -309,7 +330,7 @@
                         </goals>
                         <configuration>
                             <additionalProperties>
-                                <author>R. Demers; 2023.</author>
+                                <author>R. Demers; 2026.</author>
                                 <copyright>Réal Demers.</copyright>
                             </additionalProperties>
                         </configuration>

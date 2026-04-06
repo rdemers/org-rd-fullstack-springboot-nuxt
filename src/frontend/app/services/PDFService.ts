@@ -12,180 +12,224 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-import type Session                   from "@/types/Session";
-import { type PDFDocumentLoadingTask, 
-         type PDFDocumentProxy, 
-         type PDFPageProxy, 
-         type PageViewport }          from "pdfjs-dist";
+import {
+    type PDFDocumentLoadingTask,
+    type PDFDocumentProxy,
+    type PDFPageProxy,
+    type PageViewport
+}                               from "pdfjs-dist";
 
-import { SessionStore }               from "@/store/SessionStore";
-import { PDFServiceCode }             from "@/services/PDFServiceCode";
-import { PDFServiceException }        from "@/services/PDFServiceException";
+import * as pdfjs               from "pdfjs-dist";
 
-import { fromByteArray }              from "base64-js";
-import printJS                        from "print-js";
-import * as pdfjs                     from 'pdfjs-dist';
+import { PDFServiceCode }       from "@/services/PDFServiceCode";
+import { PDFServiceException }  from "@/services/PDFServiceException";
+import type Session             from "@/types/Session";
+import { SessionStore }         from "@/store/SessionStore";
 
-// Webpack allows to initialize correctly.
-// pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker.
-import "pdfjs-dist/webpack"; 
+import printJS                  from "print-js";
+import { fromByteArray }        from "base64-js";
+import { GlobalWorkerOptions }  from "pdfjs-dist";
+import pdfWorker                from "pdfjs-dist/build/pdf.worker?url";
 
-// Old code.
-//if (typeof window !== "undefined" && "Worker" in window) {
-//    pdfjs.GlobalWorkerOptions.workerPort = new Worker(
-//      new URL("./build/pdf.worker.js", import.meta.url)
-//    );
-//  }
-//const pdfjs = require("pdfjs-dist/webpack");
+export interface PDFServiceOptions {
+    pdfSource: string;
+    title?: string;
+    subtitle?: string;
+    useAuthorization?: boolean;
+}
 
 export class PDFService {
+    private readonly MIN_SCALE   = 0.4;
+    private readonly MAX_SCALE   = 4.0;
+    private readonly ZOOM_FACTOR = 1.25;
 
-    private pdfSource:string;
-    private numPages:number;
-    private currentPage:number;
-	private scale:number;
+    private pdfSource: string;
+    private title?: string;
+    private subtitle?: string;
+    private useAuthorization: boolean;
 
-    private canvas?:HTMLCanvasElement;
-	private documentProxy?:PDFDocumentProxy;
+    private documentProxy?: PDFDocumentProxy;
+    private canvas?: HTMLCanvasElement;
 
-    constructor(pdfSource:string) {
+    private numPages = 0;
+    private currentPage = 1;
+    private scale = 1.0;
 
-        this.pdfSource   = pdfSource;
-        this.numPages    = 0;
-        this.currentPage = 1;
-        this.scale       = 1.0;
+    private rendering = false;
+    private pendingRender = false;
+    private static workerInitialized = false;
 
-        this.canvas        = undefined;
-        this.documentProxy = undefined;
+    constructor(options: PDFServiceOptions) {
+        if (!PDFService.workerInitialized) {
+            GlobalWorkerOptions.workerSrc = pdfWorker;
+            PDFService.workerInitialized = true;
+        }
+        this.pdfSource        = options.pdfSource;
+        this.title            = options.title;
+        this.subtitle         = options.subtitle;
+        this.useAuthorization = options.useAuthorization ?? true;
     }
 
-    public async init(canvas:HTMLCanvasElement) : Promise<void> {
-
-        // Know our canvas.
-        this.canvas = canvas;
-
-        if (pdfjs === undefined) {
-            console.log("pdfjs is not defined. PDF.JS is not very functional on Node.");
-            return;
-        }
-
-        if (! this.pdfSource)
-        {
-            console.log("No source defined... Demo mode?");
-            return;
-        }
-
-        // Obtain the document in PDF format.
-        // The HTTP request is secure. We need to pass our session token.
-        const session:Session = SessionStore().getSession;
-        const loadingTask:PDFDocumentLoadingTask = pdfjs.getDocument({
-            url:this.pdfSource,
-            httpHeaders: {
-                Authorization: session.jwtToken,
-                Accept: "application/pdf",
-            }
-        });
-
-        // Complete initialization.
-        this.documentProxy = await loadingTask.promise;
-        this.numPages      = this.documentProxy.numPages;
-    }
-
-    public async render() : Promise<void> {
-
-        if (! this.pdfSource) {
+    public async init(canvas: HTMLCanvasElement): Promise<void> {
+        if (!this.pdfSource) {
             throw new PDFServiceException(PDFServiceCode.NO_SOURCE);
         }
-        
-        if (this.documentProxy === undefined) {
+
+        if (pdfjs === undefined) {
             throw new PDFServiceException(PDFServiceCode.NO_NODE_SUPPORTED);
         }
 
-        // Scale adjustment.
-	    const pageProxy:PDFPageProxy = await (this.documentProxy as PDFDocumentProxy).getPage(this.currentPage);
-        const viewport:PageViewport = pageProxy.getViewport({scale: this.scale});
+        if (this.documentProxy) {
+            this.destroy();
+        }
+        
+        this.canvas = canvas;
 
-        // Apply the dimensions to our <canvas> element.
-	    const context:CanvasRenderingContext2D = (this.canvas as HTMLCanvasElement).getContext('2d') as CanvasRenderingContext2D;
-	    (this.canvas as HTMLCanvasElement).height = viewport.height;
-	    (this.canvas as HTMLCanvasElement).width = viewport.width;
+        const url = new URL(this.pdfSource);
+        if (this.title) {
+            url.searchParams.set("title", this.title);
+        }
+        if (this.subtitle) {
+            url.searchParams.set("sub-title", this.subtitle);
+        }
 
-        // Render to the canvas.
-        pageProxy.render({canvasContext: context, viewport: viewport, canvas: this.canvas as HTMLCanvasElement});
+        const httpHeaders: Record<string, string> = {
+            Accept: "application/pdf"
+        };
+
+        if (this.useAuthorization) {
+            const session: Session = SessionStore().getSession;
+            if (session.jwtToken) {
+                httpHeaders.Authorization = "Bearer " + session.jwtToken;
+            }
+        }
+
+        const loadingTask: PDFDocumentLoadingTask = pdfjs.getDocument({
+            url: url.toString(),
+            httpHeaders
+        });
+
+        this.documentProxy = await loadingTask.promise;
+        this.numPages = this.documentProxy.numPages;
+        await this.safeRender();
     }
 
-    public prevPage() : void {
+    public destroy(): void {
+        this.documentProxy?.destroy();
+        this.documentProxy = undefined;
 
-        if (this.documentProxy === undefined || this.currentPage <= 1) {
-            return;
+        if (this.canvas) {
+            const context = this.canvas.getContext("2d");
+            if (context) {
+                context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            }
+            this.canvas.width = 0;
+            this.canvas.height = 0;
+            this.canvas = undefined;
         }
-        this.currentPage--;
-        this.render();
+
+        this.rendering = false;
+        this.pendingRender = false;
     }
-    
-    public nextPage() : void {
 
-        if (this.documentProxy === undefined || this.currentPage >= this.numPages) {
+    private async render(): Promise<void> {
+        if (!this.documentProxy || !this.canvas) {
+            throw new PDFServiceException(PDFServiceCode.NO_NODE_SUPPORTED);
+        }
+
+        const page: PDFPageProxy = await this.documentProxy.getPage(this.currentPage);
+        const viewport: PageViewport = page.getViewport({ scale: this.scale });
+        const context = this.canvas.getContext("2d");
+        if (!context)
+            return;
+
+        this.canvas.width = viewport.width;
+        this.canvas.height = viewport.height;
+
+        const renderTask = page.render({
+            canvasContext: context,
+            viewport,
+            canvas: this.canvas
+        });
+
+        await renderTask.promise;
+    }
+
+    private async safeRender(): Promise<void> {
+        if (this.rendering) {
+            this.pendingRender = true;
             return;
         }
+
+        this.rendering = true;
+        try {
+            await this.render();
+        } finally {
+            this.rendering = false;
+            if (this.pendingRender) {
+                this.pendingRender = false;
+                await this.safeRender();
+            }
+        }
+    }
+
+    public async nextPage(): Promise<void> {
+        if (this.currentPage >= this.numPages)
+            return;
+
         this.currentPage++;
-        this.render();
+        await this.safeRender();
     }
 
-    public getNumPages() : number {
-        return this.numPages;
+    public async prevPage(): Promise<void> {
+        if (this.currentPage <= 1)
+            return;
+
+        this.currentPage--;
+        await this.safeRender();
     }
-    
-    public getPage() : number {
+
+    public async setPage(page: number): Promise<void> {
+        if (page < 1 || page > this.numPages || page === this.currentPage)
+            return;
+
+        this.currentPage = page;
+        await this.safeRender();
+    }
+
+    public async zoomIn(): Promise<void> {
+        this.scale = Math.min(this.scale * this.ZOOM_FACTOR, this.MAX_SCALE);
+        await this.safeRender();
+    }
+
+    public async zoomOut(): Promise<void> {
+        this.scale = Math.max(this.scale / this.ZOOM_FACTOR, this.MIN_SCALE);
+        await this.safeRender();
+    }
+
+    public async print(): Promise<void> {
+        if (!this.documentProxy)
+            return;
+
+        const data = await this.documentProxy.getData();
+        const base64 = fromByteArray(data);
+
+        if (typeof window !== "undefined") {
+            printJS({
+                printable: base64,
+                type: "pdf",
+                base64: true
+            });
+        }
+    }
+
+    public getPage(): number {
         return this.currentPage;
     }
 
-    public setPage(noPage:number) : void {
-
-        if (this.documentProxy === undefined || noPage < 1 ||
-            noPage > this.numPages           || this.currentPage == noPage) {
-            return;
-        }
-        this.currentPage = noPage;
-        this.render();
-        return;
-    }
-
-    public print() : void {
-
-        if (this.documentProxy === undefined) {
-            return;
-        }
-
-        // The next line allows only the current page.
-        // printJS((this._canvas as HTMLCanvasElement).id,"html");
-
-        // The whole document.
-        (this.documentProxy as PDFDocumentProxy).getData().then((arrayBuffer: Uint8Array) => {
-            const pdfBase64Source:string = fromByteArray(arrayBuffer);
-            if (typeof window !== "undefined") {
-               printJS({printable:pdfBase64Source, type: "pdf", base64: true})
-            }
-        });
-    }
-
-    public scaleIN() : void {
-
-        if (this.documentProxy === undefined) {
-            return;
-        }   
-        this.scale *= 4 / 3;
-        this.render();
-    }
-
-    public scaleOUT() : void {
-
-        if (this.documentProxy === undefined) {
-            return;
-        }      
-        this.scale *= 2 / 3;
-        this.render();
+    public getNumPages(): number {
+        return this.numPages;
     }
 }

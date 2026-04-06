@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.dto;
 
 public enum ERole {
     ROLE_SELECT,
     ROLE_INSERT,
     ROLE_UPDATE,
-    ROLE_DELETE
+    ROLE_DELETE,
+    FACTOR_PASSWORD // is a GrantedAuthority used to indicate that a user has successfully 
+                    // completed the initial password authentication step as part of a multi-factor 
+                    // authentication (MFA) flow. It was introduced in Spring Security 7 to provide
+                    // native support for MFA.
 }

@@ -1,10 +1,61 @@
 {
     "common" : {
         "button" : {
-            "login"  : "Login",
+            "edit"   : "Modifier",
+            "delete" : "Supprimer",
             "cancel" : "Annuler",
-            "ok"     : "Ok"
+            "ok"     : "Ok",
+            "add"    : "Ajouter",
+            "action" : "Action",
+            "report" : "Rapport"
+        },
+        "message": {
+            "create-success" : "Création réussie !",
+            "update-success" : "Modifications enregistrées !",
+            "delete-success" : "Élément supprimé avec succès.",
+            "select-failed"  : "Erreur lors de la lecture des données.\n Message du serveur: {message}.",
+            "create-failed"  : "Échec de la création de l'élément.\n Message du serveur: {message}.",
+            "update-failed"  : "Échec de la mise à jour de l'élément.\n Message du serveur: {message}.",
+            "delete-failed"  : "Échec de la suppression de l'élément.\n Message du serveur: {message}."
+        },
+        "label" : {
+            "action"         : "Action",
+            "confirmation"   : "Confirmation",
+            "no-data"        : "Aucune donnée disponible",
+            "ask-delete"     : "Êtes-vous sûr de vouloir supprimer cet élément ?",
+            "all"            : "Tous",
+            "items-per-page" : "Éléments par page",
+            "of"             : "de"
+        },
+        "alert" : {
+            "title" : "Exception interne",
+            "text"  : "Une erreur est survenue en accédant les services."
+        },
+        "rule" : {
+            "chars"               : "Caractères.",
+            "required"            : "Le champ {field} est obligatoire",
+            "integer"             : "Le champ {field} doit être entier",
+            "min"                 : "{field} doit contenir au moins {min} caractères",
+            "max"                 : "{field} doit contenir au plus {min} caractères",
+            "positive"            : "Le montant doit être positif",
+            "invalid"             : "Format invalide",
+            "precision"           : "Maximum 2 décimales",
+            "invalid-amount"      : "Montant invalide (ex: 1234,56)",
+            "multiple-decimals"   : "Un seul séparateur décimal autorisé",
+            "letters-not-allowed" : "Les lettres ne sont pas autorisées",
+            "max-decimals"        : "Maximum {decimals} décimales"
         }
+    },
+    "layout" : {
+        "theme-light"    : "Clair",
+        "theme-dark"     : "Foncé",
+        "home"           : "Bienvenue",
+        "database"       : "Base de données",
+        "infrastructure" : "Infrastructure",
+        "persons"        : "Personnes",
+        "products"       : "Produits",
+        "inventories"    : "Inventaires",
+        "about"          : "A propos"
     },
     "login" : {
         "alert" : {
@@ -12,87 +63,87 @@
             "text"  : "Votre usager/mot de passe est invalide."
         }, 
         "title"       : "Fenêtre d'authentification",       
-        "information" : "Cette application est sécurisée. Utiliser les comptes suivants: login/password : root/root ou support/support ou guest/guest.",
+        "information" : "Cette application est sécurisée.",
         "login"       : "login",
-        "password"    : "mot de passe"
-    },
-    "layout" : {
-        "home"       : "Bienvenue",
-        "books"      : "Livres",
-        "graphql"    : "GraphQL (Cache)",
-        "scratchpad" : "ScratchPad (ui)",
-        "about"      : "A propos"
+        "password"    : "mot de passe",
+        "required"    : "Le champ est obligatoire"
     },
     "index" : {
-        "welcome"  : "Bienvenue au Fullstack - SPRINGBOOT/NUXT",
-        "sommaire" : "Cette application propose une approche pour le développement d'application WEB et présente un exemple concret de gestion de données. Have fun !!!",
-        "techno"   : "Les technologies utilisées par cette application sont les suivantes:",
-        "techno1"  : "Spring Boot - Facilite la création d'applications JAVA/Services/REST.",
-        "techno2"  : "Nuxt - Le framework Vue intuitif.",
-        "techno3"  : "Vue - Le framework JavaScript progressif.",
-        "techno4"  : "Vuetify - Composantes UX/UI pour Vue.",
-        "scm"      : "Github source"
+        "welcome"   : "Bienvenue au Fullstack - SPRINGBOOT/NUXT",
+        "sommaire"  : "Cette application offre les bases essentielles pour travailler Nuxt. Have fun !!! ",
+        "techno"    : "Les technologies utilisées par cette application sont les suivantes:",
+        "techno-01" : "Spring Boot - Framework pour JAVA/Services/REST.",
+        "techno-02" : "Nuxt - Le framework Vue intuitif.",
+        "techno-03" : "Vue - Le framework JavaScript progressif.",
+        "techno-04" : "Vuetify - Composantes UX/UI pour Vue.",
+        "scm"       : "Source Github"
     },
-    "book" : {
-        "alert" : {
-            "title" : "Exception interne",
-            "text"  : "Une erreur est survenue en accédant les services."
-        },
-        "rule" : {
-            "rule1"   : "Vous devez spécifier une valeur pour ",
-            "rule2-0" : " doit avoir une longueur minimale de ",
-            "rule2-1" : " caractères."
-        }, 
+    "person" : {
         "id"          : "ID",
-        "title"       : "Titre",
+        "firstname"   : "Prénom",
+        "lastname"    : "Nom",
+        "balance"     : "Solde",
+        "title": {
+            "add": "Ajouter une personne",
+            "edit": "Modifier la personne"
+        }
+    },
+    "product" : {
+        "id"          : "ID",
+        "code"        : "Code",
         "description" : "Description",
-        "askdelete"   : "Désirez-vous vraiment détruire cet enregistrement ?"
+        "price"       : "Prix",
+        "title": {
+            "add": "Ajouter un produit",
+            "edit": "Modifier le produit"
+        }
     },
-    "ui" : {
-        "title"      : "ScratchPad présente quelques composantes UI",
-        "icon_title" : "FontAwesome icon.",
-        "icon_text"  : "Exemple d'utilisation d'icons externes. FontAwesome : https://fontawesome.com. Ces icons peuvent être ajustés en fonction de vos besoins : https://fontawesome.com/docs/web/style/size.",
-        "slot_title" : "Utilisation d'une SLOT à l'intérieure d'une composante.",
-        "slot_text"  : "Il est possible d'utiliser une SLOT pour activer une sous-composante à l'intérieur d'une composante principale.",
-        "pdf_title"  : "Une composante WEB pour voir un PDF.",
-        "pdf_text"   : "La création d'une composante WEB (ici voir un PDF) nécessite de limiter l'utilisation d'un Framework afin de réduire les dépendances de votre composante."
-    },
-    "cache" : {
-        "title"      : "GraphQL",
-        "icon_title" : "GraphQL.",
-        "icon_text"  : "GraphQL.",
-        "slot_title" : "GraphQL.",
-        "slot_text"  : "GraphQL.",
-        "pdf_title"  : "GraphQL.",
-        "pdf_text"   : "GraphQL."
+    "inventory" : {
+        "id"            : "ID",
+        "product-code"  : "Code du produit",
+        "product-descr" : "Description du produit",
+        "qty"           : "Quantité",
+        "title": {
+            "add" : "Ajouter à l'inventaire",
+            "edit": "Modifier l'inventaire"
+        },
+        "report" : {
+            "title"    : "Rapport d'inventaire",
+            "subtitle" : "Contrôle et corroboration"
+        }
     },
     "about" : {
-        "licence01" : "Licence Apache",
-        "licence02" : "Version 2.0, janvier 2004",
-        "licence03" : "http://www.apache.org/licenses/",
-        "licence04" : "CONDITIONS GÉNÉRALES D'UTILISATION, DE REPRODUCTION ET DE DISTRIBUTION",
-        "licence05" : "Copyright 2023, 2024, 2025 - Réal Demers",
-        "licence06" : "Licence sous la licence Apache, version 2.0 (la 'Licence');",
-        "licence07" : "vous ne pouvez utiliser ce fichier qu'en conformité avec la Licence.",
-        "licence08" : "Vous pouvez obtenir une copie de la Licence sur",
-        "licence09" : "Licence Apache",
-        "licence10" : "Sauf si requis par la loi applicable ou convenu par écrit, logiciel",
-        "licence11" : "distribué sous la licence est distribué sur une BASE 'EN L'ÉTAT'",
-        "licence12" : "SANS GARANTIE OU CONDITION D'AUCUNE SORTE, expresse ou tacite.",
-        "licence13" : "Voir la licence pour la langue spécifique régissant les autorisations et",
-        "licence14" : "limitations sous la Licence."
+        "licence-01" : "Licence Apache",
+        "licence-02" : "Version 2.0, janvier 2004",
+        "licence-03" : "http://www.apache.org/licenses/",
+        "licence-04" : "CONDITIONS GÉNÉRALES D'UTILISATION, DE REPRODUCTION ET DE DISTRIBUTION",
+        "licence-05" : "Copyright 2023 - Réal Demers",
+        "licence-06" : "Licence sous la licence Apache, version 2.0 (la 'Licence');",
+        "licence-07" : "vous ne pouvez utiliser ce fichier qu'en conformité avec la Licence.",
+        "licence-08" : "Vous pouvez obtenir une copie de la Licence sur",
+        "licence-09" : "Licence Apache",
+        "licence-10" : "Sauf si requis par la loi applicable ou convenu par écrit, logiciel",
+        "licence-11" : "distribué sous la licence est distribué sur une BASE 'EN L'ÉTAT'",
+        "licence-12" : "SANS GARANTIE OU CONDITION D'AUCUNE SORTE, expresse ou tacite.",
+        "licence-13" : "Voir la licence pour la langue spécifique régissant les autorisations et",
+        "licence-14" : "limitations sous la Licence."
     },
     "error" : {
-        "title"     : "Fenêtre d'exception",
-        "exception" : "Exception applicative",
-        "message"   : "Retour à la page d'accueil",
-        "msg_error" : "Erreur interne. Appeler le support."
+        "title"       : "Fenêtre d'exception",
+        "exception"   : "Exception applicative",
+        "detail"      : "Détails Technique (Stacktrace)",
+        "status-code" : "Code statut",
+        "go-home"     : "Retour à la page d'accueil",
+        "msg-error"   : "Erreur interne. Appeler le support.",
+        "unknown"     : "Erreur inconnue."
     },
     "vrd-pdfviewer" : {
-        "page"                 : "Page ",
-        "of"                   : " de ",
-        "ex_no_source"         : "Aucune source définie !",
-        "ex_no_node_supported" : "Node n'est pas supporté !",
-        "ex_unknown"           : "Exception inconnue"
+        "page"              : "Page ",
+        "of"                : " de ",
+        "loading"           : "Chargement...",
+        "no-canvas"         : "Canvas non supporté.",
+        "no-source"         : "Aucune source définie.",
+        "no-node-supported" : "Node n'est pas supporté.",
+        "unknown"           : "Exception inconnue."
     }
 }

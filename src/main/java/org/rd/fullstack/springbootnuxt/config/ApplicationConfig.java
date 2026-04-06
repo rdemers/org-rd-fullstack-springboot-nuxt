@@ -13,24 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.config;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EntityScan({"org.rd.fullstack.springbootnuxt.dto"})
-@ComponentScan({"org.rd.fullstack.springbootnuxt.controller"})
+@ComponentScan({"org.rd.fullstack.springbootnuxt.controller", "org.rd.fullstack.springbootnuxt.srv"})
 @EnableJpaRepositories({"org.rd.fullstack.springbootnuxt.dao"})
-public class ApplicationConfig {
-
-    public ApplicationConfig() {
-        super();
-    }
-
-    // Nothing in particular.
-    // It is always possible to create a few beans for your application.
-}
+public class ApplicationConfig {}

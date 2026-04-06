@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -41,9 +40,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import jakarta.servlet.Filter;
 
 @Configuration
@@ -55,7 +51,7 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
         "/app/**",          // Our Nuxt/Vue app.
-        "/jwt/**",          // JWT token management and generation.
+        "/auth/**",         // JWT token management and generation.
         "/swagger-ui/**",   // API implementation through the use of Swagger.
         "/graphql/**",      // GraphQL API implementation. 
         "/graphiql/**",     // GraphQL API implementation.
@@ -126,43 +122,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    WebMvcConfigurer forwardToIndex() {
-        return new WebMvcConfigurer() {
-            @Override
-            @SuppressWarnings("null")
-            public void addViewControllers(ViewControllerRegistry registry) {
-
-                // To access Swagger UX/UI interface.
-                registry
-                        .addViewController("/swagger-ui") 
-                        .setViewName("redirect:/swagger-ui/index.html");
-                
-                // To access Nuxt UX/UI interface.
-                // ----------------------------------------------------------------------
-                // @EnableWebMvc annotation switch off all the things that Spring Boot does for you in WebMvcAutoConfiguration. 
-                // You could remove that annotation, or you could add back the view controller that you switched off.
-                //
-                // IMPORTANT (SSR)
-                // Must be synchronize with the configuration of Nuxt/Vue JS application.
-                // See the following files :
-                // - src/frontend/nuxt.config.ts
-                // - src/frontend/plugins/vuetify.ts
-                registry
-                        .addViewController("/favicon.ico")
-                        .setViewName("redirect:/app/favicon.ico");
-                registry
-                        .addViewController("/app")                        
-                        .setViewName("redirect:/app/index.html");
-                registry
-                        .addViewController("/app/login")                        
-                        .setViewName("redirect:/app/login/index.html");
-            }
-        };
-    }
-
-    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        
         http.cors(withDefaults());
 
         http.csrf(csrf -> csrf

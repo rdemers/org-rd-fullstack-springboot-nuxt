@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
 import java.util.Collection;
@@ -21,12 +20,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.rd.fullstack.springbootnuxt.dto.User;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserDetailsImpl implements UserDetails {
-
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;

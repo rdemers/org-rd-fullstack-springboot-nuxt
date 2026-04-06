@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
 import java.io.IOException;
@@ -44,8 +43,8 @@ public class AuthentificationTokenFilter extends OncePerRequestFilter {
 
     private static final String  CST_AUTHORIZATION_HEADER = "Authorization";
     private static final Pattern CST_BEARER_PATTERN       = Pattern.compile("^Bearer (.+?)$"); // https://regex101.com/.
-    private static final String  CST_API_URL_PATH         = "/api/**";    // URL for books API.
-    private static final String  CST_REPORT_URL_PATH      = "/report/**"; // URL for books report.
+    private static final String  CST_API_URL_PATH         = "/api/**";    // URL for API.
+    private static final String  CST_REPORT_URL_PATH      = "/report/**"; // URL for report.
     private static final String  CST_GRAPHPQL_URL_PATH    = "/graphql**"; // URL for GrapQL query.
     private static final String  CST_HEALTH_URL_PATH      = "/health/**"; // URL for health check.
 
@@ -111,7 +110,7 @@ public class AuthentificationTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            logger.debug("The request does not have a valid JWT token. The exception is: {}", ex);
+            logger.debug("The request does not have a valid JWT token. The exception is: {}.", ex);
         }
 
         filterChain.doFilter(request, response);

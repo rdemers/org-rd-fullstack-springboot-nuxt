@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { jwtApi }        from "@/services/HTTPService";
+import { apiAuth }       from "@/services/HTTPService";
 import type LoginRequest from "@/types/LoginRequest";
 import { SessionStore }  from "@/store/SessionStore";
 
 class AuthentificationService {
 
     public doLogin(loginRequest:LoginRequest) : Promise<any> {
-        return jwtApi.post("/token", loginRequest);
+        return apiAuth.post("/token", loginRequest);
     }
 
     public doLogout(): boolean {
@@ -33,6 +32,5 @@ class AuthentificationService {
     }
 }
 
-// Singleton.
 const authentificationService: AuthentificationService = new AuthentificationService();
 export default authentificationService;

@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import axios from "axios"
+import axios from "axios";
 
 export default defineNuxtPlugin(nuxtApp => {
     return {
@@ -27,4 +26,4 @@ export default defineNuxtPlugin(nuxtApp => {
             }
         }
     }
-})
+});

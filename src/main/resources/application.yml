@@ -1,5 +1,5 @@
 #
-# R. Demers 2023.
+# R. Demers 2026.
 #
 server:
   shutdown: graceful
@@ -12,43 +12,37 @@ management:
     web:
       exposure:
         include: "info,health,prometheus"
-#
-logging: 
-  file:
-    name: log/springboot-nuxt-log.json
-  structured: 
-    format:
-      # console: ecs
-      file: ecs
-    ecs:
-      service:
-        name: org.rd.fullstack.springboot-nuxt
-        version: unspecified
-        environment: DEV
-        node-name: DEV
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 #
 spring:
   main:
     cloud-platform: kubernetes
+#
   lifecycle:
     timeout-per-shutdown-phase: 45s
-  h2:
-    console:
-      enabled: false # Doesn't work well with Spring/Security.
+#
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
+    url: jdbc:hsqldb:mem:stagingdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
     username: sa
     password:
+#
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      # data-locations: classpath:data.sql   # optional
+#
   jpa:
+    # database-platform: org.hibernate.dialect.HSQLDialect
+    open-in-view: false
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        ddl-auto: update
-  graphql:
-    graphiql:
-      enabled: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
 #
 org:
   rd:
@@ -57,4 +51,17 @@ org:
         secret: the.beautiful.secret.key.to.change
         expiration: 30000
         authorities: rd.roles
+#
+logging:
+  file:
+    name: log/springboot-nuxt.log
+  structured:
+    format:
+      console: ecs
+    ecs:
+      service:
+        name: org.rd.fullstack.springboot-nuxt
+        version: unspecified
+        environment: DEV
+        node-name: DEV
 #

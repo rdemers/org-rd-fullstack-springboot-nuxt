@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
 import org.slf4j.Logger;
@@ -27,7 +26,8 @@ import graphql.schema.DataFetchingEnvironment;
 
 public class ExceptionHandlerGraphQL extends DataFetcherExceptionResolverAdapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerGraphQL.class);
+    private static final Logger logger = 
+        LoggerFactory.getLogger(ExceptionHandlerGraphQL.class);
 
     public ExceptionHandlerGraphQL() {
         super();

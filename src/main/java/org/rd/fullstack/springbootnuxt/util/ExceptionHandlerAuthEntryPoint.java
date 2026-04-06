@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.util;
 
 import java.io.IOException;
@@ -28,8 +27,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ExceptionHandlerAuthEntryPoint implements AuthenticationEntryPoint {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerAuthEntryPoint.class);
+    private static final Logger logger = 
+        LoggerFactory.getLogger(ExceptionHandlerAuthEntryPoint.class);
 
     public ExceptionHandlerAuthEntryPoint() {
         super();
@@ -38,7 +37,7 @@ public class ExceptionHandlerAuthEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-        logger.debug("Exception - Unauthorized access: {}", authException.getMessage());
+        logger.debug("Exception - Unauthorized access: {}.", authException.getMessage());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Exception - Unauthorized access.");
     }
 }

@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// Update the import path to the correct relative location
 import { SessionStore } from "@/store/SessionStore";
 
 export default defineNuxtRouteMiddleware((to, from) => {
@@ -24,5 +22,4 @@ export default defineNuxtRouteMiddleware((to, from) => {
         (! SessionStore().isActiveSession())) {
         return navigateTo(authPage, {replace:true});
     }
-
 });

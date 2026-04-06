@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.rd.fullstack.springbootnuxt.controller;
 
 import org.rd.fullstack.springbootnuxt.dto.LoginRequest;
@@ -39,7 +38,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/jwt")
+@RequestMapping("/auth")
 @Tag(name = "AuthController", description = "Application controller for authentication & authorization.")
 public class AuthController {
 

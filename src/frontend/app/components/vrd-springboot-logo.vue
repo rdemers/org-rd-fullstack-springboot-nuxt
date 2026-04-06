@@ -22,7 +22,6 @@
 
 <style scoped>
     .springboot-logo {
-        height: 180px;
-        width: 180px;
+        height: 120px;
     }
 </style>

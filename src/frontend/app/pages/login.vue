@@ -14,74 +14,80 @@
   * limitations under the License.
   -->
 <template>
-    <v-row align="center" justify="center">
-        <v-card max-width="500">
-            <v-alert v-if=isErrorLogin color="error" icon="$error" 
-                     :title="$t('login.title')"  :text="$t('login.alert.text')"/>
-            <v-card-title align="center" primary-title>{{$t('login.title')}}</v-card-title>
-            <v-card-text align="center">{{$t('login.information')}}</v-card-text>
-            <v-divider/>
-            <v-card-text>
-                <v-form>
-                    <v-text-field prepend-icon="mdi-account" id="login" name="login"    
-                                  :label="$t('login.login')" type="text" v-model="loginRequest.username"></v-text-field>
-                    <v-text-field prepend-icon="mdi-lock" id="password" name="password" 
-                                  :label="$t('login.password')" type="password" v-model="loginRequest.password"></v-text-field>
-                </v-form>
-            </v-card-text>
-            <v-card-actions>
-                <v-spacer/>
-                <v-progress-circular v-if=isActionDisabled indeterminate color="primary"/>
-                <v-btn color="success" class="mx-2" :disabled=isActionDisabled flat @click="doLogin">{{$t('common.button.login')}}</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-row>
+  <v-dialog v-model="dialog" max-width="440" persistent>
+    <v-card rounded="lg">
+      <v-card-title class="d-flex align-center justify-space-between pt-5 px-5">
+        <div class="d-flex align-center gap-2">
+          <v-icon icon="mdi-account-circle" color="primary"/>
+          {{ $t('login.title') }}
+        </div>
+      </v-card-title>
+      <v-card-subtitle class="px-5 pb-2">
+        {{ $t('login.information') }}
+      </v-card-subtitle>
+      <v-alert
+        v-if="isErrorLogin" type="error" variant="tonal"
+                            class="mx-4 mb-2" density="compact" :text="$t('login.alert.text')"/>
+      <v-card-text class="px-5">
+        <v-form ref="formRef" @submit.prevent="doLogin">
+          <v-text-field v-model="loginRequest.username" prepend-inner-icon="mdi-account"
+                        :label="$t('login.login')" type="text" variant="outlined" density="comfortable"
+                        :rules="[v => !!v || $t('login.required')]" class="mb-3"/>
+          <v-text-field v-model="loginRequest.password" prepend-inner-icon="mdi-lock"
+                        :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                        :label="$t('login.password')"
+                        :type="showPassword ? 'text' : 'password'" variant="outlined" density="comfortable"
+                        :rules="[v => !!v || $t('login.required')]"
+                        @click:append-inner="showPassword = !showPassword"/>
+        </v-form>
+      </v-card-text>
+      <v-card-actions class="px-5 pb-5">
+        <v-btn type="submit" color="primary" variant="flat" block
+          :loading="isActionDisabled" @click="doLogin">
+          {{ $t('login.login') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
+    import { ref }                 from 'vue';
+    import type { VForm }          from "vuetify/components";
     import type LoginRequest       from "@/types/LoginRequest";
     import type ResponseData       from "@/types/ResponseData";
     import type Session            from "@/types/Session";
-
     import { SessionStore }        from "@/store/SessionStore";
     import authentificationService from "@/services/AuthentificationService";
 
+    const dialog           = ref<boolean>(true);
+    const formRef          = ref<VForm | null>(null);
     const isActionDisabled = ref<boolean>(false);
     const isErrorLogin     = ref<boolean>(false);
-    const loginRequest     = ref<LoginRequest>({username: "", password: ""});
+    const showPassword     = ref<boolean>(false);
+    const loginRequest     = ref<LoginRequest>({ username: "", password: "" });
 
-    function doLogin(): void {
+    async function doLogin(): Promise<void> {
+
+        const result = await formRef.value?.validate();
+        if (!result?.valid) 
+            return;
+
         isActionDisabled.value = true;
+        isErrorLogin.value = false;
 
-        authentificationService.doLogin(loginRequest.value)
-            .then((response: ResponseData) => {
-                const session:Session = SessionStore().getSession;
-
-                session.jwtToken = response.data.message;
-                SessionStore().setSession(session);
-                
-                isErrorLogin.value = false;
-                navigateToHome(); // Nuxt/NavigaTo() constraint - return or await.
-            })
-            .catch((error: any) => {
-                isErrorLogin.value = true;
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log(error);
-                }
-            })
-            .finally(() => {
-                isActionDisabled.value = false;
-            });
-    }    
-
-    function navigateToHome(): any {
-        return navigateTo("/");
+        try {
+            const response: ResponseData = await authentificationService.doLogin(loginRequest.value);
+            const session: Session = SessionStore().getSession;
+            session.jwtToken = response.data.message;
+            SessionStore().setSession(session);
+            navigateTo("/");
+        } catch (error: any) {
+            isErrorLogin.value = true;
+            console.error('[Login]', error?.response?.data ?? error);
+        } finally {
+            isActionDisabled.value = false;
+        }
     }
 </script>
 
