@@ -10,7 +10,6 @@ This project uses Spring Boot, Nuxt, Apache Maven, and Docker to build an OCI-co
 * Source : [AppCRUD.png](./doc/asserts/appcrud.png)
 * Source : [AppPDF.png](./doc/asserts/apppdf.png)
 * Source : [Swagger.png](./doc/asserts/swagger.png)
-* Source : [GraphQL.png](./doc/asserts/graphql.png)
 
 ## Important
 
@@ -95,9 +94,8 @@ java -Djarmode=layertools -jar target/springboot-nuxt-unspecified.jar extract --
 When the application is running, you can access the following endpoints:
 
 * [Nuxt4 Web Application](http://localhost:8080/app)
-* [Ping Endpoint (startup verification)](http://localhost:8080/jwt/ping)
+* [Ping Endpoint (startup verification)](http://localhost:8080/auth/ping)
 * [Swagger UI (API testing)](http://localhost:8080/swagger-ui)
-* [GraphiQL (GraphQL API testing)](http://localhost:8080/graphiql)
 * [OpenAPI Specification](http://localhost:8080/v3/api-docs)
 * [Actuator Endpoints](http://localhost:8081/actuator)
 * [Info Probe](http://localhost:8081/actuator/info)
@@ -139,7 +137,6 @@ This section outlines recommended development practices for various scenarios:
 
 * [Building Images (OCI/Docker)](./doc/ocidev.md)
 * [Cloud Development](./doc/clouddev.md)
-* [GraphQL HTTP Caching](./doc/graphqldev.md)
 * [REST API and Error Handling](./doc/restdev.md)
 
 ## Other Information

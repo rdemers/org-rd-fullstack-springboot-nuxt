@@ -16,7 +16,6 @@
 package org.rd.fullstack.springbootnuxt.srv;
 
 import org.rd.fullstack.springbootnuxt.dao.InventoryRepository;
-import org.rd.fullstack.springbootnuxt.dao.PersonRepository;
 import org.rd.fullstack.springbootnuxt.dao.ProductRepository;
 import org.rd.fullstack.springbootnuxt.dto.Inventory;
 import org.springframework.beans.factory.annotation.Autowired;

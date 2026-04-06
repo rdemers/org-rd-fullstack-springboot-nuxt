@@ -25,7 +25,7 @@ Even if your application is not part of a larger ecosystem, starting development
 The following controllers define the API contracts for this project:
 
 * [AuthController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/AuthController.java)
-* [BookController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/BookController.java)
+* [InventoryController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/InventoryController.java)
 * [HealthController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/HealthController.java)
 * [ReportController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/ReportController.java)
 
