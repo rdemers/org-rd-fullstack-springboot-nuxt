@@ -32,28 +32,6 @@ The following software must be installed on your workstation to build and run th
 To get started quickly, run the following commands:
 
 ```bash
-# Nuxt4 (Frontend)
-cd src/frontend                                  # Navigate to the web application root.
-
-npm i -D vuetify vite-plugin-vuetify             # Install Vuetify plugins for Nuxt.
-npm i @mdi/font                                  # Install Material Design Icons font for Vuetify.
-
-npm cache clean --force                          # Clear the npm cache.
-npm install                                      # Install project dependencies.
-npm run dev                                      # Start the app with hot reloading.
-npm run preview                                  # Preview a production build locally.
-npm run build && npm run start                   # Build and start the production version.
-npm run generate                                 # Generate the static site.
-npx nuxi@latest upgrade                          # Upgrade Nuxt to the latest version.
-npx nuxi cleanup                                 # Remove temporary files and directories.
-npm outdated                                     # List outdated packages.
-
-npm set registry=https://registry.npmjs.org/     # Set npm registry (useful behind a proxy).
-npm config set strict-ssl false --global         # Disable strict SSL checks (not recommended for production).
-
-npm i nuxi                                       # Install the nuxi module (optional).
-npx nuxi init frontend                           # Create a new Nuxt app in the "frontend" directory.
-
 # Spring Boot (Backend)
 mvn clean                                        # Remove compiled files and artifacts.
 mvn install                                      # Build and package the application.
