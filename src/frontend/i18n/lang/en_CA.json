@@ -10,6 +10,7 @@
             "report" : "Report"
         },
         "message": {
+            "no-data"        : "No data available.",
             "create-success" : "Creation successful!",
             "update-success" : "Changes saved!",
             "delete-success" : "Item deleted successfully.",
@@ -144,6 +145,12 @@
         "no-canvas"         : "Canvas not supported.",
         "no-source"         : "No source defined.",
         "no-node-supported" : "Node is not supported.",
-        "unknown"           : "Unknown exception."
+        "unknown"           : "Unknown exception.",
+        "prevPage"          : "Previous Page",
+        "nextPage"          : "Next Page",
+        "pageInput"         : "Go to Page",
+        "zoomIn"            : "Zoom In",
+        "zoomOut"           : "Zoom Out",
+        "print"             : "Print"
     }
 }

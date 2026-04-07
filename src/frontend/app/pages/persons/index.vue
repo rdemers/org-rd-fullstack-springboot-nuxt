@@ -62,7 +62,7 @@
       </v-card>
     </v-dialog>
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
-                style="white-space: pre-line" location="top" timer="bottom">
+                style="white-space: pre-line" location="top" timer="bottom" timer-color="white">
       {{ snackbar.message }}
     </v-snackbar>
   </v-container>
@@ -98,7 +98,11 @@
     
         try {
             const response = await PersonService.getAll();
-            persons.value = response.data;
+            if (!response || !response.data) {
+              persons.value = [];
+            } else {
+              persons.value = response.data;
+            }
         } catch (err) {
             console.error(err);
             const msg = err instanceof Error ? err.message : String(err);

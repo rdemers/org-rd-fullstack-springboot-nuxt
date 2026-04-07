@@ -10,6 +10,7 @@
             "report" : "Rapport"
         },
         "message": {
+            "no-data"        : "Aucune donnée disponible.",
             "create-success" : "Création réussie !",
             "update-success" : "Modifications enregistrées !",
             "delete-success" : "Élément supprimé avec succès.",
@@ -144,6 +145,12 @@
         "no-canvas"         : "Canvas non supporté.",
         "no-source"         : "Aucune source définie.",
         "no-node-supported" : "Node n'est pas supporté.",
-        "unknown"           : "Exception inconnue."
+        "unknown"           : "Exception inconnue.",
+        "prevPage"          : "Page précédente",
+        "nextPage"          : "Page suivante",
+        "pageInput"         : "Aller à la page",
+        "zoomIn"            : "Zoom avant",
+        "zoomOut"           : "Zoom arrière",
+        "print"             : "Imprimer"
     }
 }

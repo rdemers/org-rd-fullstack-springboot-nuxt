@@ -30,7 +30,8 @@
       </v-col>
     </v-row>
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
-                style="white-space: pre-line" location="top" @update:model-value="onSnackbarChange">
+                style="white-space: pre-line" location="top" timer="bottom" timer-color="white"
+                @update:model-value="onSnackbarChange">
       {{ snackbar.message }}
     </v-snackbar>
   </v-container>

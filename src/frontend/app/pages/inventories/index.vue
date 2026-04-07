@@ -74,7 +74,7 @@
         </v-card>
     </v-dialog>
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
-                style="white-space: pre-line" location="top" timer="bottom">
+                style="white-space: pre-line" location="top" timer="bottom" timer-color="white">
       {{ snackbar.message }}
     </v-snackbar>
   </v-container>
@@ -110,7 +110,11 @@
     
         try {
           const response = await InventoryService.getAllView();
-          inventories.value = response.data;
+          if (!response || !response.data) {
+            inventories.value = [];
+          } else {
+            inventories.value = response.data;
+          }
         } catch (err) {
             console.error(err);
             const msg = err instanceof Error ? err.message : String(err);
