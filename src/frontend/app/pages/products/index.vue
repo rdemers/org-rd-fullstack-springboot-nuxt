@@ -62,7 +62,7 @@
       </v-card>
     </v-dialog>
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout"
-                style="white-space: pre-line" location="top">
+                style="white-space: pre-line" location="top" timer="bottom">
       {{ snackbar.message }}
     </v-snackbar>
   </v-container>
