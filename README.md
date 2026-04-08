@@ -1,33 +1,33 @@
 # org-rd-fullstack-springboot-nuxt
 
-## Fullstack application with Springboot and Nuxt
+## Fullstack Application with Spring Boot and Nuxt
 
-This project uses Spring Boot, Nuxt, Apache Maven, and Docker to build an OCI-compliant application container. It includes microservices designed for compatibility with AWS/EKS environments and features a web application built with Nuxt (Vue/Vuetify) following JamStack principles. Note: In this setup, Spring Boot serves as a static HTTP server (CDN).
+This project uses Spring Boot, Nuxt, Apache Maven, and Docker to build an OCI-compliant application container. It includes microservices designed for compatibility with AWS/EKS environments and features a web application built with Nuxt (Vue/Vuetify) following Jamstack principles. Note: In this setup, Spring Boot serves as a static HTTP server (CDN).
 
 ![alt text](./doc/asserts/springboot-nuxt.png "Springboot-Nuxt")
 
-* Source : [AppLogin.png](./doc/asserts/applogin.png)
-* Source : [AppCRUD.png](./doc/asserts/appcrud.png)
-* Source : [AppPDF.png](./doc/asserts/apppdf.png)
-* Source : [Swagger.png](./doc/asserts/swagger.png)
+* Source: [AppLogin.png](./doc/asserts/applogin.png)
+* Source: [AppCRUD.png](./doc/asserts/appcrud.png)
+* Source: [AppPDF.png](./doc/asserts/apppdf.png)
+* Source: [Swagger.png](./doc/asserts/swagger.png)
 
 ## Important
 
-Building a web application with SOA services (BFF only) included in a single artifact is neither recommended nor prohibited. The solution architect’s judgment is required. If this approach is used, limit SOA services to BFF (Backend For Frontend) type requirements only. In this project, authentication/authorization services and an in-memory database are embedded. These services should ideally be external resources. This project is intended for learning and demonstration purposes only.
+Building a web application with SOA services (BFF only) included in a single artifact is neither recommended nor prohibited. The solution architect's judgment is required. If this approach is used, limit SOA services to BFF (Backend For Frontend) type requirements only. In this project, authentication/authorization services and an in-memory database are embedded. Ideally, these services should be external resources. This project is intended for learning and demonstration purposes only.
 
 ## Prerequisites
 
 The following software must be installed on your workstation to build and run this project:
 
-* [NodeJS](https://nodejs.org/en)
+* [Node.js](https://nodejs.org/en)
 * [Java SDK](https://www.oracle.com/java/technologies/downloads/)
-* [Apache/Maven](https://maven.apache.org/download.cgi)
-* [Optional - GIT or Zip download](https://git-scm.com/downloads)
-* [Optional - VSCode/IDE](https://code.visualstudio.com/download)
-* [Optional - VSCode/Plugin](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-* [Optional - Docker to build image](https://www.docker.com/products/docker-desktop/)
+* [Apache Maven](https://maven.apache.org/download.cgi)
+* [Optional - Git or Zip download](https://git-scm.com/downloads)
+* [Optional - VS Code/IDE](https://code.visualstudio.com/download)
+* [Optional - VS Code/Plugin](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+* [Optional - Docker (to build images)](https://www.docker.com/products/docker-desktop/)
 
-## Springboot - Getting started
+## Spring Boot - Getting Started
 
 To get started quickly, run the following commands:
 
@@ -37,11 +37,11 @@ mvn clean                                        # Remove compiled files and art
 mvn install                                      # Build and package the application.
 mvn spring-boot:run                              # Start the Spring Boot app.
 
-mvn wrapper:wrapper                              # Regenerate Maven wrapper files.
+mvn wrapper:wrapper                              # Regenerate Maven Wrapper files.
 mvn dependency:sources                           # Download source code for dependencies.
 mvn dependency:resolve -Dclassifier=javadoc      # Download Javadoc for dependencies.
 
-mvn spring-boot:build-image                      # Build an OCI image using Paketo Buildpack.
+mvn spring-boot:build-image                      # Build an OCI image using Paketo Buildpacks.
                                                  # Alternatively, use the Dockerfile for custom builds.
 
 java -jar target/springboot-nuxt-unspecified.jar # Run the packaged JAR directly.
@@ -56,7 +56,7 @@ docker run -it -p8080:8080 -p8081:8081 org-rd-fullstack/springboot-nuxt:unspecif
 
 docker system prune -a                           # Remove unused Docker data (use with caution).
 docker image ls                                  # List local Docker images.
-docker rmi -f <imageID>                          # Force remove an image by ID.
+docker rmi -f <imageID>                          # Force-remove an image by ID.
 
 # Image Inspection
 dive org-rd-fullstack/springboot-nuxt:unspecified
@@ -71,7 +71,7 @@ java -Djarmode=layertools -jar target/springboot-nuxt-unspecified.jar extract --
 
 When the application is running, you can access the following endpoints:
 
-* [Nuxt4 Web Application](http://localhost:8080/app)
+* [Nuxt Web Application](http://localhost:8080/app)
 * [Ping Endpoint (startup verification)](http://localhost:8080/auth/ping)
 * [Swagger UI (API testing)](http://localhost:8080/swagger-ui)
 * [OpenAPI Specification](http://localhost:8080/v3/api-docs)
@@ -82,7 +82,7 @@ When the application is running, you can access the following endpoints:
 * [Readiness Probe](http://localhost:8081/actuator/health/readiness)
 * [Prometheus Metrics](http://localhost:8081/actuator/prometheus)
 
-## Nuxt4 - Getting started
+## Nuxt - Getting Started
 
 To get started quickly, run the following commands:
 
@@ -102,10 +102,10 @@ npx nuxi@latest upgrade                          # Upgrade Nuxt to the latest ve
 npx nuxi cleanup                                 # Remove temporary files and directories.
 npm outdated                                     # List outdated packages.
 
-npm set registry=https://registry.npmjs.org/     # Set npm registry (useful behind a proxy).
+npm set registry=https://registry.npmjs.org/     # Set the npm registry (useful behind a proxy).
 npm config set strict-ssl false --global         # Disable strict SSL checks (not recommended for production).
 
-npm i nuxi                                       # Install the nuxi module (optional).
+npm i nuxi                                       # Install the Nuxi module (optional).
 npx nuxi init frontend                           # Create a new Nuxt app in the "frontend" directory.
 ```
 
@@ -119,6 +119,18 @@ This section outlines recommended development practices for various scenarios:
 
 ## Other Information
 
+### Users and Passwords
+
+The following users and passwords are valid:
+
+| User    | Password |
+|---------|----------|
+| root    | root     |
+| support | support  |
+| guest   | guest    |
+
+* Source: [SecurityConfig.java](src/main/java/org/rd/fullstack/springbootnuxt/config/SecurityConfig.java)
+
 ### Example JWT Token
 
 ```code
@@ -128,7 +140,7 @@ eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNzJjMDhjMS02OGY5LTQ3YmQtODdhOS1iNjY0YTIxZTZhMWM
 **Notes:**
 
 * This JWT token represents the `root` user (password: `root`). It is generated via the `/jwt/token` service. Refer to the Swagger UI for details.
-* Security in this project is minimal and **must not** be used in production.
+* The security in this project is minimal and **must not** be used in a production environment.
 * This project is for learning and demonstration purposes only.
 
 Enjoy experimenting!

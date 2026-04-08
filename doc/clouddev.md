@@ -75,8 +75,8 @@ org:
         authorities: rd.roles
 ```
 
-* Source : [application.yml](../src/main/resources/application.yml)
-* Documentation : [Springboot/External configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.external-config)
+* Source: [application.yml](../src/main/resources/application.yml)
+* Documentation: [Spring Boot/External Configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.external-config)
 
 ## 6. Logs
 
@@ -84,7 +84,7 @@ Logs should be treated as event streams—a sequence of time-ordered events emit
 
 Traditional approaches often involve configuring log file locations, rotation policies, and other file system details. However, in cloud environments, the underlying file system is ephemeral and cannot be relied upon for persistent storage. By writing logs to stdout/stderr, applications remain portable and platform-agnostic.
 
-Log aggregation and analysis are handled by external systems such as the ELK stack (Elasticsearch, Logstash, Kibana), Splunk, or cloud-native logging solutions. These tools collect, process, and visualize log data for monitoring and troubleshooting. For structured logging, it is recommended to use the ecs format.
+Log aggregation and analysis are handled by external systems such as the ELK stack (Elasticsearch, Logstash, Kibana), Splunk, or cloud-native logging solutions. These tools collect, process, and visualize log data for monitoring and troubleshooting. For structured logging, it is recommended to use the ECS (Elastic Common Schema) format.
 
 ```yaml
 logging: 
@@ -102,7 +102,7 @@ logging:
         node-name: DEV
 ```
 
-* Source : [application.yml](../src/main/resources/application.yml)
+* Source: [application.yml](../src/main/resources/application.yml)
 
 ## 7. Disposability
 
@@ -118,7 +118,7 @@ server:
 
 For more details, refer to the [Spring Boot documentation on graceful shutdown](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.shutdown).
 
-* Source : [application.yml](../src/main/resources/application.yml)
+* Source: [application.yml](../src/main/resources/application.yml)
 
 ## 8. Backing services
 
@@ -205,16 +205,16 @@ spring:
 
 ```
 
-* Source : [application.yml](../src/main/resources/application.yml)
+* Source: [application.yml](../src/main/resources/application.yml)
 
 This configuration enables the application to expose the following telemetry endpoints:
 
-* [Actuator root endpoint](http://domaine:8081/actuator) — lists all available probes
-* [Info endpoint](http://domaine:8081/actuator/info) — provides build and environment information
-* [Health endpoint](http://domaine:8081/actuator/health) — reports overall health status
-* [Liveness probe](http://domaine:8081/actuator/health/liveness) — indicates if the application is running
-* [Readiness probe](http://domaine:8081/actuator/health/readiness) — indicates if the application is ready to serve requests
-* [Prometheus metrics](http://domaine:8081/actuator/prometheus) — exposes application metrics for monitoring
+* [Actuator root endpoint](http://domain:8081/actuator) — lists all available probes
+* [Info endpoint](http://domain:8081/actuator/info) — provides build and environment information
+* [Health endpoint](http://domain:8081/actuator/health) — reports overall health status
+* [Liveness probe](http://domain:8081/actuator/health/liveness) — indicates if the application is running
+* [Readiness probe](http://domain:8081/actuator/health/readiness) — indicates if the application is ready to serve requests
+* [Prometheus metrics](http://domain:8081/actuator/prometheus) — exposes application metrics for monitoring
 
 These endpoints support monitoring, alerting, and automated orchestration in cloud environments.
 

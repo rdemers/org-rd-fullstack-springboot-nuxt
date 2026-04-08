@@ -13,7 +13,7 @@ The conventional method for building a Spring Boot OCI image uses a fat JAR, as 
 
 ```docker
 FROM arm64v8/amazoncorretto:17
-ARG JAR_FILE=target/dspringboot-nuxt-unspecified.jar
+ARG JAR_FILE=target/springboot-nuxt-unspecified.jar
 ADD ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
@@ -160,7 +160,7 @@ LABEL app.image.description=${LABEL_DESCRIPTION}
 LABEL app.image.created=${LABEL_CREATED}
 LABEL app.image.version.major=${LABEL_VERSION_MAJOR}
 LABEL app.image.version.minor=${LABEL_VERSION_MINOR}
-LABEL app.image.version.revison=${LABEL_VERSION_REVISION}
+LABEL app.image.version.revision=${LABEL_VERSION_REVISION}
 LABEL app.image.version.build=${LABEL_VERSION_BUILD}
 
 WORKDIR /application
