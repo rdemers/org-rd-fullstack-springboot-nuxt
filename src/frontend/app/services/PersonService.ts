@@ -21,37 +21,37 @@ class PersonService {
     private readonly endpoint = "/persons";
 
     public getAll(): Promise<AxiosResponse<Person[]>> {
-        return apiClient.get<Person[]>(this.endpoint);
+        return apiClient().get<Person[]>(this.endpoint);
     }
 
     public get(id: number): Promise<AxiosResponse<Person>> {
         if (id < 0) 
             throw new Error("ID.");
        
-        return apiClient.get<Person>(`${this.endpoint}/${id}`);
+        return apiClient().get<Person>(`${this.endpoint}/${id}`);
     }
 
     public findByFirstName(firstName: string): Promise<AxiosResponse<Person[]>> {
         const safeFirstName = encodeURIComponent(firstName);
-        return apiClient.get<Person[]>(`${this.endpoint}?firstName=${safeFirstName}`);
+        return apiClient().get<Person[]>(`${this.endpoint}?firstName=${safeFirstName}`);
     }
     
     public create(data: Person): Promise<AxiosResponse<Person>> {
-        return apiClient.post<Person>(this.endpoint, data);
+        return apiClient().post<Person>(this.endpoint, data);
     }
 
     public update(person: Person): Promise<AxiosResponse<Person>> {
         if (person.personId === null || person.personId < 0) 
             throw new Error("ID.");
        
-        return apiClient.put<Person>(`${this.endpoint}/${person.personId}`, person);
+        return apiClient().put<Person>(`${this.endpoint}/${person.personId}`, person);
     }
 
     public delete(id: number): Promise<AxiosResponse<void>> {
         if (id < 0) 
             throw new Error("ID.");
         
-        return apiClient.delete<void>(`${this.endpoint}/${id}`);
+        return apiClient().delete<void>(`${this.endpoint}/${id}`);
     }
 }
 

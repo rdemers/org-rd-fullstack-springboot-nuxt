@@ -22,14 +22,14 @@ export const SessionStore = defineStore("SessionStore", {
         currentSession: {
             jwtToken: "",
             user: "",
-            roles: []
+            roles: [] as string[]
         } as Session,
     }),
 
     getters: {
         getSession():Session {
             return this.currentSession;
-        }
+        },
     },
 
     actions: {

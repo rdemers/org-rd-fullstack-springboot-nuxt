@@ -20,7 +20,7 @@ import { SessionStore }  from "@/store/SessionStore";
 class AuthentificationService {
 
     public doLogin(loginRequest:LoginRequest) : Promise<any> {
-        return apiAuth.post("/token", loginRequest);
+        return apiAuth().post("/token", loginRequest);
     }
 
     public doLogout(): boolean {

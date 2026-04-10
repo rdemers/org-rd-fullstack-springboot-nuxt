@@ -21,37 +21,37 @@ class ProductService {
     private readonly endpoint = "/products";
 
     public getAll(): Promise<AxiosResponse<Product[]>> {
-        return apiClient.get<Product[]>(this.endpoint);
+        return apiClient().get<Product[]>(this.endpoint);
     }
 
     public get(id: number): Promise<AxiosResponse<Product>> {
         if (id < 0) 
             throw new Error("ID.");
         
-        return apiClient.get<Product>(`${this.endpoint}/${id}`);
+        return apiClient().get<Product>(`${this.endpoint}/${id}`);
     }
 
     public findByCode(code: string): Promise<AxiosResponse<Product[]>> {
         const safeCode = encodeURIComponent(code);
-        return apiClient.get<Product[]>(`${this.endpoint}?code=${safeCode}`);
+        return apiClient().get<Product[]>(`${this.endpoint}?code=${safeCode}`);
     }
     
     public create(data: Product): Promise<AxiosResponse<Product>> {
-        return apiClient.post<Product>(this.endpoint, data);
+        return apiClient().post<Product>(this.endpoint, data);
     }
 
     public update(product: Product): Promise<AxiosResponse<Product>> {
         if (product.productId === null || product.productId < 0) 
             throw new Error("ID.");
         
-        return apiClient.put<Product>(`${this.endpoint}/${product.productId}`, product);
+        return apiClient().put<Product>(`${this.endpoint}/${product.productId}`, product);
     }
 
     public delete(id: number): Promise<AxiosResponse<void>> {
         if (id < 0) 
             throw new Error("ID.");
         
-        return apiClient.delete<void>(`${this.endpoint}/${id}`);
+        return apiClient().delete<void>(`${this.endpoint}/${id}`);
     }
 }
 

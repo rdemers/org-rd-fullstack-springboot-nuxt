@@ -41,7 +41,7 @@
     import Decimal         from "decimal.js";
     import type Product    from "@/types/Product";
     import ProductService  from "@/services/ProductService";
-    import { useSnackbar } from "@/composables/useSnackbar"
+    import { useSnackbar } from "@/composables/useSnackbar";
 
     const { t } = useI18n();
     const { snackbar, notify } = useSnackbar();

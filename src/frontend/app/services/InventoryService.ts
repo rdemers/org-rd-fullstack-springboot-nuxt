@@ -23,7 +23,7 @@ class InventoryService {
     private readonly endpoint = "/inventories";
 
     public getAll(): Promise<AxiosResponse<Inventory[]>> {
-        return apiClient.get<Inventory[]>(this.endpoint);
+        return apiClient().get<Inventory[]>(this.endpoint);
     }
 
     public get(id: number): Promise<AxiosResponse<Inventory>> {
@@ -31,18 +31,18 @@ class InventoryService {
         if (id < 0) 
             throw new Error("ID.");
 
-        return apiClient.get<Inventory>(`${this.endpoint}/${id}`);
+        return apiClient().get<Inventory>(`${this.endpoint}/${id}`);
     }
 
     public findByCode(productCode: string): Promise<AxiosResponse<Inventory[]>> {
 
         const safeProductCode = encodeURIComponent(productCode);
-        return apiClient.get<Inventory[]>(`${this.endpoint}?code=${safeProductCode}`);
+        return apiClient().get<Inventory[]>(`${this.endpoint}?code=${safeProductCode}`);
     }
 
     public create(data: Inventory): Promise<AxiosResponse<Inventory>> {
 
-        return apiClient.post<Inventory>(this.endpoint, data);
+        return apiClient().post<Inventory>(this.endpoint, data);
     }
 
     public update(inventory: Inventory): Promise<AxiosResponse<Inventory>> {
@@ -50,7 +50,7 @@ class InventoryService {
         if (inventory.inventoryId === null || inventory.inventoryId < 0) 
             throw new Error("ID.");
 
-        return apiClient.put<Inventory>(`${this.endpoint}/${inventory.inventoryId}`, inventory);
+        return apiClient().put<Inventory>(`${this.endpoint}/${inventory.inventoryId}`, inventory);
     }
 
     public delete(id: number): Promise<AxiosResponse<void>> {
@@ -58,17 +58,17 @@ class InventoryService {
         if (id < 0) 
             throw new Error("ID.");
         
-        return apiClient.delete<void>(`${this.endpoint}/${id}`);
+        return apiClient().delete<void>(`${this.endpoint}/${id}`);
     }
 
     public getView(id: number) {
 
-        return apiClient.get<InventoryView>(`${this.endpoint}/view/${id}`);
+        return apiClient().get<InventoryView>(`${this.endpoint}/view/${id}`);
     }
 
     public getAllView(): Promise<AxiosResponse<InventoryView[]>> {
 
-        return apiClient.get<InventoryView[]>(`${this.endpoint}/view`);
+        return apiClient().get<InventoryView[]>(`${this.endpoint}/view`);
     }
 }
 

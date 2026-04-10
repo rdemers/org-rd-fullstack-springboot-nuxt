@@ -17,39 +17,53 @@ import axios, { type AxiosInstance, AxiosError } from "axios";
 import type Session                              from "@/types/Session";
 import { SessionStore }                          from "@/store/SessionStore";
 
-const apiAuth: AxiosInstance = axios.create({
-    baseURL: useRuntimeConfig().public.authURL,
-    headers: {
-        "Content-type": "application/json",
-        "Accept": "application/json"
-    },
-});
+let _apiAuth: AxiosInstance | null = null;
+let _apiClient: AxiosInstance | null = null;
 
-const apiClient: AxiosInstance = axios.create({
-    baseURL: useRuntimeConfig().public.apiURL,
-    headers: {
-        "Content-type": "application/json",
-        "Accept": "application/json",
+function getApiAuth(): AxiosInstance {
+    if (!_apiAuth) {
+        _apiAuth = axios.create({
+            baseURL: useRuntimeConfig().public.authURL,
+            headers: {
+                "Content-type": "application/json",
+                "Accept": "application/json"
+            },
+        });
     }
-})
+    return _apiAuth;
+}
 
-apiClient.interceptors.request.use((config) => {
-    const session:Session = SessionStore().getSession;
-    if (session.jwtToken) {
-        config.headers.Authorization = "Bearer " + session.jwtToken;
+function getApiClient(): AxiosInstance {
+    if (!_apiClient) {
+        _apiClient = axios.create({
+            baseURL: useRuntimeConfig().public.apiURL,
+            headers: {
+                "Content-type": "application/json",
+                "Accept": "application/json",
+            }
+        });
+
+        _apiClient.interceptors.request.use((config) => {
+            const session: Session = SessionStore().getSession;
+            if (session.jwtToken) {
+                config.headers.Authorization = "Bearer " + session.jwtToken;
+            }
+            return config;
+        });
+
+        _apiClient.interceptors.response.use((response) => response, (error: AxiosError) => {
+            if (error.response?.status === 401) {
+                SessionStore().clearSession();
+                navigateTo('/login');
+                return Promise.reject(error);
+            }
+            return Promise.reject(error);
+        });
     }
-    return config;
-})
+    return _apiClient;
+}
 
-apiClient.interceptors.response.use((response) => response,(error: AxiosError) => {
-    if (error.response?.status === 401) {
-        return navigateTo('/login');
-    }
-    return Promise.reject(error);
-})
-
-export { 
-    apiClient,
-    apiAuth 
+export {
+    getApiClient as apiClient,
+    getApiAuth as apiAuth
 };
-

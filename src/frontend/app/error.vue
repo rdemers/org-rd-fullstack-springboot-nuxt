@@ -29,10 +29,10 @@
             </v-alert>
             <div class="text-center">
               <v-chip size="small" variant="outlined" color="secondary" class="mb-2">
-                {{ t('error.status-code') }} : {{ error?.status || '500' }}
+                {{ t('error.status-code') }} : {{ error?.statusCode || '500' }}
               </v-chip>
-              <p v-if="error?.statusText" class="text-body-2 text-medium-emphasis italic">
-                "{{ error.statusText }}"
+              <p v-if="error?.statusMessage" class="text-body-2 text-medium-emphasis italic">
+                "{{ error.statusMessage }}"
               </p>
             </div>
             <v-expansion-panels v-if="isDev && error?.stack" class="mt-4">

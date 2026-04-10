@@ -39,7 +39,7 @@ spring:
   jpa:
     # database-platform: org.hibernate.dialect.HSQLDialect
     open-in-view: false
-    show-sql: true
+    show-sql: false
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: none
@@ -48,8 +48,8 @@ org:
   rd:
     fullstack:
       springbootnuxt:
-        secret: the.beautiful.secret.key.to.change
-        expiration: 60000
+        secret: ${JWT_SECRET:the.beautiful.secret.key.to.change}
+        expiration: ${JWT_EXPIRATION:3600000}
         authorities: rd.roles
         kafka:
           sandbox:
