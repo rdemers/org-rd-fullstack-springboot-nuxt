@@ -22,7 +22,7 @@ export const SessionStore = defineStore("SessionStore", {
         currentSession: {
             jwtToken: "",
             user: "",
-            roles: [""]
+            roles: []
         } as Session,
     }),
 
@@ -41,7 +41,7 @@ export const SessionStore = defineStore("SessionStore", {
             this.currentSession = {
                 jwtToken: "",
                 user: "",
-                roles: [""]
+                roles: []
             }
         },
  

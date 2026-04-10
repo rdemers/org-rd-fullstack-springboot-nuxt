@@ -37,7 +37,7 @@
             "required"            : "Le champ {field} est obligatoire",
             "integer"             : "Le champ {field} doit être entier",
             "min"                 : "{field} doit contenir au moins {min} caractères",
-            "max"                 : "{field} doit contenir au plus {min} caractères",
+            "max"                 : "{field} doit contenir au plus {max} caractères",
             "positive"            : "Le montant doit être positif",
             "invalid"             : "Format invalide",
             "precision"           : "Maximum 2 décimales",
@@ -136,6 +136,7 @@
         "status-code" : "Code statut",
         "go-home"     : "Retour à la page d'accueil",
         "msg-error"   : "Erreur interne. Appeler le support.",
+        "msg_default" : "Une erreur inattendue s'est produite.",
         "unknown"     : "Erreur inconnue."
     },
     "vrd-pdfviewer" : {

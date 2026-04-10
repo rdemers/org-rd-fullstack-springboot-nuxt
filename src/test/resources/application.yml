@@ -49,7 +49,7 @@ org:
     fullstack:
       springbootnuxt:
         secret: the.beautiful.secret.key.to.change
-        expiration: 30000
+        expiration: 60000
         authorities: rd.roles
         kafka:
           sandbox:

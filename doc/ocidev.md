@@ -12,7 +12,7 @@ This project supports two main approaches for OCI image construction:
 The conventional method for building a Spring Boot OCI image uses a fat JAR, as shown:
 
 ```docker
-FROM arm64v8/amazoncorretto:17
+FROM amazoncorretto:21
 ARG JAR_FILE=target/springboot-nuxt-unspecified.jar
 ADD ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
@@ -48,7 +48,7 @@ To resolve the above issues, configure a builder and split the OCI image into mu
 A builder image allows you to use custom development tools. The builder image is temporary and flexible.
 
 ```docker
-FROM arm64v8/debian:bullseye-slim as builder
+FROM debian:bullseye-slim as builder
 WORKDIR /application
 COPY src ./src   
 COPY pom.xml .
@@ -56,19 +56,16 @@ COPY layers.xml .
 COPY mvnw .
 COPY .mvn ./.mvn
 COPY maven-with-proxy.xml .
-COPY web-app-jamstack.xml .
+COPY build-web-app.xml .
 RUN rm -rf src/frontend/node_modules
 RUN chmod 777 ./mvnw
 
-RUN apt update -y
-RUN apt install curl -y
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt install nodejs -y
-RUN apt install ca-certificates-java -y
-RUN apt install openjdk-17-jdk -y
+RUN apt update -y \
+    && apt install -y curl ca-certificates-java \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt install -y nodejs openjdk-21-jdk
 
 RUN npm set registry=https://registry.npmjs.org/
-RUN npm config set strict-ssl false --global
 
 RUN ./mvnw -U -B -e -f pom.xml clean prepare-package package
 ```
@@ -145,7 +142,7 @@ RUN java -Djarmode=layertools -jar application.jar extract
 Build the final OCI image using the extracted layers:
 
 ```docker
-FROM arm64v8/amazoncorretto:17
+FROM amazoncorretto:21
 
 ARG LABEL_TITLE="Please, provide a title."
 ARG LABEL_DESCRIPTION="Please, provide a description."
@@ -170,7 +167,7 @@ COPY --from=builder application/corpo-dependencies/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
 
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
 ```
 
 *Source: [Dockerfile](../Dockerfile)*

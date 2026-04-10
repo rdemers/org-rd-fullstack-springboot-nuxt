@@ -48,8 +48,8 @@ org:
   rd:
     fullstack:
       springbootnuxt:
-        secret: the.beautiful.secret.key.to.change
-        expiration: 30000
+        secret: ${JWT_SECRET:the.beautiful.secret.key.to.change}
+        expiration: 60000
         authorities: rd.roles
 #
 logging:

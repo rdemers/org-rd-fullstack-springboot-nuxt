@@ -16,17 +16,8 @@
 import { library, config } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
-// 
-//import { faTwitterSquare, faTwitch, faGithubSquare } from '@fortawesome/free-brands-svg-icons'
-//library.add(faTwitterSquare, faTwitch, faGithubSquare)
-
-//
-// Global.
-//
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-library.add(fab, far, fas);
+import { faArrowLeft, faArrowRight, faPrint, faMagnifyingGlassPlus, faMagnifyingGlassMinus } from "@fortawesome/free-solid-svg-icons";
+library.add(faArrowLeft, faArrowRight, faPrint, faMagnifyingGlassPlus, faMagnifyingGlassMinus);
 
 // This is important, we're going to let Nuxt handle the CSS.
 config.autoAddCss = false;

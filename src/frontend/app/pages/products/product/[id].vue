@@ -101,7 +101,7 @@
 
     onMounted(() => {
         const idStr = route.params.id as string;
-        const id = parseInt(idStr);
+        const id = parseInt(idStr, 10);
       
         if (!isNaN(id)) {
             load(id);

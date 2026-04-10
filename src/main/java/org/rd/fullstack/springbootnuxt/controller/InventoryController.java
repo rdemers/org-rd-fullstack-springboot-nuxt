@@ -78,7 +78,7 @@ public class InventoryController {
 
             return new ResponseEntity<>(inventories, HttpStatus.OK);
         } catch (Exception ex) {
-            logger.info("Exception getting list: {}.", ex);
+            logger.error("Exception getting list: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -99,7 +99,7 @@ public class InventoryController {
                     new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(()
                         -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
-            logger.info("FindById exception: {}.", ex);
+            logger.error("FindById exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -117,10 +117,9 @@ public class InventoryController {
 
         try {
             Inventory inventory = inventoryRepository.saveAndFlush(newInventory);
-            inventory.setInventoryId(null); // Reset ID for new inventory for a insert.
             return new ResponseEntity<>(inventory, HttpStatus.CREATED);
         } catch (Exception ex) {
-            logger.info("Save exception: {}.", ex);
+            logger.error("Save exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -138,14 +137,13 @@ public class InventoryController {
         try {
             Optional<Inventory> inventory = inventoryRepository.findById(inventoryId);
             if (inventory.isPresent()) {
-                inventory.get().setinventory(majinventory);
-                inventoryRepository.saveAndFlush(inventory.get()); 
-                return new ResponseEntity<>(inventoryRepository.save(inventory.get()), HttpStatus.OK);
+                inventory.get().setInventory(majinventory);
+                return new ResponseEntity<>(inventoryRepository.saveAndFlush(inventory.get()), HttpStatus.OK);
             } else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         } catch (Exception ex) {
-                logger.info("Update exception: {}.", ex);
+                logger.error("Update exception: {}.", ex.getMessage(), ex);
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -168,7 +166,7 @@ public class InventoryController {
             inventoryRepository.flush();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
-            logger.info("Delete exception: {}.", ex);
+            logger.error("Delete exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -186,7 +184,7 @@ public class InventoryController {
             inventoryRepository.flush();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
-            logger.info("Delete all exception: {}.", ex);
+            logger.error("Delete all exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -206,7 +204,7 @@ public class InventoryController {
                     new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(()
                         -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
-            logger.info("FindById exception: {}.", ex);
+            logger.error("FindById exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -229,7 +227,7 @@ public class InventoryController {
 
             return new ResponseEntity<>(inventoriesViews, HttpStatus.OK);
         } catch (Exception ex) {
-            logger.info("Get list exception: {}.", ex);
+            logger.error("Get list exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

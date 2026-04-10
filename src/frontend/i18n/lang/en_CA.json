@@ -136,6 +136,7 @@
         "status-code" : "Status code",
         "go-home"     : "Back to the homepage",
         "msg-error"   : "Internal error. Call support.",
+        "msg_default" : "An unexpected error occurred.",
         "unknown"     : "Unknown error."
     },
     "vrd-pdfviewer" : {

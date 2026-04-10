@@ -25,6 +25,8 @@ Even if your application is not part of a larger ecosystem, starting development
 The following controllers define the API contracts for this project:
 
 * [AuthController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/AuthController.java)
+* [PersonController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/PersonController.java)
+* [ProductController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/ProductController.java)
 * [InventoryController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/InventoryController.java)
 * [HealthController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/HealthController.java)
 * [ReportController.java](../src/main/java/org/rd/fullstack/springbootnuxt/controller/ReportController.java)
@@ -70,10 +72,12 @@ org:
   rd:
     fullstack:
       springbootnuxt:
-        secret: the.beautiful.secret.key.to.change
+        secret: ${JWT_SECRET:the.beautiful.secret.key.to.change}
         expiration: 30000
         authorities: rd.roles
 ```
+
+> **Important:** In production, always set the `JWT_SECRET` environment variable with a strong, randomly generated key. Never use the default value in a production environment.
 
 * Source: [application.yml](../src/main/resources/application.yml)
 * Documentation: [Spring Boot/External Configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.external-config)
@@ -87,13 +91,12 @@ Traditional approaches often involve configuring log file locations, rotation po
 Log aggregation and analysis are handled by external systems such as the ELK stack (Elasticsearch, Logstash, Kibana), Splunk, or cloud-native logging solutions. These tools collect, process, and visualize log data for monitoring and troubleshooting. For structured logging, it is recommended to use the ECS (Elastic Common Schema) format.
 
 ```yaml
-logging: 
+logging:
   file:
-    name: log/springboot-nuxt-log.json
-  structured: 
+    name: log/springboot-nuxt.log
+  structured:
     format:
       console: ecs
-      file: ecs
     ecs:
       service:
         name: org.rd.fullstack.springboot-nuxt

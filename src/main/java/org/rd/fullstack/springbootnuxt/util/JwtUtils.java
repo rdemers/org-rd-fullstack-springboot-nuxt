@@ -47,8 +47,7 @@ public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     final private String CST_SECRET;
-    @SuppressWarnings("unused")
-	final private int    CST_EXPIRATION; // Not used. Activate as needed.
+    final private int    CST_EXPIRATION;
     final private String CST_AUTHORITIES;
 
     protected JwtUtils() {
@@ -78,8 +77,7 @@ public class JwtUtils {
                    .subject(userPrincipal.getUsername())
                    .claim(CST_AUTHORITIES, authorities)
                    .issuedAt(new Date())
-                   //.setExpiration(new Date((new Date()).getTime() + CST_EXPIRATION))
-                   // An API/KEY does not expire. Add an expiration for testing. Att: Update timeout.
+                   .expiration(new Date((new Date()).getTime() + CST_EXPIRATION))
                    .signWith(getSigningKey()) 
                    .compact();
     }

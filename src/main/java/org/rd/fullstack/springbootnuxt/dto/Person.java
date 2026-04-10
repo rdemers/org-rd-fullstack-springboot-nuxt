@@ -101,6 +101,6 @@ public class Person {
                "Person [personId=" + this.personId + 
                ", firstName=" + this.firstName + 
                ", lastName=" + this.lastName +
-               ", balance=" + this.balance.toString() + "]";
+               ", balance=" + String.valueOf(this.balance) + "]";
     }
 }

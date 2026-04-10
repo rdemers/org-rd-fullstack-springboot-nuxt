@@ -79,7 +79,7 @@ public class Inventory {
         this.qty = qty;
     }
 
-    public void setinventory(Inventory majinventory) {
+    public void setInventory(Inventory majinventory) {
         this.inventoryId = majinventory.getInventoryId();
         this.productId   = majinventory.getProductId();
         this.qty         = majinventory.getQty();

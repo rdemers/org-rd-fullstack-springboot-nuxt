@@ -38,8 +38,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userUtils.findByUsername(username);
-        if (user == null) 
-            new UsernameNotFoundException("Utilisateur inexistant: " + username);
+        if (user == null)
+            throw new UsernameNotFoundException("Utilisateur inexistant: " + username);
 
         return UserDetailsImpl.build(user);
     }

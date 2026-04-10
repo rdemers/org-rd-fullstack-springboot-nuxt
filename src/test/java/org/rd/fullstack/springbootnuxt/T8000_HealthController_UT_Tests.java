@@ -54,7 +54,7 @@ public class T8000_HealthController_UT_Tests extends AbstractMVC {
         assertNotNull(mvcInstance);
 
         String CST_URI_HEALT_LIVENESS_STATE_DOWN = "/api/liveness_state_down";
-        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.get(CST_URI_HEALT_LIVENESS_STATE_DOWN)
+        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.post(CST_URI_HEALT_LIVENESS_STATE_DOWN)
             .header("Authorization", "Bearer " + CST_JWT_TOKEN)
             .accept(MediaType.ALL))
             .andReturn();
@@ -74,8 +74,8 @@ public class T8000_HealthController_UT_Tests extends AbstractMVC {
         assertNotNull(mvcInstance);
 
         String CST_URI_HEALT_LIVENESS_STATE_UP = "/api/liveness_state_up";
-        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.get(CST_URI_HEALT_LIVENESS_STATE_UP)
-            .header("Authorization", "Bearer " + CST_JWT_TOKEN)        
+        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.post(CST_URI_HEALT_LIVENESS_STATE_UP)
+            .header("Authorization", "Bearer " + CST_JWT_TOKEN)
             .accept(MediaType.ALL))
             .andReturn();
 
@@ -94,8 +94,8 @@ public class T8000_HealthController_UT_Tests extends AbstractMVC {
         assertNotNull(mvcInstance);
 
         String CST_URI_HEALT_READINESS_STATE_DOWN = "/api/readiness_state_down";
-        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.get(CST_URI_HEALT_READINESS_STATE_DOWN)
-            .header("Authorization", "Bearer " + CST_JWT_TOKEN)        
+        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.post(CST_URI_HEALT_READINESS_STATE_DOWN)
+            .header("Authorization", "Bearer " + CST_JWT_TOKEN)
             .accept(MediaType.ALL))
             .andReturn();
 
@@ -114,8 +114,8 @@ public class T8000_HealthController_UT_Tests extends AbstractMVC {
         assertNotNull(mvcInstance);
 
         String CST_URI_HEALT_READINESS_STATE_UP = "/api/readiness_state_up";
-        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.get(CST_URI_HEALT_READINESS_STATE_UP)
-            .header("Authorization", "Bearer " + CST_JWT_TOKEN)     
+        MvcResult mvcResult = mvcInstance.perform(MockMvcRequestBuilders.post(CST_URI_HEALT_READINESS_STATE_UP)
+            .header("Authorization", "Bearer " + CST_JWT_TOKEN)
             .accept(MediaType.ALL))
             .andReturn();
 

@@ -77,7 +77,7 @@ public class PersonController {
 
             return new ResponseEntity<>(persons, HttpStatus.OK);
         } catch (Exception ex) {
-            logger.info("Get list exception: {}.", ex);
+            logger.error("Get list exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -97,7 +97,7 @@ public class PersonController {
                     new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(()
                         -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
-            logger.info("FindById exception: {}.", ex);
+            logger.error("FindById exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -114,10 +114,9 @@ public class PersonController {
     public ResponseEntity<Person> save(@RequestBody Person newPerson) {
         try {
             Person person = personRepository.saveAndFlush(newPerson);
-            person.setPersonId(null); // Reset ID for new person for a insert.
             return new ResponseEntity<>(person, HttpStatus.CREATED);
         } catch (Exception ex) {
-            logger.info("Save exception: {}.", ex);
+            logger.error("Save exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -136,13 +135,12 @@ public class PersonController {
             Optional<Person> person = personRepository.findById(personId);
             if (person.isPresent()) {
                 person.get().setPerson(majPerson);
-                personRepository.saveAndFlush(person.get()); 
-                return new ResponseEntity<>(personRepository.save(person.get()), HttpStatus.OK);
+                return new ResponseEntity<>(personRepository.saveAndFlush(person.get()), HttpStatus.OK);
             } else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         } catch (Exception ex) {
-                logger.info("Update exception: {}.", ex);
+                logger.error("Update exception: {}.", ex.getMessage(), ex);
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -165,7 +163,7 @@ public class PersonController {
             personRepository.flush();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
-            logger.info("Delete exception: {}.", ex);
+            logger.error("Delete exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -183,7 +181,7 @@ public class PersonController {
             personRepository.flush();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
-            logger.info("Delete all exception: {}.", ex);
+            logger.error("Delete all exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

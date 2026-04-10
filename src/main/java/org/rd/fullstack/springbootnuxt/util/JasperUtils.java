@@ -54,8 +54,6 @@ public class JasperUtils {
     static public JasperReport compileReport(String reportSource, boolean bFile) throws IOException, JRException, URISyntaxException, FileNotFoundException {
         Assert.notNull(reportSource, "JasperUtils::compileReport - reportSource is NULL.");
         File file = ResourceUtils.getFile("classpath:" + reportSource);
-        InputStream reportStream = new FileInputStream(file);
-        Assert.notNull(reportStream, "JasperUtils::compileReport - reportStream is NULL.");
 
         // Determine source and target.
         String jasperReportSource = file.getAbsolutePath();
@@ -63,7 +61,10 @@ public class JasperUtils {
         logger.info("Compiling Jasper report from source {} to target {}.", jasperReportSource,jasperReportTarget);
 
         // Compilation of the report in ".jasper".
-        JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+        JasperReport jasperReport;
+        try (InputStream reportStream = new FileInputStream(file)) {
+            jasperReport = JasperCompileManager.compileReport(reportStream);
+        }
 
         if (bFile) // The source must be on the PATH. But not in a JAR (responsibility of the developer) ;-)
             JRSaver.saveObject(jasperReport, jasperReportTarget);

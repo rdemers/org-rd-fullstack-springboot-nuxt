@@ -51,7 +51,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
                      inv.inventoryId, inv.productId, inv.qty, 
                      prod.code, prod.description)
                 FROM Inventory inv
-          INNER JOIN Product prod ON inv.productId = prod.id
+          INNER JOIN Product prod ON inv.productId = prod.productId
            """)
     List<InventoryView> findAllView();
 

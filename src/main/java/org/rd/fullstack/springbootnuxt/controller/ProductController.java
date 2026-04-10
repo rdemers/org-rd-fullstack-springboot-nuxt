@@ -53,7 +53,7 @@ public class ProductController {
         LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
-    private ProductRepository ProductRepository;
+    private ProductRepository productRepository;
 
     @PreAuthorize("hasRole('ROLE_SELECT')")
     @GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,16 +68,16 @@ public class ProductController {
             List<Product> products = new ArrayList<>();
 
             if (code == null)
-                products.addAll(ProductRepository.findAll());
+                products.addAll(productRepository.findAll());
             else
-                products.addAll(ProductRepository.findByCodeContaining(code));
+                products.addAll(productRepository.findByCodeContaining(code));
 
             if (products.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
             return new ResponseEntity<>(products, HttpStatus.OK);
         } catch (Exception ex) {
-            logger.info("Get list exception: {}.", ex);
+            logger.error("Get list exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -90,14 +90,14 @@ public class ProductController {
         @ApiResponse(responseCode = "404", description = "Unknown Product."),
         @ApiResponse(responseCode = "500", description = "Exception/Internal error. Call support.")
     })
-    public ResponseEntity<Product> get(@PathVariable("ProductId") long ProductId) {
+    public ResponseEntity<Product> get(@PathVariable("ProductId") long productId) {
         try {
-            Optional<Product> Product = ProductRepository.findById(ProductId);
-            return Product.map(value ->
+            Optional<Product> product = productRepository.findById(productId);
+            return product.map(value ->
                     new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(()
                         -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
-            logger.info("FindById exception: {}.", ex);
+            logger.error("FindById exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -113,11 +113,10 @@ public class ProductController {
     })
     public ResponseEntity<Product> save(@RequestBody Product newProduct) {
         try {
-            Product Product = ProductRepository.saveAndFlush(newProduct);
-            Product.setProductId(null); // Reset ID for new Product for a insert.
-            return new ResponseEntity<>(Product, HttpStatus.CREATED);
+            Product product = productRepository.saveAndFlush(newProduct);
+            return new ResponseEntity<>(product, HttpStatus.CREATED);
         } catch (Exception ex) {
-            logger.info("Save exception: {}.", ex);
+            logger.error("Save exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -131,18 +130,17 @@ public class ProductController {
         @ApiResponse(responseCode = "404", description = "Unknown Product."),
         @ApiResponse(responseCode = "500", description = "Exception/Internal error. Call support.")
     })
-    public ResponseEntity<Product> update(@PathVariable("ProductId") long ProductId, @RequestBody Product majProduct) {
+    public ResponseEntity<Product> update(@PathVariable("ProductId") long productId, @RequestBody Product majProduct) {
         try {
-            Optional<Product> Product = ProductRepository.findById(ProductId);
-            if (Product.isPresent()) {
-                Product.get().setProduct(majProduct);
-                ProductRepository.saveAndFlush(Product.get()); 
-                return new ResponseEntity<>(ProductRepository.save(Product.get()), HttpStatus.OK);
+            Optional<Product> product = productRepository.findById(productId);
+            if (product.isPresent()) {
+                product.get().setProduct(majProduct);
+                return new ResponseEntity<>(productRepository.saveAndFlush(product.get()), HttpStatus.OK);
             } else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         } catch (Exception ex) {
-                logger.info("Update exception: {}.", ex);
+                logger.error("Update exception: {}.", ex.getMessage(), ex);
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -155,17 +153,17 @@ public class ProductController {
         @ApiResponse(responseCode = "404", description = "Unknown Product."),
         @ApiResponse(responseCode = "500", description = "Exception/Internal error. Call support.")
     })
-    public ResponseEntity<HttpStatus> delete(@PathVariable("ProductId") long ProductId) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable("ProductId") long productId) {
         try {
-            Optional<Product> Product = ProductRepository.findById(ProductId);
-            if (Product.isEmpty())
+            Optional<Product> product = productRepository.findById(productId);
+            if (product.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            ProductRepository.deleteById(ProductId);
-            ProductRepository.flush();
+            productRepository.deleteById(productId);
+            productRepository.flush();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
-            logger.info("Delete exception: {}.", ex);
+            logger.error("Delete exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -179,11 +177,11 @@ public class ProductController {
     })
     public ResponseEntity<HttpStatus> deleteAll() {
         try {
-            ProductRepository.deleteAll();
-            ProductRepository.flush();
+            productRepository.deleteAll();
+            productRepository.flush();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
-            logger.info("Delete all exception: {}.", ex);
+            logger.error("Delete all exception: {}.", ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

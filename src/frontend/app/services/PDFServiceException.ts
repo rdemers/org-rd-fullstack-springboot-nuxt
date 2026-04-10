@@ -30,7 +30,7 @@ export class PDFServiceException extends Error {
         return this.code;
     }    
 
-    public getmessage(): string {
+    public getMessage(): string {
         return this.message;
     }
 

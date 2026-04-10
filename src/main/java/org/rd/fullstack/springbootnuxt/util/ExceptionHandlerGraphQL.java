@@ -36,10 +36,10 @@ public class ExceptionHandlerGraphQL extends DataFetcherExceptionResolverAdapter
     @Override
     @SuppressWarnings("null")
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
-        logger.debug("GraphQL Exception : {}.", ex.getMessage());
+        logger.error("GraphQL Exception : {}.", ex.getMessage(), ex);
         return GraphqlErrorBuilder.newError()
               .errorType(ErrorType.DataFetchingException) // To be adapted according to your needs.
-              .message(ex.getMessage())
+              .message("An internal error occurred while processing your request.")
               .path(env.getExecutionStepInfo().getPath())
               .location(env.getField().getSourceLocation())
               .build();

@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     ssr: false, // Springboot static server.
     
     devtools: {
-     enabled: true,
+     enabled: process.env.NODE_ENV === 'development',
 
      timeline: {
       enabled: true,
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
 
     sourcemap: {
         "server" : true,
-        "client" : true,
+        "client" : false,
     },
  
     modules: [

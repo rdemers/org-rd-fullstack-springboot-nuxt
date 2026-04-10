@@ -63,7 +63,7 @@
     </v-dialog>
     <v-dialog v-model="pdfDialog" persistent width="900">
         <v-card>
-            <vrd-pdfviewer url="http://localhost:8080/report/invents-report" 
+            <vrd-pdfviewer :url="`${useRuntimeConfig().public.apiURL.replace('/api', '')}/report/invents-report`"
                            :title="t('inventory.report.title')" 
                            :subtitle="t('inventory.report.subtitle')"/>
             <v-card-actions>

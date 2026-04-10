@@ -66,8 +66,7 @@
     });
 
     const { t } = useI18n();
-    //const isDev = import.meta.dev; // Check if we are in development mode.
-    const isDev = true;
+    const isDev = import.meta.dev; // Check if we are in development mode.
 
     const handleError = () => clearError({ redirect: "/" });
 </script>

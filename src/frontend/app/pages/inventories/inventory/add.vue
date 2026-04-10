@@ -60,7 +60,7 @@
         isError.value = false;
         try {
               await InventoryService.create(data as Inventory);
-              notify(t("common.message.update-success"));
+              notify(t("common.message.create-success"));
         } catch (err) {
               isError.value = true;
               console.error("Error creating inventory:", err);

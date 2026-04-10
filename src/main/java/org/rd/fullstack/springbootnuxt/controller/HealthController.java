@@ -55,7 +55,7 @@ public class HealthController {
      * <p>
      * - Example: Application/service is having a fatal runtime exception.
      */
-    @RequestMapping(value = "/liveness_state_down", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = "/liveness_state_down", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
     @Operation(summary = "Report that the internal state of the application is broken.", description = "String.class")
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Success|OK."),
@@ -68,7 +68,7 @@ public class HealthController {
         return CST_DOWN;
     }
 
-    @RequestMapping(value = "/liveness_state_up", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = "/liveness_state_up", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
     @Operation(summary = "Signal that the application's internal state is valid.", description = "String.class")
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Success|OK."),
@@ -94,7 +94,7 @@ public class HealthController {
      * <p>
      * - Example: application/services is usually going to a graceful shutdown.
      */
-    @RequestMapping(value = "/readiness_state_down", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = "/readiness_state_down", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
     @Operation(summary = "Report that the application is no longer accepting requests.", description = "String.class")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Success|OK."),
@@ -107,7 +107,7 @@ public class HealthController {
         return CST_DOWN;
     }
 
-    @RequestMapping(value = "/readiness_state_up", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = "/readiness_state_up", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
     @Operation(summary = "Signal that the application is accepting requests.", description = "String.class")
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Success|OK."),

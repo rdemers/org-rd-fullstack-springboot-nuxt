@@ -17,6 +17,7 @@ package org.rd.fullstack.springbootnuxt.util;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.rd.fullstack.springbootnuxt.dto.User;
@@ -96,6 +97,11 @@ public class UserDetailsImpl implements UserDetails {
             return false;
 
         UserDetailsImpl user = (UserDetailsImpl) obj;
-        return (user.getUsername().compareTo(this.getUsername()) == 0) ? true : false;
+        return Objects.equals(this.getUsername(), user.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 }

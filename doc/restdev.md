@@ -35,7 +35,7 @@ The uniform interface separates the client from the server. This separation of c
 A client cannot tell whether it is connected directly to the end server or to an intermediary along the way. Intermediary servers can improve system scalability by enabling load balancing, providing shared caches, and enforcing security policies.
 
 **Code on Demand (optional)**  
-Servers can temporarily extend or customize client functionality by transferring logic that the client can execute. Examples include compiled components like Java applets and client-side scripts such as JavaScript. The standard for the AGL system prohibits this usage.
+Servers can temporarily extend or customize client functionality by transferring logic that the client can execute. Examples include compiled components like Java applets and client-side scripts such as JavaScript. This capability is optional and should be used with caution.
 
 ### HTTP VERBS
 
@@ -43,7 +43,7 @@ Most implementations use the HTTP transport layer. HTTP verbs are an important p
 
 ### UNIFORM RESOURCE LOCATOR (URL)
 
-Defining a standard for identifying a resource via a URL is essential. We establish this standard using "IBM Cloud Managed Services" as a reference. The structure of a URL and its rules are as follows:
+Defining a standard for identifying a resource via a URL is essential. The structure of a URL and its rules are as follows:
 
 ```code
 https://{host}:{port}/{srv}/{node}/{resource}-{id}/{operation}?{query_parameters}
@@ -57,7 +57,7 @@ The following table describes the possible values for the variables that make up
 |------------|-------------|
 | host       | Server name or IP address |
 | port       | Port number |
-| srv        | Service endpoint (AGL only) |
+| srv        | Service endpoint |
 | node       | Node identification (always plural, e.g., tickets) |
 | resource   | Resource, possibly with a prefix (e.g., ticket-1234) |
 | operation  | Optional operation specifying an action beyond standard CRUD (e.g., exclude) |
@@ -79,7 +79,7 @@ Implementing services may require additional norms and standards to address spec
     An operation (or service call) is idempotent if a client can make the same call repeatedly and produce the same result, like an assignment in programming: X=5. In other words, making multiple identical requests to the same URL yields the same result. PUT and DELETE verbs are generally defined to be idempotent.
 
 - **Authentication/Authorization**  
-    The best practice is to use "OAuth" for authentication (or alternatives). The AGL system uses an alternative form. For more on OAuth specification, see: <http://oauth.net/documentation/spec/>.  
+    The best practice is to use "OAuth" for authentication (or alternatives). For more on the OAuth specification, see: <http://oauth.net/documentation/spec/>.  
     Authorization occurs at the time of the service call. The token obtained during authentication is used to verify access rights (usually roles).
 
 - **Limiting Results**  
@@ -98,7 +98,7 @@ Implementing services may require additional norms and standards to address spec
 
 - **Date/Time**  
     Dates and timestamps can be tricky if not handled properly and consistently. Time zone issues and daylight saving changes are typical problems.  
-    Internally, services should store, process, and cache using UTC or GMT. The AGL system does not currently follow these principles. This should be implemented in a future version.
+    Internally, services should store, process, and cache using UTC or GMT to avoid timezone-related issues.
 
 ## RETURN CODES (HTTP TOP 10)
 

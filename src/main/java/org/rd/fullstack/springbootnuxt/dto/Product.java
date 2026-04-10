@@ -101,6 +101,6 @@ public class Product {
                "Product [productId=" + this.productId + 
                ", code=" + this.code + 
                ", description=" + this.description +
-               ", price=" + this.price.toString() + "]";
+               ", price=" + String.valueOf(this.price) + "]";
     }
 }

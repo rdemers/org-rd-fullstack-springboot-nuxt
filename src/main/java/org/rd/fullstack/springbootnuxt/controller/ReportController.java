@@ -93,7 +93,7 @@ public class ReportController {
             // Check all parameters.
             if ((title == null) || (title.length() == 0))        title = CST_TITLE;
             if ((subTitle == null) || (subTitle.length() == 0))  subTitle = CST_SUBTITLE;
-            if ((mediaType == null) || (subTitle.length() == 0)) mediaType = MediaType.APPLICATION_PDF_VALUE;
+            if ((mediaType == null) || (mediaType.length() == 0)) mediaType = MediaType.APPLICATION_PDF_VALUE;
             
             // Get report data.
             List<InventoryView> invents = new ArrayList<InventoryView>();
@@ -149,7 +149,7 @@ public class ReportController {
 
     private void generateXML(ByteArrayOutputStream baos, Map<String, Object> parameters, List<InventoryView> books, Map<String, Object> footer) throws Exception {
         InventsReport report = new InventsReport(Arrays.asList(parameters), books,  Arrays.asList(footer));
-        baos.write("<?xml version=\"1.0\" encoding=\"UTF-8\">".getBytes());
+        baos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>".getBytes());
         baos.write(new XmlMapper().writeValueAsString(report).getBytes());
     }
 }

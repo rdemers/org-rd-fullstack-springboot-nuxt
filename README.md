@@ -131,15 +131,20 @@ The following users and passwords are valid:
 
 * Source: [SecurityConfig.java](src/main/java/org/rd/fullstack/springbootnuxt/config/SecurityConfig.java)
 
-### Example JWT Token
+### JWT Token
 
-```code
-eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNzJjMDhjMS02OGY5LTQ3YmQtODdhOS1iNjY0YTIxZTZhMWMiLCJzdWIiOiJyb290IiwicmQucm9sZXMiOiJST0xFX1NFTEVDVCxST0xFX0lOU0VSVCxST0xFX1VQREFURSxST0xFX0RFTEVURSIsImlhdCI6MTcxODM4NjQ1NH0.AIS4YFJCUIIv0IzTxdDp3MqQXDyuhQBFSJnJmF6b06c
+To generate a JWT token, use the `/auth/jwt/token` endpoint via the Swagger UI or with a direct HTTP request. Example:
+
+```bash
+curl -X POST http://localhost:8080/auth/jwt/token \
+     -H "Content-Type: application/json" \
+     -d '{"username": "root", "password": "root"}'
 ```
 
 **Notes:**
 
-* This JWT token represents the `root` user (password: `root`). It is generated via the `/jwt/token` service. Refer to the Swagger UI for details.
+* JWT tokens are generated for authenticated users via the `/auth/jwt/token` service. Refer to the Swagger UI for details.
+* Tokens have a configurable expiration (default: 30 seconds). Generate a fresh token for each session.
 * The security in this project is minimal and **must not** be used in a production environment.
 * This project is for learning and demonstration purposes only.
 
