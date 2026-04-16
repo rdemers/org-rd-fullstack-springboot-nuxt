@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
 
-import org.rd.fullstack.springbootnuxt.dto.ERole;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -86,13 +84,13 @@ public class JwtUtils {
         return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload().getSubject();
     }
 
-    public List<ERole> getAuthoritiesFromJwtToken(String token) {
-        List<ERole> roles = new ArrayList<ERole>();
+    public List<Role> getAuthoritiesFromJwtToken(String token) {
+        List<Role> roles = new ArrayList<Role>();
         String authorities = Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload().get(CST_AUTHORITIES, String.class);
         if (authorities != null && ! authorities.isEmpty()) {
             StringTokenizer tokenizer = new StringTokenizer(authorities, ",");
             while (tokenizer.hasMoreElements()) {
-                roles.add(ERole.valueOf(tokenizer.nextToken()));
+                roles.add(Role.valueOf(tokenizer.nextToken()));
             }
         }
         return roles;

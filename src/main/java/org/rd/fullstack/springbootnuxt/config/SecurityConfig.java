@@ -19,8 +19,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.Arrays;
 
-import org.rd.fullstack.springbootnuxt.dto.ERole;
 import org.rd.fullstack.springbootnuxt.util.AuthentificationTokenFilter;
+import org.rd.fullstack.springbootnuxt.util.Role;
 import org.rd.fullstack.springbootnuxt.util.ExceptionHandlerAuthEntryPoint;
 import org.rd.fullstack.springbootnuxt.util.JwtUtils;
 import org.rd.fullstack.springbootnuxt.util.UserDetailsServiceImpl;
@@ -88,13 +88,13 @@ public class SecurityConfig {
         PasswordEncoder passwordEncoder = passwordEncoder();
 
         userUtils.add("root", passwordEncoder.encode("root"),
-                Arrays.asList(ERole.ROLE_SELECT, ERole.ROLE_INSERT, ERole.ROLE_UPDATE, ERole.ROLE_DELETE));
+                Arrays.asList(Role.ROLE_SELECT, Role.ROLE_INSERT, Role.ROLE_UPDATE, Role.ROLE_DELETE));
 
         userUtils.add("support", passwordEncoder.encode("support"),
-                Arrays.asList(ERole.ROLE_SELECT, ERole.ROLE_UPDATE));
+                Arrays.asList(Role.ROLE_SELECT, Role.ROLE_UPDATE));
 
         userUtils.add("guest", passwordEncoder.encode("guest"),
-                Arrays.asList(ERole.ROLE_SELECT));
+                Arrays.asList(Role.ROLE_SELECT));
 
         return userUtils;
     }

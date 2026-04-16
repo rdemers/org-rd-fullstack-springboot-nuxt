@@ -18,7 +18,6 @@ package org.rd.fullstack.springbootnuxt.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.rd.fullstack.springbootnuxt.dto.ERole;
 import org.rd.fullstack.springbootnuxt.dto.User;
 
 public class UserUtils {
@@ -30,7 +29,7 @@ public class UserUtils {
         this.users = new ArrayList<>();
     }
 
-    public void add(String username, String password, List<ERole> roles) {
+    public void add(String username, String password, List<Role> roles) {
         users.add(new User(username, password, roles));
     }
 

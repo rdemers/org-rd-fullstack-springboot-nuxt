@@ -18,11 +18,13 @@ package org.rd.fullstack.springbootnuxt.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.rd.fullstack.springbootnuxt.util.Role;
+
 public class User {
     private String username;
     private String password;
 
-    private List<ERole> roles;
+    private List<Role> roles;
 
 	public User() {
         super();
@@ -31,7 +33,7 @@ public class User {
         this.roles    = new ArrayList<>();
     }
 
-    public User(String username, String password, List<ERole> roles) {
+    public User(String username, String password, List<Role> roles) {
         super();
         this.username = username;
         this.password = password;
@@ -54,11 +56,11 @@ public class User {
         this.password = password;
     }
 
-    public List<ERole> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<ERole> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }
